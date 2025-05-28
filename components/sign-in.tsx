@@ -7,7 +7,7 @@ export default function SignIn() {
   return (
     <div>
       <button
-        onClick={() => signIn("google")}
+        onClick={() => signIn("google" , { callbackUrl: "/" })}
         type="button"
         className="w-full inline-flex justify-center items-center py-3 px-4 border border-gray-600 rounded-md shadow-sm bg-gray-700 text-sm font-medium text-gray-200 hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200"
       >

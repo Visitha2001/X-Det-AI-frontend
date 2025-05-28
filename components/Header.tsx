@@ -92,11 +92,11 @@ export default function Header() {
               </span>
               <button
                 onClick={() => signOut()}
-                className="px-3 py-1 text-sm py-2 rounded-md bg-gray-700 text-gray-300 hover:bg-gray-600 transition-colors flex items-center justify-center" // Added flex classes for centering icon/text
+                className="px-3 py-2 text-sm rounded-2xl bg-gray-700 text-gray-300 hover:bg-gray-600 transition-colors flex items-center justify-center" // Added flex classes for centering icon/text
               >
                 {/* Logout icon for mobile screens (md:hidden) */}
                 <span className="">
-                  <FiLogOut className="w-5 h-5" />
+                  <FiLogOut className="w-5 h-5 text-red-400" />
                 </span>
                 <span className="hidden md:inline ml-1">Sign Out</span>
               </button>
@@ -105,14 +105,14 @@ export default function Header() {
             <>
               <Link
                 href="/signin"
-                className="px-3 py-2 text-sm rounded-md bg-gray-700 text-gray-300 hover:bg-gray-600 transition-colors flex items-center"
+                className="px-3 py-2 text-sm rounded-2xl bg-gray-700 text-gray-300 hover:bg-gray-600 transition-colors flex items-center"
               >
                 <FcGoogle className="mr-2" />
                 Sign In
               </Link>
               <Link
                 href="/signup"
-                className="px-3 py-2 text-sm rounded-md bg-blue-600 text-white hover:bg-blue-700 transition-colors"
+                className="px-3 py-2 text-sm rounded-2xl bg-blue-600 text-white hover:bg-blue-700 transition-colors"
               >
                 Sign Up
               </Link>
@@ -127,7 +127,7 @@ export default function Header() {
           <Link
             key={item.path}
             href={item.path}
-            className={`flex flex-col items-center p-1 rounded-lg min-w-[60px] ${
+            className={`flex flex-col items-center p-1 rounded-xl min-w-[60px] ${
               pathname === item.path
                 ? "text-blue-400 bg-gray-700"
                 : "text-gray-400 hover:bg-gray-700"

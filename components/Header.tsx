@@ -3,7 +3,7 @@
 import { usePathname } from "next/navigation";
 import { signIn, signOut, useSession } from "next-auth/react";
 import Link from "next/link";
-import { FaUser, FaRobot, FaClinicMedical, FaHome, FaSignOutAlt } from "react-icons/fa";
+import { FaUser, FaRobot, FaClinicMedical, FaHome, FaSignOutAlt, FaInfoCircle } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import Image from "next/image";
 import Logo from "../public/assets/Dark_Logo.png";
@@ -30,6 +30,11 @@ export default function Header() {
       path: "/diseases",
       icon: <FaKitMedical className="mr-1" />,
     },
+    {
+      name: "About",
+      path: "/about",
+      icon: <FaInfoCircle className="mr-1" />,
+    }
   ];
 
   return (
@@ -49,22 +54,30 @@ export default function Header() {
 
         {/* Navigation - Center */}
         <nav className="hidden md:flex items-center space-x-8">
-          {navItems.map((item) => (
-            <Link
-              key={item.path}
-              href={item.path}
-              className="relative group text-gray-300 hover:text-white transition-colors"
-            >
-              <div className="flex items-center">
-                {item.name}
-              </div>
-              <span
-                className={`absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-400 transition-all duration-300 group-hover:w-full ${
-                  pathname === item.path ? "w-full" : ""
-                }`}
-              ></span>
-            </Link>
-          ))}
+          {navItems.map((item) => {
+            const isActive = pathname === item.path;
+            return (
+              <Link
+                key={item.path}
+                href={item.path}
+                className="relative group text-gray-300 hover:text-white transition-colors"
+              >
+                <div
+                  className={`flex items-center mb-1 ${isActive ? "text-blue-300" : ""}`}
+                >
+                  {item.name}
+                </div>
+                <span
+                  className={`
+                    absolute bottom-0 left-1/2 
+                    h-[3px] bg-blue-400 
+                    transition-all duration-300 
+                    ${isActive ? "w-3 left-[calc(50%-6px)]" : "w-0 group-hover:w-full group-hover:left-0"}
+                  `}
+                ></span>
+              </Link>
+            );
+          })}
         </nav>
 
         {/* Auth Section - Right */}
@@ -122,21 +135,47 @@ export default function Header() {
       </div>
 
       {/* Mobile Navigation - Compact */}
-      <nav className="md:hidden bg-gray-800 py-1 px-2 flex justify-around fixed bottom-0 left-0 right-0 z-50">
-        {navItems.map((item) => (
-          <Link
-            key={item.path}
-            href={item.path}
-            className={`flex flex-col items-center p-1 rounded-xl min-w-[60px] ${
-              pathname === item.path
-                ? "text-blue-400 bg-gray-700"
-                : "text-gray-400 hover:bg-gray-700"
-            } transition-colors`}
-          >
-            <span className="text-xl">{item.icon}</span>
-            <span className="text-[10px] mt-0.5 font-medium">{item.name}</span>
-          </Link>
-        ))}
+      <nav className="md:hidden bg-gray-900 py-2 px-2 flex justify-around fixed bottom-0 left-0 right-0 z-50">
+        {navItems.map((item) => {
+          const isActive = pathname === item.path;
+
+          return (
+            <Link
+              key={item.path}
+              href={item.path}
+              className="flex flex-col items-center min-w-[60px] text-gray-400 hover:text-blue-300 transition-colors"
+              onClick={(e) => {
+                const target = e.currentTarget.querySelector(".ripple-container");
+                const ripple = document.createElement("span");
+                const rect = target.getBoundingClientRect();
+
+                ripple.className = "ripple-effect";
+                ripple.style.width = ripple.style.height = `${rect.width * 2}px`;
+                ripple.style.left = `${e.clientX - rect.left - rect.width}px`;
+                ripple.style.top = `${e.clientY - rect.top - rect.width}px`;
+
+                target.appendChild(ripple);
+
+                setTimeout(() => ripple.remove(), 600);
+              }}
+            >
+              <div
+                className={`py-1 px-3 rounded-xl ripple-container ${
+                  isActive ? "bg-blue-900 text-blue-400" : "hover:bg-gray-700"
+                }`}
+              >
+                <span className="text-xl">{item.icon}</span>
+              </div>
+              <span
+                className={`text-[10px] mt-0.5 font-medium ${
+                  isActive ? "text-blue-400" : ""
+                }`}
+              >
+                {item.name}
+              </span>
+            </Link>
+          );
+        })}
       </nav>
     </header>
   );

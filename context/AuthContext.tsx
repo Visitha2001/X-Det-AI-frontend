@@ -31,6 +31,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const logout = useCallback(() => {
     localStorage.removeItem('access_token');
+    localStorage.removeItem('access_token');
     sessionStorage.removeItem('username');
     setUsername(null);
   }, []);

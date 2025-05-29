@@ -31,7 +31,7 @@ const Page = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gray-800 sm:bg-gray-900 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <h2 className="mt-6 text-center text-3xl font-extrabold text-blue-400">
           Sign in to your account
@@ -47,7 +47,7 @@ const Page = () => {
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
         <div className="bg-gray-800 py-8 px-4 shadow-2xl sm:rounded-lg sm:px-10 border border-gray-700">
           {errorMsg && (
-            <div className="mb-4 text-red-500 text-sm text-center">{errorMsg}</div>
+            <div className="mb-4 p-4 bg-red-900/50 border border-red-400 text-red-100 rounded-md">{errorMsg}</div>
           )}
 
           <div className="space-y-6">

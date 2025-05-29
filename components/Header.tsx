@@ -9,8 +9,10 @@ import Image from "next/image";
 import Logo from "../public/assets/Dark_Logo.png";
 import { FaKitMedical } from "react-icons/fa6";
 import { FiLogOut } from "react-icons/fi";
+import { useAuth } from "@/context/AuthContext";
 
 export default function Header() {
+  const { username, logout } = useAuth();
   const pathname = usePathname();
   const { data: session } = useSession();
 
@@ -82,9 +84,9 @@ export default function Header() {
 
         {/* Auth Section - Right */}
         <div className="flex items-center space-x-4">
-          {session?.user ? (
+          {session?.user || username ? (  // Changed this condition
             <div className="flex items-center space-x-3">
-              {session.user.image ? (
+              {session?.user?.image ? (
                 <div className="relative w-8 h-8 rounded-full overflow-hidden">
                   <Image
                     src={session.user.image}
@@ -101,13 +103,20 @@ export default function Header() {
                 </div>
               )}
               <span className="text-gray-300 hidden sm:inline">
-                {session.user?.name || "User"}
+                {session?.user?.name || session?.user?.email?.split('@')[0] || username || "User"}
               </span>
               <button
-                onClick={() => signOut()}
-                className="px-3 py-2 text-sm rounded-2xl bg-gray-700 text-gray-300 hover:bg-gray-600 transition-colors flex items-center justify-center" // Added flex classes for centering icon/text
+                onClick={() => {
+                  if (session) {
+                    signOut();
+                  } else {
+                    logout(); // Use the context logout function
+                    localStorage.removeItem('access_token');
+                    window.location.reload(); // You might not need this anymore
+                  }
+                }}
+                className="px-3 py-2 text-sm rounded-2xl bg-gray-700 text-gray-300 hover:bg-gray-600 transition-colors flex items-center justify-center"
               >
-                {/* Logout icon for mobile screens (md:hidden) */}
                 <span className="">
                   <FiLogOut className="w-5 h-5 text-red-400" />
                 </span>

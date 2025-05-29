@@ -11,7 +11,6 @@ const Page = () => {
   const [password, setPassword] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
   const router = useRouter();
-
   const { login } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -21,9 +20,9 @@ const Page = () => {
     try {
       const response = await loginUser(username, password);
       const { access_token } = response.data;
-  
-      localStorage.setItem('access_token', access_token);
-      login(username); // Use the context login function instead of sessionStorage directly
+      
+      // Use the updated login function
+      login(username, access_token);
       router.push('/');
     } catch (err: any) {
       setErrorMsg(err?.response?.data?.detail || err?.message || 'Login failed. Please try again.');

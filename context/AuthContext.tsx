@@ -2,8 +2,9 @@
 import { createContext, useContext, useState, useEffect, useCallback } from 'react';
 
 type AuthContextType = {
+  isAuthenticated: boolean;
   username: string | null;
-  login: (username: string) => void;
+  login: (username: string, token: string) => void;
   logout: () => void;
 };
 
@@ -13,24 +14,31 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [username, setUsername] = useState<string | null>(null);
 
   useEffect(() => {
+    // Check both localStorage (for JWT) and sessionStorage (for username)
+    const token = localStorage.getItem('access_token');
     const storedUsername = sessionStorage.getItem('username');
-    if (storedUsername) {
+    
+    if (token && storedUsername) {
       setUsername(storedUsername);
     }
   }, []);
 
-  const login = useCallback((username: string) => {
+  const login = useCallback((username: string, token: string) => {
+    localStorage.setItem('access_token', token);
     sessionStorage.setItem('username', username);
     setUsername(username);
   }, []);
 
   const logout = useCallback(() => {
+    localStorage.removeItem('access_token');
     sessionStorage.removeItem('username');
     setUsername(null);
   }, []);
 
+  const isAuthenticated = !!username;
+
   return (
-    <AuthContext.Provider value={{ username, login, logout }}>
+    <AuthContext.Provider value={{ isAuthenticated, username, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

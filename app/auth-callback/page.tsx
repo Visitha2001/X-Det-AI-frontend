@@ -19,7 +19,7 @@ export default function AuthCallback() {
         sessionStorage.setItem('username', session.user.name);
       }
       login(session.user.email, session.accessToken);
-      router.push('/');
+      router.push('/home');
     } else if (status === 'unauthenticated' && !hasProcessed) {
       setHasProcessed(true);
       router.push('/signin');

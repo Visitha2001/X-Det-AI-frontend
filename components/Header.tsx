@@ -19,7 +19,7 @@ export default function Header() {
   const navItems = [
     {
       name: "Home",
-      path: "/",
+      path: "/home",
       icon: <FaHome className="mr-1" />,
     },
     {
@@ -43,7 +43,7 @@ export default function Header() {
     <header className="sticky top-0 z-50 bg-black border-b border-gray-700">
       <div className="container mx-auto px-4 py-4 flex items-center justify-between">
         {/* Logo */}
-        <Link href="/" className="flex items-center">
+        <Link href="/home" className="flex items-center">
           <Image
             src={Logo}
             alt="Logo"

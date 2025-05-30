@@ -24,7 +24,7 @@ const Page = () => {
       
       // Use the updated login function
       login(username, access_token);
-      router.push('/');
+      router.push('/home');
     } catch (err: any) {
       setErrorMsg(err?.response?.data?.detail || err?.message || 'Login failed. Please try again.');
     }

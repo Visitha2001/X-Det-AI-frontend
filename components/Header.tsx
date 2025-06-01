@@ -10,11 +10,13 @@ import Logo from "../public/assets/Dark_Logo.png";
 import { FaKitMedical } from "react-icons/fa6";
 import { FiLogOut } from "react-icons/fi";
 import { useAuth } from "@/context/AuthContext";
+import { useRouter } from "next/navigation";
 
 export default function Header() {
   const { username, logout } = useAuth();
   const pathname = usePathname();
   const { data: session } = useSession();
+  const router = useRouter();
 
   const navItems = [
     {
@@ -112,6 +114,8 @@ export default function Header() {
                   } else {
                     logout(); // Use the context logout function
                     localStorage.removeItem('access_token');
+                    sessionStorage.removeItem('username');
+                    router.push('/signin');
                     window.location.reload(); // You might not need this anymore
                   }
                 }}

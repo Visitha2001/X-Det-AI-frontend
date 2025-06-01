@@ -1,11 +1,12 @@
 'use client';
+import { useState } from 'react';
 import { DiseasePrediction, PredictionResponse } from '@/services/prediction_service';
 import { 
     savePredictionDataToSession, 
     saveDiseaseDetailsToSession,
     fetchDiseaseDetails, 
     savePredictionWithDetails
-  } from '@/services/disease_service';
+} from '@/services/disease_service';
 
 interface PredictionResultsProps {
   imageUrl: string;
@@ -22,6 +23,34 @@ export default function PredictionResults({
   prediction,
   onRetry
 }: PredictionResultsProps) {
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [processingError, setProcessingError] = useState<string | null>(null);
+
+  const handleViewDetails = async () => {
+    setIsProcessing(true);
+    setProcessingError(null);
+    
+    try {
+      await savePredictionWithDetails(prediction, imageUrl);
+      window.location.href = `/home/results?image=${encodeURIComponent(imageUrl)}`;
+    } catch (err) {
+      console.error('Failed to save results:', err);
+      // Fallback to session storage if DB save fails
+      try {
+        savePredictionDataToSession(prediction);
+        const topDisease = prediction.top_5_diseases[0].disease;
+        const details = await fetchDiseaseDetails(topDisease);
+        saveDiseaseDetailsToSession(details);
+        window.location.href = `/home/results?image=${encodeURIComponent(imageUrl)}`;
+      } catch (fallbackErr) {
+        console.error('Failed in fallback:', fallbackErr);
+        setProcessingError('Failed to process results. Please try again.');
+      }
+    } finally {
+      setIsProcessing(false);
+    }
+  };
+
   if (scanError) {
     return (
       <div className="w-full bg-white rounded-lg p-6 mt-4 max-w-3xl mx-auto">
@@ -43,9 +72,27 @@ export default function PredictionResults({
   if (!prediction && !isScanning) return null;
 
   return (
-    <div className="w-full p-4 mt-4">
+    <div className="w-full p-4 mt-4 mb-12 sm:mb-0">
+      {/* Processing Modal */}
+      {isProcessing && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-xl p-8 max-w-md w-full mx-4">
+            <div className="flex flex-col items-center">
+              <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-blue-500 mb-4"></div>
+              <h3 className="text-xl font-bold text-gray-800 mb-2">Processing Results</h3>
+              <p className="text-gray-600 text-center mb-4">
+                Please wait while we save your scan results and prepare the detailed analysis.
+              </p>
+              {processingError && (
+                <p className="text-red-500 text-sm mb-4">{processingError}</p>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+
       <div className="relative bg-white rounded-xl p-10 max-w-full mx-auto overflow-hidden">
-        {/* Spinner overlay - only shown when scanning */}
+        {/* Scanning overlay */}
         {isScanning && (
           <div className="absolute inset-0 bg-white bg-opacity-70 flex items-center justify-center z-10 rounded-xl flex-col">
             <div className="animate-spin rounded-full h-16 w-16 border-t-8 border-b-8 border-blue-500"></div>
@@ -121,34 +168,28 @@ export default function PredictionResults({
                 </div>
 
                 <div className="mt-6">
-                <button
-                    onClick={async () => {
-                        try {
-                            await savePredictionWithDetails(prediction, imageUrl);
-                            window.location.href = `/home/results?image=${encodeURIComponent(imageUrl)}`;
-                        } catch (err) {
-                            console.error('Failed to save results:', err);
-                            // Fallback to session storage if DB save fails
-                            savePredictionDataToSession(prediction);
-                            const topDisease = prediction.top_5_diseases[0].disease;
-                            try {
-                                const details = await fetchDiseaseDetails(topDisease);
-                                saveDiseaseDetailsToSession(details);
-                                window.location.href = `/home/results?image=${encodeURIComponent(imageUrl)}`;
-                            } catch (err) {
-                                console.error('Failed to fetch disease details:', err);
-                                // Still redirect but components will handle missing data
-                                window.location.href = `/home/results?image=${encodeURIComponent(imageUrl)}`;
-                            }
-                        }
-                    }}
-                    className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-blue-500 to-blue-600 text-white font-medium rounded-lg shadow-md hover:from-blue-600 hover:to-blue-700 transition-all duration-300"
-                    >
-                    <span>View Detailed Analysis</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                    </svg>
-                    </button>
+                  <button
+                    onClick={handleViewDetails}
+                    disabled={isProcessing}
+                    className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-blue-500 to-blue-600 text-white font-medium rounded-lg shadow-md hover:from-blue-600 hover:to-blue-700 transition-all duration-300 disabled:opacity-70 disabled:cursor-not-allowed"
+                  >
+                    {isProcessing ? (
+                      <>
+                        <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                        Processing...
+                      </>
+                    ) : (
+                      <>
+                        <span>View Detailed Analysis</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                        </svg>
+                      </>
+                    )}
+                  </button>
                 </div>
               </>
             )}

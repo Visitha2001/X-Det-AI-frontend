@@ -112,7 +112,7 @@ export default function ImageUploadRow({
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-[30vh] text-black relative">
+    <div className="flex flex-col items-center justify-center min-h-[25vh] sm:min-h-[17vh] text-black relative">
       {/* Background */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500 animate-gradient bg-[length:400%_400%]" />
@@ -125,7 +125,7 @@ export default function ImageUploadRow({
           bg-white bg-opacity-20 backdrop-blur-lg 
           rounded-4xl shadow-2xl border border-white border-opacity-30 
           transition-all 
-          ${selectedImage ? 'h-[24vh] sm:h-[18vh] px-2 py-2' : 'h-[10vh] sm:h-[10vh] px-4 py-2'}
+          ${selectedImage ? 'h-[22vh] sm:h-[13vh] px-2 py-2' : 'h-[10vh] sm:h-[7vh] px-4 py-2'}
         `}>
           <div className="flex flex-row w-full items-center mt-5 sm:mt-0">
             {/* Upload Button */}
@@ -148,7 +148,7 @@ export default function ImageUploadRow({
                     <img
                       src={selectedImage}
                       alt="Preview"
-                      className="h-30 w-30 object-cover rounded-2xl border border-white"
+                      className="h-25 w-25 mt-[-8px] sm:mt-[0px] sm:h-22 sm:w-22  object-cover rounded-2xl border border-white"
                     />
                     {!isUploading && !isScanning && (
                       <button
@@ -156,7 +156,7 @@ export default function ImageUploadRow({
                           e.stopPropagation();
                           handleRemoveImage();
                         }}
-                        className="absolute -top-2 -right-2 bg-white text-red-600 rounded-full h-5 w-5 flex items-center justify-center text-xs shadow-md"
+                        className="absolute -top-2 -right-2 bg-white text-red-600 border border-red-600 rounded-full h-5 w-5 flex items-center justify-center text-xs shadow-md"
                         title="Remove image"
                       >
                         ✕
@@ -238,7 +238,7 @@ export default function ImageUploadRow({
           100% { background-position: 0% 50%; }
         }
         .animate-gradient {
-          animation: gradient 10s ease infinite;
+          animation: gradient 8s ease infinite;
         }
       `}</style>
     </div>

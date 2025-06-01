@@ -75,7 +75,9 @@ export async function savePredictionWithDetails(
       accessToken,
       imageUrl,
       prediction,
-      diseaseDetails
+      diseaseDetails,
+      disease: topDisease,
+      details: diseaseDetails.details
     });
 
     // Save to session storage

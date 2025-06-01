@@ -14,12 +14,23 @@ interface ImageUploadResponse {
   height: number;
 }
 
-export default function ImageUploadRow() {
+interface ImageUploadRowProps {
+  onUploadSuccess: (result: ImageUploadResponse) => void;
+  onScanClick: () => void;
+  isScanning: boolean;
+  uploadResult: ImageUploadResponse | null;
+}
+
+export default function ImageUploadRow({
+  onUploadSuccess,
+  onScanClick,
+  isScanning,
+  uploadResult
+}: ImageUploadRowProps) {
   const router = useRouter();
   const { isAuthenticated } = useAuth();
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [isUploading, setIsUploading] = useState(false);
-  const [uploadResult, setUploadResult] = useState<ImageUploadResponse | null>(null);
   const [error, setError] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -28,13 +39,12 @@ export default function ImageUploadRow() {
     const file = e.target.files?.[0];
     
     if (file) {
-      // Basic validation
       if (!file.type.match('image.*')) {
         setError('Please select an image file');
         return;
       }
       
-      if (file.size > 5 * 1024 * 1024) { // 5MB limit
+      if (file.size > 5 * 1024 * 1024) {
         setError('File size must be less than 5MB');
         return;
       }
@@ -55,7 +65,7 @@ export default function ImageUploadRow() {
 
   const handleRemoveImage = () => {
     setSelectedImage(null);
-    setUploadResult(null);
+    onUploadSuccess(null);
     setError(null);
     if (fileInputRef.current) {
       fileInputRef.current.value = '';
@@ -65,7 +75,6 @@ export default function ImageUploadRow() {
   const handleUpload = async () => {
     if (!selectedImage || !fileInputRef.current?.files?.[0]) return;
     
-    // Check authentication before uploading
     if (!isAuthenticated) {
       router.push('/signin');
       return;
@@ -79,7 +88,6 @@ export default function ImageUploadRow() {
       const formData = new FormData();
       formData.append('file', file);
 
-      // Get token from localStorage
       const token = localStorage.getItem('access_token');
       
       const response = await http.post('/images/upload', formData, {
@@ -89,7 +97,7 @@ export default function ImageUploadRow() {
         },
       });
       
-      setUploadResult(response.data);
+      onUploadSuccess(response.data);
     } catch (err: any) {
       console.error('Upload failed:', err);
       if (err.response?.status === 401) {
@@ -104,37 +112,35 @@ export default function ImageUploadRow() {
   };
 
   return (
-    <div className="flex items-center justify-center h-[30vh] sm:h-[25vh] text-black relative">
-      {/* Animated gradient background */}
+    <div className="flex flex-col items-center justify-center min-h-[30vh] text-black relative">
+      {/* Background */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500 animate-gradient bg-[length:400%_400%]" />
       </div>
 
-      {/* Content container */}
+      {/* Upload Container */}
       <div className="relative z-10 w-[80%] max-w-3xl">
-        <div
-          className={`
-            flex flex-col sm:flex-row items-center gap-4 
-            bg-white bg-opacity-20 backdrop-blur-lg 
-            rounded-4xl shadow-2xl border border-white border-opacity-30 
-            transition-all 
-            ${selectedImage ? 'h-[24vh] sm:h-[18vh] px-2 py-2' : 'h-[10vh] sm:h-[10vh] px-4 py-2'}
-          `}
-        >
+        <div className={`
+          flex flex-col sm:flex-row items-center gap-4 
+          bg-white bg-opacity-20 backdrop-blur-lg 
+          rounded-4xl shadow-2xl border border-white border-opacity-30 
+          transition-all 
+          ${selectedImage ? 'h-[24vh] sm:h-[18vh] px-2 py-2' : 'h-[10vh] sm:h-[10vh] px-4 py-2'}
+        `}>
           <div className="flex flex-row w-full items-center mt-5 sm:mt-0">
-            {/* File input button with AI icon */}
+            {/* Upload Button */}
             <button
               onClick={triggerFileInput}
-              disabled={isUploading}
+              disabled={isUploading || isScanning}
               className="flex-shrink-0 flex items-center justify-center h-10 w-10 rounded-full bg-white bg-opacity-30 hover:bg-opacity-40 transition-all mr-2 disabled:opacity-50"
             >
               <Image src="/assets/ai.png" alt="AI Icon" width={50} height={50} />
             </button>
 
-            {/* Preview or prompt text */}
+            {/* Preview */}
             <div 
-              onClick={!isUploading ? triggerFileInput : undefined} 
-              className={`flex-grow ${!isUploading ? 'cursor-pointer' : ''}`}
+              onClick={!isUploading && !isScanning ? triggerFileInput : undefined} 
+              className={`flex-grow ${!isUploading && !isScanning ? 'cursor-pointer' : ''}`}
             >
               {selectedImage ? (
                 <div className="flex items-center gap-2">
@@ -144,7 +150,7 @@ export default function ImageUploadRow() {
                       alt="Preview"
                       className="h-30 w-30 object-cover rounded-2xl border border-white"
                     />
-                    {!isUploading && (
+                    {!isUploading && !isScanning && (
                       <button
                         onClick={(e) => {
                           e.stopPropagation();
@@ -168,17 +174,16 @@ export default function ImageUploadRow() {
               )}
             </div>
 
-            {/* Hidden file input */}
             <input
               type="file"
               ref={fileInputRef}
               onChange={handleImageChange}
               accept="image/*"
               className="hidden"
-              disabled={isUploading}
+              disabled={isUploading || isScanning}
             />
 
-            {/* Action buttons - hidden on mobile */}
+            {/* Desktop Buttons */}
             <div className="hidden sm:flex">
               {selectedImage && !uploadResult && (
                 <button
@@ -191,15 +196,17 @@ export default function ImageUploadRow() {
               )}
               {uploadResult && (
                 <button
-                  className="px-6 py-3 text-white text-sm font-medium rounded-full transition-all bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500 animate-gradient bg-[length:400%_400%] hover:brightness-110 shadow-lg"
+                  onClick={onScanClick}
+                  disabled={isScanning}
+                  className="px-6 py-3 mr-2 text-white text-sm font-medium rounded-full transition-all bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500 animate-gradient bg-[length:400%_400%] hover:brightness-110 shadow-lg disabled:opacity-50"
                 >
-                  Scan
+                  {isScanning ? 'Scanning...' : 'Scan'}
                 </button>
               )}
             </div>
           </div>
 
-          {/* Action buttons - visible only on mobile */}
+          {/* Mobile Buttons */}
           <div className="sm:hidden w-full px-4">
             {selectedImage && !uploadResult && (
               <button
@@ -212,9 +219,11 @@ export default function ImageUploadRow() {
             )}
             {uploadResult && (
               <button
-                className="w-full px-6 py-3 text-white text-sm font-medium rounded-full transition-all bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500 animate-gradient bg-[length:400%_400%] hover:brightness-110 shadow-lg"
+                onClick={onScanClick}
+                disabled={isScanning}
+                className="w-full px-6 py-3 text-white text-sm font-medium rounded-full transition-all bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500 animate-gradient bg-[length:400%_400%] hover:brightness-110 shadow-lg disabled:opacity-50"
               >
-                Scan
+                {isScanning ? 'Scanning...' : 'Scan'}
               </button>
             )}
           </div>

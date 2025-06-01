@@ -1,11 +1,60 @@
-import ImageUpload from "@/components/ImageUpload"
+'use client';
+import { useState } from 'react';
+import ImageUpload from '@/components/ImageUpload'; 
+import PredictionResult from '@/components/PredictionResult';
+import http from '@/services/http_service';
 
-const page = () => {
+export default function HomePage() {
+  const [uploadResult, setUploadResult] = useState(null);
+  const [prediction, setPrediction] = useState(null);
+  const [isScanning, setIsScanning] = useState(false);
+  const [scanError, setScanError] = useState(null);
+
+  const handleUploadSuccess = (result) => {
+    setUploadResult(result);
+    setPrediction(null);
+    setScanError(null);
+  };
+
+  const handleScan = async () => {
+    if (!uploadResult?.url) return;
+    
+    setIsScanning(true);
+    setScanError(null);
+    
+    try {
+      const response = await http.post('/predict-image', {
+        image_url: uploadResult.url
+      });
+      setPrediction(response.data);
+    } catch (err) {
+      console.error('Scan failed:', err);
+      setScanError(err.message || 'Failed to analyze image. Please try again.');
+    } finally {
+      setIsScanning(false);
+    }
+  };
+
   return (
-    <>
-      <ImageUpload />
-    </>
-  )
+    <div className="bg-gradient-to-b from-blue-50 to-purple-50">
+      <div className="mx-auto">
+        <ImageUpload
+          onUploadSuccess={handleUploadSuccess}
+          onScanClick={handleScan}
+          isScanning={isScanning}
+          uploadResult={uploadResult}
+        />
+        
+        {uploadResult && (
+          <PredictionResult
+            imageUrl={uploadResult.url}
+            isScanning={isScanning}
+            scanError={scanError}
+            prediction={prediction}
+            onRetry={handleScan}
+          />
+        )}
+      </div>
+    </div>
+  );
 }
-
-export default page 

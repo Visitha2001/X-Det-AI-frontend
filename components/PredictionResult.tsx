@@ -7,6 +7,7 @@ import {
     fetchDiseaseDetails, 
     savePredictionWithDetails
 } from '@/services/disease_service';
+import { FaSpinner } from 'react-icons/fa';
 
 interface PredictionResultsProps {
   imageUrl: string;
@@ -78,7 +79,7 @@ export default function PredictionResults({
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white rounded-xl p-8 max-w-md w-full mx-4">
             <div className="flex flex-col items-center">
-              <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-blue-500 mb-4"></div>
+              <FaSpinner className="animate-spin text-blue-500 text-5xl mb-4" />
               <h3 className="text-xl font-bold text-gray-800 mb-2">Processing Results</h3>
               <p className="text-gray-600 text-center mb-4">
                 Please wait while we save your scan results and prepare the detailed analysis.
@@ -95,7 +96,7 @@ export default function PredictionResults({
         {/* Scanning overlay */}
         {isScanning && (
           <div className="absolute inset-0 bg-white bg-opacity-70 flex items-center justify-center z-10 rounded-xl flex-col">
-            <div className="animate-spin rounded-full h-16 w-16 border-t-8 border-b-8 border-blue-500"></div>
+            <FaSpinner className="animate-spin text-blue-500 text-5xl mb-4" />
             <p className="text-gray-700 text-xl font-bold mt-2">Analyzing X-Ray image...</p>
             <p className="text-gray-500 text-sm mt-1">Please wait while we analyze your X-Ray image.</p>
           </div>

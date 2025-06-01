@@ -83,18 +83,20 @@ export default function ResultsPage() {
       // Check for main headers (##)
       if (paragraph.startsWith('## ')) {
         return (
-          <h2 key={index} className="text-xl font-bold mt-8 mb-4 text-blue-400">
+          <h1 key={index} className="text-3xl font-bold mt-8 mb-4 text-blue-400">
             {paragraph.replace(/^##\s/, '')}
-          </h2>
+          </h1>
         );
       }
       
       // Check for subheaders (###)
       if (paragraph.startsWith('### ')) {
         return (
-          <h3 key={index} className="text-lg font-semibold mt-6 mb-3 text-blue-300">
-            {paragraph.replace(/^###\s/, '')}
-          </h3>
+          <div key={index} className="bg-blue-900 p-2 rounded-lg my-4">
+            <h2 className="text-2xl font-semibold text-blue-300">
+              {paragraph.replace(/^###\s/, '')}
+            </h2>
+          </div>
         );
       }
       
@@ -119,20 +121,37 @@ export default function ResultsPage() {
       }
       
       // Check for bullet points (lines starting with *)
-      if (paragraph.startsWith('* ')) {
+      const trimmedParagraph = paragraph.trim();
+      if (trimmedParagraph.startsWith('* ')) {
         return (
           <ul key={index} className="list-disc pl-6 mb-4 space-y-2 text-gray-300">
             {paragraph.split('\n').filter(item => item.trim()).map((item, i) => {
-              const colonIndex = item.indexOf(':');
-              if (colonIndex > 0) {
+              const cleanedItem = item.replace(/^\*\s*/, '').trim(); // remove leading '* '
+              const boldMatch = cleanedItem.match(/^\*\*(.+?):\*\*\s*(.*)/); // match **Something:** rest
+
+              if (boldMatch) {
+                const boldPart = boldMatch[1] + ':';
+                const rest = boldMatch[2];
                 return (
                   <li key={i} className="text-gray-300">
-                    <span className="font-semibold text-blue-300">{item.substring(0, colonIndex + 1).replace(/^\*\s/, '')}</span>
-                    {item.substring(colonIndex + 1)}
+                    <span className="font-semibold text-blue-300">{boldPart}</span> {rest}
                   </li>
                 );
               }
-              return <li key={i}>{item.replace(/^\*\s/, '')}</li>;
+
+              const colonIndex = cleanedItem.indexOf(':');
+              if (colonIndex > 0) {
+                return (
+                  <li key={i} className="text-gray-300">
+                    <span className="font-semibold text-blue-300">
+                      {cleanedItem.substring(0, colonIndex + 1)}
+                    </span>
+                    {cleanedItem.substring(colonIndex + 1)}
+                  </li>
+                );
+              }
+
+              return <li key={i}>{cleanedItem}</li>;
             })}
           </ul>
         );
@@ -211,43 +230,44 @@ export default function ResultsPage() {
         </div>
 
         {/* Right Column - 70% width */}
-        <div className="w-full lg:w-[70%] bg-gray-800 rounded-xl p-8 shadow-sm border border-gray-700 relative mb-12 sm:mb-0">
+        <div className="w-full lg:w-[70%] bg-gray-800 rounded-xl px-0 py-5 sm:px-8 sm:py-8 shadow-sm border border-gray-700 relative mb-12 sm:mb-0">
           <h1 className="text-3xl font-bold text-center text-blue-400 mb-6">Detailed Analysis</h1>
-          <hr className="mx-auto my-4 border-blue-400" />
-          
-          <h2 className="text-xl font-semibold mb-4 text-blue-300">
+
+          <h2 className="text-xl font-semibold mb-2 sm:mb-4 bg-blue-900 p-2 rounded-sm sm:rounded-lg text-blue-300">
             {loading ? '' : "Selected Disease : " + diseaseDetails?.disease || 'Select a condition'}
           </h2>
           
-          {loading ? (
-            <div className="space-y-4 relative mt-20">
-              {/* Spinner overlay */}
-              <div className="absolute inset-0 bg-gray-800 bg-opacity-70 flex items-center justify-center z-10 rounded-xl flex-col">
-                <FaSpinner className="animate-spin text-blue-500 text-5xl mb-4" />
-                <p className="text-blue-300 text-xl font-bold mt-2">Analyzing Medical Data...</p>
-                <p className="text-gray-400 text-sm mt-1">Please wait while we process your information.</p>
+          <div className="flex flex-col border-0 sm:border-2 rounded-xl border-blue-900 px-5">        
+            {loading ? (
+              <div className="space-y-4 relative mt-20">
+                {/* Spinner overlay */}
+                <div className="absolute inset-0 bg-gray-800 bg-opacity-70 flex items-center justify-center z-10 rounded-xl flex-col">
+                  <FaSpinner className="animate-spin text-blue-500 text-5xl mb-4" />
+                  <p className="text-blue-300 text-xl font-bold mt-2">Analyzing Medical Data...</p>
+                  <p className="text-gray-400 text-sm mt-1">Please wait while we process your information.</p>
+                </div>
+                
+                {/* Keep skeleton loader as fallback */}
+                {[...Array(5)].map((_, index) => (
+                  <div 
+                    key={index} 
+                    className="h-4 bg-gray-800 rounded-full animate-pulse" 
+                    style={{ width: `${Math.random() * 50 + 50}%` }}
+                  ></div>
+                ))}
               </div>
-              
-              {/* Keep skeleton loader as fallback */}
-              {[...Array(5)].map((_, index) => (
-                <div 
-                  key={index} 
-                  className="h-4 bg-gray-800 rounded-full animate-pulse" 
-                  style={{ width: `${Math.random() * 50 + 50}%` }}
-                ></div>
-              ))}
-            </div>
-          ) : diseaseDetails ? (
-            <div className="max-w-none disease-content">
-              {renderDiseaseDetails()}
-            </div>
-          ) : (
-            <div className="flex items-center justify-center h-64">
-              <p className="text-gray-400 text-lg">
-                Select a condition from the list to view detailed information
-              </p>
-            </div>
-          )}
+            ) : diseaseDetails ? (
+              <div className="max-w-none disease-content">
+                {renderDiseaseDetails()}
+              </div>
+            ) : (
+              <div className="flex items-center justify-center h-64">
+                <p className="text-gray-400 text-lg">
+                  Select a condition from the list to view detailed information
+                </p>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>

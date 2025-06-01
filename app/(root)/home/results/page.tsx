@@ -92,7 +92,7 @@ export default function ResultsPage() {
       // Check for subheaders (###)
       if (paragraph.startsWith('### ')) {
         return (
-          <div key={index} className="bg-blue-900 p-2 rounded-lg my-4">
+          <div key={index} className="rounded-lg">
             <h2 className="text-2xl font-semibold text-blue-300">
               {paragraph.replace(/^###\s/, '')}
             </h2>

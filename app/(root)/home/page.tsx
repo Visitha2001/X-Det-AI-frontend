@@ -1,12 +1,11 @@
-import ProtectedComponent from "@/components/test_Token"
+import ImageUpload from "@/components/ImageUpload"
 
 const page = () => {
   return (
-    <div>
-      <h1>X-Det-AI</h1>
-      <ProtectedComponent />
-    </div>
+    <>
+      <ImageUpload />
+    </>
   )
 }
 
-export default page
+export default page 

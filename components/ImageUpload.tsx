@@ -178,35 +178,46 @@ export default function ImageUploadRow() {
               disabled={isUploading}
             />
 
-            {/* Upload button - hidden on mobile */}
+            {/* Action buttons - hidden on mobile */}
+            <div className="hidden sm:flex">
+              {selectedImage && !uploadResult && (
+                <button
+                  onClick={handleUpload}
+                  disabled={isUploading}
+                  className="px-6 py-3 mr-2 text-white text-sm font-medium rounded-full transition-all bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500 animate-gradient bg-[length:400%_400%] hover:brightness-110 shadow-lg disabled:opacity-50"
+                >
+                  {isUploading ? 'Uploading...' : 'Upload'}
+                </button>
+              )}
+              {uploadResult && (
+                <button
+                  className="px-6 py-3 text-white text-sm font-medium rounded-full transition-all bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500 animate-gradient bg-[length:400%_400%] hover:brightness-110 shadow-lg"
+                >
+                  Scan
+                </button>
+              )}
+            </div>
+          </div>
+
+          {/* Action buttons - visible only on mobile */}
+          <div className="sm:hidden w-full px-4">
             {selectedImage && !uploadResult && (
               <button
                 onClick={handleUpload}
                 disabled={isUploading}
-                className="hidden sm:block px-6 py-3 mr-2 text-white text-sm font-medium rounded-full transition-all bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500 animate-gradient bg-[length:400%_400%] hover:brightness-110 shadow-lg disabled:opacity-50"
+                className="w-full px-6 py-3 text-white text-sm font-medium rounded-full transition-all bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500 animate-gradient bg-[length:400%_400%] hover:brightness-110 shadow-lg disabled:opacity-50"
               >
                 {isUploading ? 'Uploading...' : 'Upload'}
               </button>
             )}
+            {uploadResult && (
+              <button
+                className="w-full px-6 py-3 text-white text-sm font-medium rounded-full transition-all bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500 animate-gradient bg-[length:400%_400%] hover:brightness-110 shadow-lg"
+              >
+                Scan
+              </button>
+            )}
           </div>
-
-          {/* Upload button - visible only on mobile */}
-          {selectedImage && !uploadResult && (
-            <button
-              onClick={handleUpload}
-              disabled={isUploading}
-              className="sm:hidden w-full px-6 py-3 text-white text-sm font-medium rounded-full transition-all bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500 animate-gradient bg-[length:400%_400%] hover:brightness-110 shadow-lg disabled:opacity-50"
-            >
-              {isUploading ? 'Uploading...' : 'Upload'}
-            </button>
-          )}
-
-          {/* Success message */}
-          {uploadResult && (
-            <div className="w-full text-center text-green-500 text-sm mt-2">
-              Image uploaded successfully!
-            </div>
-          )}
         </div>
       </div>
 

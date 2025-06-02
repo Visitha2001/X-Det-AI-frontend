@@ -8,7 +8,8 @@ import {
   getDiseaseDetailsFromSession,
   fetchDiseaseDetails,
 } from '@/services/disease_service';
-import DOMPurify from 'dompurify';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import { FaSpinner } from 'react-icons/fa';
 
 interface DiseaseDetails {
@@ -75,106 +76,6 @@ export default function ResultsPage() {
       </div>
     );
   }
-
-  const renderDiseaseDetails = () => {
-    if (!diseaseDetails) return null;
-
-    return diseaseDetails.details.split('\n\n').map((paragraph, index) => {
-      // Check for main headers (##)
-      if (paragraph.startsWith('## ')) {
-        return (
-          <h1 key={index} className="text-3xl font-bold mt-8 mb-4 text-blue-400">
-            {paragraph.replace(/^##\s/, '')}
-          </h1>
-        );
-      }
-      
-      // Check for subheaders (###)
-      if (paragraph.startsWith('### ')) {
-        return (
-          <div key={index} className="rounded-lg">
-            <h2 className="text-2xl font-semibold text-blue-300">
-              {paragraph.replace(/^###\s/, '')}
-            </h2>
-          </div>
-        );
-      }
-      
-      // Check for numbered list items
-      if (/^\d+\.\s/.test(paragraph)) {
-        return (
-          <ol key={index} className="list-decimal pl-6 mb-4 space-y-2 text-gray-300">
-            {paragraph.split('\n').filter(item => item.trim()).map((item, i) => {
-              const colonIndex = item.indexOf(':');
-              if (colonIndex > 0) {
-                return (
-                  <li key={i} className="text-gray-300">
-                    <span className="font-semibold text-blue-300">{item.substring(0, colonIndex + 1)}</span>
-                    {item.substring(colonIndex + 1)}
-                  </li>
-                );
-              }
-              return <li key={i}>{item.replace(/^\d+\.\s/, '')}</li>;
-            })}
-          </ol>
-        );
-      }
-      
-      // Check for bullet points (lines starting with *)
-      const trimmedParagraph = paragraph.trim();
-      if (trimmedParagraph.startsWith('* ')) {
-        return (
-          <ul key={index} className="list-disc pl-6 mb-4 space-y-2 text-gray-300">
-            {paragraph.split('\n').filter(item => item.trim()).map((item, i) => {
-              const cleanedItem = item.replace(/^\*\s*/, '').trim(); // remove leading '* '
-              const boldMatch = cleanedItem.match(/^\*\*(.+?):\*\*\s*(.*)/); // match **Something:** rest
-
-              if (boldMatch) {
-                const boldPart = boldMatch[1] + ':';
-                const rest = boldMatch[2];
-                return (
-                  <li key={i} className="text-gray-300">
-                    <span className="font-semibold text-blue-300">{boldPart}</span> {rest}
-                  </li>
-                );
-              }
-
-              const colonIndex = cleanedItem.indexOf(':');
-              if (colonIndex > 0) {
-                return (
-                  <li key={i} className="text-gray-300">
-                    <span className="font-semibold text-blue-300">
-                      {cleanedItem.substring(0, colonIndex + 1)}
-                    </span>
-                    {cleanedItem.substring(colonIndex + 1)}
-                  </li>
-                );
-              }
-
-              return <li key={i}>{cleanedItem}</li>;
-            })}
-          </ul>
-        );
-      }
-      
-      // Check for bold text (**text**)
-      if (paragraph.includes('**')) {
-        const htmlString = paragraph.replace(/\*\*(.*?)\*\*/g, '<strong class="text-blue-300">$1</strong>');
-        const sanitizedHTML = DOMPurify.sanitize(htmlString);
-      
-        return (
-          <p key={index} className="text-gray-300 mb-4" dangerouslySetInnerHTML={{ __html: sanitizedHTML }} />
-        );
-      }
-      
-      // Regular paragraph
-      return (
-        <p key={index} className="text-gray-300 mb-4">
-          {paragraph}
-        </p>
-      );
-    });
-  };
 
   return (
     <div className="w-full p-4 bg-gray-900 min-h-screen">
@@ -257,8 +158,23 @@ export default function ResultsPage() {
                 ))}
               </div>
             ) : diseaseDetails ? (
-              <div className="max-w-none disease-content">
-                {renderDiseaseDetails()}
+              <div className="max-w-none disease-content text-gray-300">
+                <ReactMarkdown 
+                  remarkPlugins={[remarkGfm]}
+                  components={{
+                    h1: ({node, ...props}) => <h1 className="text-3xl font-bold mt-8 mb-4 text-blue-400" {...props} />,
+                    h2: ({node, ...props}) => <h2 className="text-2xl font-semibold mt-6 mb-3 text-blue-300" {...props} />,
+                    h3: ({node, ...props}) => <h3 className="text-xl font-medium mt-4 mb-2 text-blue-200" {...props} />,
+                    p: ({node, ...props}) => <p className="mb-4" {...props} />,
+                    ul: ({node, ...props}) => <ul className="list-disc pl-6 mb-4 space-y-2" {...props} />,
+                    ol: ({node, ...props}) => <ol className="list-decimal pl-6 mb-4 space-y-2" {...props} />,
+                    li: ({node, ...props}) => <li className="mb-1" {...props} />,
+                    strong: ({node, ...props}) => <strong className="font-semibold text-blue-300" {...props} />,
+                    a: ({node, ...props}) => <a className="text-blue-400 hover:underline" {...props} />,
+                  }}
+                >
+                  {diseaseDetails.details}
+                </ReactMarkdown>
               </div>
             ) : (
               <div className="flex items-center justify-center h-64">

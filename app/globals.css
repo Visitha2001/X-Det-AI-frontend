@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+body {
+    background-color: #000;
+}
+
 .ripple-container {
     position: relative;
     overflow: hidden;

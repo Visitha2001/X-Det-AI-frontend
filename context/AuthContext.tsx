@@ -1,4 +1,5 @@
 "use client";
+import { useRouter } from 'next/navigation';
 import { createContext, useContext, useState, useEffect, useCallback } from 'react';
 
 type AuthContextType = {
@@ -12,6 +13,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [username, setUsername] = useState<string | null>(null);
+  const router = useRouter();
 
   useEffect(() => {
     // Check both localStorage (for JWT) and sessionStorage (for username)
@@ -26,13 +28,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const login = useCallback((username: string, token: string) => {
     localStorage.setItem('access_token', token);
     sessionStorage.setItem('username', username);
+    router.push('/home');
     setUsername(username);
   }, []);
 
   const logout = useCallback(() => {
     localStorage.removeItem('access_token');
-    localStorage.removeItem('access_token');
     sessionStorage.removeItem('username');
+    router.push('/signin');
     setUsername(null);
   }, []);
 

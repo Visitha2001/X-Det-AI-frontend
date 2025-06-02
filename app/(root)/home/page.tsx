@@ -3,6 +3,9 @@ import { useState } from 'react';
 import ImageUpload from '@/components/ImageUpload'; 
 import PredictionResult from '@/components/PredictionResult';
 import http from '@/services/http_service';
+import XRaySlider from '@/components/XRaySlider';
+import ServicesSection from '@/components/ServiceSection';
+import WhyUsSection from '@/components/WhyUsSection';
 
 export default function HomePage() {
   const [uploadResult, setUploadResult] = useState(null);
@@ -55,6 +58,9 @@ export default function HomePage() {
           />
         )}
       </div>
+      <XRaySlider />
+      <WhyUsSection />
+      <ServicesSection />
     </div>
   );
 }

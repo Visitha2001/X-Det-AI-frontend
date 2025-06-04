@@ -59,8 +59,8 @@ export default function DiseasesPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-900 p-8">
-      <div className="max-w-7xl mx-auto">
+    <div className="min-h-screen bg-gray-900 sm:p-8 p-1">
+      <div className="sm:px-50 px-2 mx-auto">
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-3xl font-bold text-white">Diseases Information</h1>
         </div>
@@ -70,7 +70,7 @@ export default function DiseasesPage() {
             No diseases found. Add a new disease to get started.
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
             {diseases.map((disease) => (
               <DiseaseCard key={disease.id} disease={disease} />
             ))}

@@ -85,7 +85,7 @@ export default function DiseaseDetailsPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
           <div>
             {disease.imageUrl && (
-              <div className="w-full h-150 bg-gray-800 rounded-lg mb-6 overflow-hidden">
+              <div className="w-full sm:h-150 h:40 bg-gray-800 rounded-lg mb-6 overflow-hidden">
                 <img 
                   src={disease.imageUrl} 
                   alt={disease.name} 

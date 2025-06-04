@@ -1,6 +1,23 @@
 @import "tailwindcss";
 @import '@uiw/react-md-editor/markdown-editor.css';
 @import '@uiw/react-markdown-preview/markdown.css';
+@tailwind utilities;
+
+@layer utilities {
+  @keyframes gradient {
+    0%, 100% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+  }
+
+  .animate-gradient {
+    background-size: 200% 200%;
+    animation: gradient 4s ease infinite;
+  }
+}
 
 body {
     background-color: #000;
@@ -25,4 +42,11 @@ body {
       transform: scale(4);
       opacity: 0;
     }
+}
+
+.prose ul {
+  padding-left: 1.5rem;
+}
+.prose li {
+  margin-bottom: 0.5rem;
 }

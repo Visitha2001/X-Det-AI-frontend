@@ -27,7 +27,7 @@ export default async function DiseasesPage() {
           <p className="text-gray-400">No diseases found. Add one to get started.</p>
         </div>
       ) : (
-        <div className="space-y-6">
+        <div className="space-y-6 grid grid-cols-3 gap-3">
           {formattedDiseases.map((disease: any) => {
             if (!disease.id) {
               console.warn('Invalid disease object:', disease);

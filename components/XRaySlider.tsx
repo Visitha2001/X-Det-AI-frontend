@@ -74,7 +74,7 @@ const HeroSlider = () => {
   useEffect(() => {
     let intervalId: NodeJS.Timeout;
     if (isAutoPlaying) {
-      intervalId = setInterval(goToNextSlide, 3000);
+      intervalId = setInterval(goToNextSlide, 5000);
     }
     return () => clearInterval(intervalId);
   }, [isAutoPlaying, goToNextSlide]);
@@ -125,7 +125,9 @@ const HeroSlider = () => {
                 key={slide.id}
                 className={`absolute transition-all duration-700 ease-out ${getContentAnimation(index)}`}
               >
-                <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
+                <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight 
+                              bg-gradient-to-r from-blue-300 via-blue-500 to-blue-700 
+                              text-transparent bg-clip-text animate-gradient">
                   {slide.title}
                 </h1>
                 <p className="text-lg md:text-xl mt-6 mb-8 max-w-lg opacity-90">

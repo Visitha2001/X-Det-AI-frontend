@@ -6,6 +6,7 @@ import http from '@/services/http_service';
 import XRaySlider from '@/components/XRaySlider';
 import ServicesSection from '@/components/ServiceSection';
 import WhyUsSection from '@/components/WhyUsSection';
+import DetectableDiseases from '@/components/Detectable_Diseases';
 
 export default function HomePage() {
   const [uploadResult, setUploadResult] = useState(null);
@@ -59,6 +60,7 @@ export default function HomePage() {
         )}
       </div>
       <XRaySlider />
+      <DetectableDiseases />
       <WhyUsSection />
       <ServicesSection />
     </div>

@@ -14,6 +14,7 @@ interface DiseaseCardProps {
     symptoms: string[];
     treatments: string[];
     prevention: string[];
+    imageUrl?: string;
   };
 }
 
@@ -57,6 +58,9 @@ export default function DiseaseCard({ disease }: DiseaseCardProps) {
         </div>
 
         <div className="mt-4 space-y-4">
+          <div>
+            <img src={disease.imageUrl} alt={disease.name} className="w-full h-64 object-cover" />
+          </div>
           <div>
             <h3 className="font-semibold text-blue-500 mb-1">Description</h3>
             <div className="prose  text-white prose-invert max-w-none">

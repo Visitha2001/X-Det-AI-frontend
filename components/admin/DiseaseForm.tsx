@@ -1,7 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef, ChangeEvent } from 'react';
 import { createDisease, updateDisease } from '@/services/diseaseService';
+import { uploadImage } from '@/services/image_upload_service';
 import dynamic from 'next/dynamic';
 import '@uiw/react-md-editor/markdown-editor.css';
 import '@uiw/react-markdown-preview/markdown.css';
@@ -20,6 +21,7 @@ interface DiseaseFormProps {
     symptoms: string[];
     treatments: string[];
     prevention: string[];
+    imageUrl?: string;
   };
 }
 
@@ -29,15 +31,49 @@ export default function DiseaseForm({ initialData }: DiseaseFormProps) {
   const [symptoms, setSymptoms] = useState<string[]>(initialData?.symptoms || ['']);
   const [treatments, setTreatments] = useState<string[]>(initialData?.treatments || ['']);
   const [prevention, setPrevention] = useState<string[]>(initialData?.prevention || ['']);
+  const [imageUrl, setImageUrl] = useState(initialData?.imageUrl || '');
+  const [imagePreview, setImagePreview] = useState(initialData?.imageUrl || '');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
-// In DiseaseForm component
-const handleSubmit = async (e: React.FormEvent) => {
+  const handleImageChange = async (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    // Create preview
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setImagePreview(reader.result as string);
+    };
+    reader.readAsDataURL(file);
+
+    try {
+      setIsSubmitting(true);
+      const response = await uploadImage(file);
+      setImageUrl(response.secure_url);
+    } catch (err) {
+      console.error('Image upload failed:', err);
+      setError('Failed to upload image');
+      setImagePreview('');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleRemoveImage = () => {
+    setImageUrl('');
+    setImagePreview('');
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     setError('');
-  
+
     try {
       const data = {
         name,
@@ -45,10 +81,10 @@ const handleSubmit = async (e: React.FormEvent) => {
         symptoms: symptoms.filter(s => s.trim() !== ''),
         treatments: treatments.filter(t => t.trim() !== ''),
         prevention: prevention.filter(p => p.trim() !== ''),
+        imageUrl
       };
-  
+
       if (initialData?.id) {
-        // Make sure we're passing the ID and data
         await updateDisease(initialData.id, data);
       } else {
         await createDisease(data);
@@ -220,6 +256,52 @@ const handleSubmit = async (e: React.FormEvent) => {
           >
             Add Prevention Method
           </button>
+        </div>
+
+        {/* Image Upload Section */}
+        <div>
+          <label className="block mb-2 font-medium">Disease Image</label>
+          <div className="flex items-center space-x-4">
+            {imagePreview ? (
+              <div className="relative">
+                <img 
+                  src={imagePreview} 
+                  alt="Preview" 
+                  className="w-32 h-32 object-cover rounded"
+                />
+                <button
+                  type="button"
+                  onClick={handleRemoveImage}
+                  className="absolute top-0 right-0 p-1 bg-red-600 rounded-full transform translate-x-1/2 -translate-y-1/2"
+                  aria-label="Remove image"
+                >
+                  ×
+                </button>
+              </div>
+            ) : (
+              <div className="w-32 h-32 bg-gray-800 rounded flex items-center justify-center">
+                <span className="text-gray-500">No image</span>
+              </div>
+            )}
+            <div>
+              <input
+                type="file"
+                ref={fileInputRef}
+                onChange={handleImageChange}
+                accept="image/*"
+                className="hidden"
+                id="image-upload"
+                disabled={isSubmitting}
+              />
+              <label
+                htmlFor="image-upload"
+                className={`px-4 py-2 rounded ${isSubmitting ? 'bg-gray-600 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700 cursor-pointer'}`}
+              >
+                {isSubmitting ? 'Uploading...' : 'Upload Image'}
+              </label>
+              <p className="mt-1 text-sm text-gray-400">JPG, PNG (Max 5MB)</p>
+            </div>
+          </div>
         </div>
 
         <div className="flex justify-end">

@@ -1,4 +1,7 @@
+'use client';
+
 import React from 'react';
+import Link from 'next/link';
 
 const DetectableDiseases = () => {
   const diseases = [
@@ -30,19 +33,20 @@ const DetectableDiseases = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+        <div className="flex flex-wrap justify-center -mx-2">
           {diseases.map((disease, index) => (
-            <div 
+            <Link
               key={index}
-              className="bg-white dark:bg-gray-950 rounded-lg shadow-md p-2 sm:p-4 border-2 border-blue-600 
+              href={`/diseases?search=${encodeURIComponent(disease)}`}
+              className="bg-white dark:bg-gray-950 rounded-lg shadow-md px-8 py-2 mx-2 my-2 border-2 border-blue-600 
                          transform transition-all duration-300 ease-in-out hover:scale-105 hover:bg-blue-50 dark:hover:bg-blue-900 hover:text-white hover:border-white"
             >
               <div className="text-center transition-colors duration-300">
-                <h3 className="text-lg font-medium text-blue-600 dark:text-blue-300 group-hover:text-blue-700">
+                <h3 className="text-lg font-medium text-blue-600 dark:text-blue-300">
                   {disease}
                 </h3>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </div>

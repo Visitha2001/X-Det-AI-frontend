@@ -1,0 +1,35 @@
+import type { Metadata } from "next";
+import { Geist, Geist_Mono } from "next/font/google";
+import "../globals.css";
+import { useAuth } from "@/context/AuthContext";
+import AdminHeader from "@/components/admin/AdminHeader";
+
+const geistSans = Geist({
+  variable: "--font-geist-sans",
+  subsets: ["latin"],
+});
+
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
+});
+
+export const metadata: Metadata = {
+  title: "X-Det-AI",
+  description: "X-Det-AI is a AI based app for detecting X-ray diseases",
+};
+
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  return (
+    <div
+      className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+    >
+        <AdminHeader />
+        {children}
+    </div>
+  );
+}

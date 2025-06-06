@@ -1,14 +1,42 @@
+'use client';
+
+import { useAuth } from '@/context/AuthContext';
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { getAllDiseases } from '@/services/diseaseService';
 import DiseaseCard from '@/components/admin/DiseaseCard';
 import Link from 'next/link';
 
-export default async function DiseasesPage() {
-  const diseases = await getAllDiseases();
+export default function DiseasesPage() {
+  const { isAuthenticated, isAdmin } = useAuth();
+  const router = useRouter();
+  const [diseases, setDiseases] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const formattedDiseases = diseases.map((disease: any) => ({
-    ...disease,
-    id: disease._id,
-  }));
+  useEffect(() => {
+    if (!isAuthenticated) {
+      router.push('/admin/login');
+    } else if (!isAdmin) {
+      router.push('/admin/login');
+    } else {
+      getAllDiseases()
+        .then((data) => {
+          const formatted = data.map((disease: any) => ({
+            ...disease,
+            id: disease._id,
+          }));
+          setDiseases(formatted);
+        })
+        .catch((error) => {
+          console.error('Error fetching diseases:', error);
+        })
+        .finally(() => setLoading(false));
+    }
+  }, [isAuthenticated, isAdmin, router]);
+
+  if (loading) {
+    return <div className="text-white text-center mt-10">Loading...</div>;
+  }
 
   return (
     <div className="container mx-auto py-8 px-4">
@@ -28,13 +56,13 @@ export default async function DiseasesPage() {
         </div>
       ) : (
         <div className="space-y-6 grid grid-cols-3 gap-3">
-          {formattedDiseases.map((disease: any) => {
-            if (!disease.id) {
-              console.warn('Invalid disease object:', disease);
-              return null;
-            }
-            return <DiseaseCard key={disease.id} disease={disease} />;
-          })}
+          {diseases.map((disease) => (
+            disease.id ? (
+              <DiseaseCard key={disease.id} disease={disease} />
+            ) : (
+              <div key={Math.random()}>Invalid disease data</div>
+            )
+          ))}
         </div>
       )}
     </div>

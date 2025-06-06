@@ -129,13 +129,19 @@ export default function ImageUploadRow({
           ${selectedImage ? 'h-[22vh] sm:h-[13vh] px-2 py-2' : 'h-[10vh] sm:h-[8vh] px-2 py-2'}
         `}>
           <div className="flex flex-row w-full items-center mt-5 sm:mt-0">
-            {/* Upload Button */}
+            {/* Upload Button with Spinning AI Logo */}
             <button
               onClick={triggerFileInput}
               disabled={isUploading || isScanning}
               className="flex-shrink-0 flex items-center justify-center h-10 w-10 rounded-full bg-black bg-opacity-30 hover:bg-opacity-40 transition-all ml-2 mr-2 disabled:opacity-50"
             >
-              <Image src="/assets/gemini-color.png" alt="AI Icon" width={30} height={30} />
+              <Image 
+                src="/assets/gemini-color.png" 
+                alt="AI Icon" 
+                width={30} 
+                height={30} 
+                className={isUploading || isScanning ? "spin-animation" : ""}
+              />
             </button>
 
             {/* Preview */}
@@ -238,8 +244,15 @@ export default function ImageUploadRow({
           50% { background-position: 100% 50%; }
           100% { background-position: 0% 50%; }
         }
+        @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
         .animate-gradient {
           animation: gradient 8s ease infinite;
+        }
+        .spin-animation {
+          animation: spin 1.5s linear infinite;
         }
         .shadow-glow {
           box-shadow: 0 0 10px rgba(168, 85, 247, 0.5), 

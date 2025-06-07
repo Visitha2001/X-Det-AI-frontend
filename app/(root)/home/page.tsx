@@ -7,6 +7,7 @@ import XRaySlider from '@/components/XRaySlider';
 import ServicesSection from '@/components/ServiceSection';
 import WhyUsSection from '@/components/WhyUsSection';
 import DetectableDiseases from '@/components/Detectable_Diseases';
+import HowItWorks from '@/components/HowItWorks';
 
 export default function HomePage() {
   const [uploadResult, setUploadResult] = useState(null);
@@ -62,6 +63,7 @@ export default function HomePage() {
       <XRaySlider />
       <DetectableDiseases />
       <WhyUsSection />
+      <HowItWorks />
       <ServicesSection />
     </div>
   );

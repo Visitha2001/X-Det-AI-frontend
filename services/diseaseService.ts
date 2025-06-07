@@ -43,3 +43,12 @@ export const deleteDisease = async (id: string) => {
       throw error;
     }
 };
+
+export const getDiseaseCount = async () => {
+    try {
+      const response = await http.get('/diseases/count');
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+};

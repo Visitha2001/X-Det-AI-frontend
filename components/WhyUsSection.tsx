@@ -78,7 +78,7 @@ export default function WhyUsSection() {
               // viewport={{ once: true }}
               className="relative"
             >
-              <div className="relative aspect-square rounded-3xl overflow-hidden border-2 border-gray-800">
+              <div className="relative aspect-square rounded-3xl overflow-hidden border-2 border-gray-800 w-full h-130">
                 {/* Replace with your actual image */}
                 <Image
                   src="/assets/robot-performing-ordinary-human-job.jpg"

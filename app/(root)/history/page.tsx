@@ -64,7 +64,7 @@ export default function HistoryPage() {
 
   if (selectedItem) {
     return (
-      <div className="min-h-screen bg-gray-900 text-white py-4 sm:py-8 px-8 sm:px-20">
+      <div className="min-h-screen bg-gray-900 text-white py-4 sm:py-8 px-8 sm:px-50">
         <button
           onClick={() => setSelectedItem(null)}
           className="mb-6 flex items-center text-blue-400 hover:text-blue-300"
@@ -72,7 +72,7 @@ export default function HistoryPage() {
           <FaChevronLeft className="mr-1" /> Back to History
         </button>
 
-        <div className="bg-gray-800 rounded-lg p-6">
+        <div className="bg-gray-800 rounded-4xl sm:p-12 p-4">
           <h1 className="text-2xl font-bold mb-4">{selectedItem.disease}</h1>
           <p className="text-gray-400 mb-6">
             {format(new Date(selectedItem.timestamp), 'MMMM d, yyyy - h:mm a')}
@@ -83,7 +83,7 @@ export default function HistoryPage() {
             {selectedItem.image_url && (
               <div className="flex-1">
                 <h2 className="text-xl font-semibold mb-3">Scan Image</h2>
-                <div className="relative h-64 w-full rounded-md overflow-hidden border border-gray-700">
+                <div className="relative h-100 w-full rounded-3xl overflow-hidden bg-gray-700 border border-gray-700">
                   <Image
                     src={selectedItem.image_url}
                     alt="Medical scan"
@@ -101,7 +101,7 @@ export default function HistoryPage() {
                 {selectedItem.prediction_data.top_5_diseases.map((disease, index) => (
                   <div
                     key={index}
-                    className="flex flex-col space-y-1 bg-gray-700 p-3 rounded"
+                    className="flex flex-col space-y-1 bg-gray-700 p-3 rounded-2xl"
                   >
                     <div className="flex justify-between items-center">
                       <span className="font-medium">
@@ -152,13 +152,9 @@ export default function HistoryPage() {
 
       {history.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-12">
-          <Image
-            src="/assets/no-history.svg"
-            alt="No history"
-            width={200}
-            height={200}
-            className="opacity-70"
-          />
+          <div className="flex items-center bg-gray-800 rounded-full p-4">
+            <FaHistory className='text-blue-400 text-4xl'/>
+          </div>
           <h2 className="text-xl font-semibold mt-4">No History Found</h2>
           <p className="text-gray-400 mt-2 text-center max-w-md">
             You haven't made any diagnoses yet. Upload an image to get started.

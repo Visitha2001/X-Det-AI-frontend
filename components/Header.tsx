@@ -30,6 +30,11 @@ export default function Header() {
     { name: "History", path: "/history", icon: <FaGlobe /> },
   ];
 
+  // Filter nav items for mobile nav: show "History" only if logged in
+  const filteredNavItems = navItems.filter((item) =>
+    item.name === "History" ? session?.user || username : true
+  );
+
   const scrollToTop = () => {
     setIsClicked(true);
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -83,7 +88,6 @@ export default function Header() {
         <div className="relative flex items-center space-x-4">
           {session?.user || username ? (
             <>
-              {/* Avatar + Dropdown */}
               <div className="relative">
                 <button
                   onClick={() => setDropdownOpen((prev) => !prev)}
@@ -110,9 +114,7 @@ export default function Header() {
 
                 {/* Dropdown Menu */}
                 {dropdownOpen && (
-                  <div
-                    className="absolute right-5 mt-2 w-40 bg-gray-800/60 backdrop-blur-md border border-gray-600 rounded-2xl shadow-xl z-50"
-                  >
+                  <div className="absolute right-5 mt-2 w-40 bg-gray-800/60 backdrop-blur-md border border-gray-600 rounded-2xl shadow-xl z-50">
                     <Link
                       href="/history"
                       className="block px-4 py-2 text-sm text-gray-200 hover:bg-gray-700 rounded-t-2xl"
@@ -128,7 +130,7 @@ export default function Header() {
                       <FiLogOut className="mr-2" />
                       Sign Out
                     </button>
-                  </div>                
+                  </div>
                 )}
               </div>
             </>
@@ -154,7 +156,7 @@ export default function Header() {
 
       {/* Mobile Navigation */}
       <nav className="md:hidden bg-gray-900 py-2 px-2 flex justify-around fixed bottom-0 left-0 right-0 z-50">
-        {navItems.map((item) => {
+        {filteredNavItems.map((item) => {
           const isActive = pathname === item.path;
 
           return (

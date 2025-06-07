@@ -2,6 +2,8 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import { getAllUsers, getUserCount } from '@/services/user_service';
+import { useRouter } from 'next/navigation';
+import { useAuth } from '@/context/AuthContext';
 
 interface User {
   id: string;
@@ -16,6 +18,30 @@ const UsersPage = () => {
   const [userCount, setUserCount] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const router = useRouter();
+  const { isAuthenticated, isAdmin } = useAuth();
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      router.push('/admin/login');
+    } else if (!isAdmin) {
+      router.push('/admin/login');
+    } else {
+      getAllUsers()
+        .then((data) => {
+          const formatted = data.map((user: any) => ({
+            ...user,
+            id: user._id,
+          }));
+          setUsers(formatted);
+        })
+        .catch((error) => {
+          console.error('Error fetching users:', error);
+        })
+        .finally(() => setLoading(false));
+    }
+  }, [isAuthenticated, isAdmin, router]);
+
 
   useEffect(() => {
     const fetchData = async () => {

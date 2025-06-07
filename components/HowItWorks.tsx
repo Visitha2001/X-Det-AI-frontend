@@ -40,7 +40,7 @@ export default function HowItWorks() {
           {/* Left side - Video */}
           <div className="lg:w-1/2 w-full">
             <motion.div
-              className="relative rounded-2xl overflow-hidden border-2 border-gray-700"
+              className="relative rounded-4xl overflow-hidden border-2 border-gray-700"
             >
               <div className="aspect-video w-full">
                 <ReactPlayer

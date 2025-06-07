@@ -11,7 +11,7 @@ export default function HowItWorks() {
   useEffect(() => {
     const handleScroll = () => {
       if (playerRef.current) {
-        setIsPlaying(false); // Pause when scrolling
+        setIsPlaying(false);
       }
     };
 
@@ -35,7 +35,7 @@ export default function HowItWorks() {
 
   return (
     <section ref={sectionRef} className="w-full py-12 sm:py-16 bg-gray-900">
-      <div className="mx-auto px-4 sm:px-50">
+      <div className="mx-auto px-8 sm:px-50">
         <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-12">
           {/* Left side - Video */}
           <div className="lg:w-1/2 w-full">
@@ -52,7 +52,7 @@ export default function HowItWorks() {
                   playing={isPlaying}
                   onPlay={handlePlay}
                   onPause={() => setIsPlaying(false)}
-                  light="/video-thumbnail.jpg"
+                  light="/assets/Thumb.png"
                   style={{ backgroundColor: '#111827' }}
                   config={{
                     file: {

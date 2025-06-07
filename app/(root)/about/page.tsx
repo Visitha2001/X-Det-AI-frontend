@@ -11,7 +11,7 @@ export default function page() {
   return (
     <div className="min-h-screen bg-black text-white">
       {/* Hero Section */}
-      <section className="py-20 bg-gradient-to-b from-blue-900/20 to-black">
+      <section className="py-10 sm:py-20 bg-gradient-to-b from-blue-900/20 to-black">
         <div className="container mx-auto px-4 text-center">
           <motion.h1 
             initial="hidden"

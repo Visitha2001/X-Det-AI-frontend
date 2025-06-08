@@ -121,6 +121,7 @@ const Page = () => {
                     value={formData.username}
                     onChange={handleChange}
                     required
+                    placeholder='Enter your username'
                     className="appearance-none block w-full px-3 py-2 border border-gray-600 rounded-md shadow-sm placeholder-gray-500 bg-gray-700 text-white focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                   />
                 </div>
@@ -138,6 +139,7 @@ const Page = () => {
                     value={formData.full_name}
                     onChange={handleChange}
                     required
+                    placeholder='Enter your full name'
                     className="appearance-none block w-full px-3 py-2 border border-gray-600 rounded-md shadow-sm placeholder-gray-500 bg-gray-700 text-white focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                   />
                 </div>
@@ -155,6 +157,7 @@ const Page = () => {
                     value={formData.email}
                     onChange={handleChange}
                     required
+                    placeholder='Enter your email'
                     className="appearance-none block w-full px-3 py-2 border border-gray-600 rounded-md shadow-sm placeholder-gray-500 bg-gray-700 text-white focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                   />
                 </div>
@@ -172,6 +175,7 @@ const Page = () => {
                     value={formData.password}
                     onChange={handleChange}
                     required
+                    placeholder='Enter your password'
                     className="appearance-none block w-full px-3 py-2 border border-gray-600 rounded-md shadow-sm placeholder-gray-500 bg-gray-700 text-white focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                   />
                   <button
@@ -208,6 +212,7 @@ const Page = () => {
                     value={formData.confirmPassword}
                     onChange={handleChange}
                     required
+                    placeholder='Enter your confirm password'
                     className="appearance-none block w-full px-3 py-2 border border-gray-600 rounded-md shadow-sm placeholder-gray-500 bg-gray-700 text-white focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                   />
                   <button

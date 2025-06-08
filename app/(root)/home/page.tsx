@@ -42,7 +42,7 @@ export default function HomePage() {
 
   return (
     <div className="bg-gradient-to-b from-blue-50 to-purple-50">
-      <div className="mx-auto">
+      <div className="mx-auto mt-2">
         <ImageUpload
           onUploadSuccess={handleUploadSuccess}
           onScanClick={handleScan}

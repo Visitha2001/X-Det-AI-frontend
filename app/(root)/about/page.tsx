@@ -250,9 +250,15 @@ export default function page() {
           <p className="text-xl text-gray-300 max-w-3xl mx-auto mb-8">
             Whether you're a healthcare provider, researcher, or investor, we'd love to collaborate.
           </p>
-          <button className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-lg transition-colors">
-            Contact Our Team
-          </button>
+          <a
+            href="https://mail.google.com/mail/?view=cm&fs=1&to=visitha2001@gmail.com"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <button className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-lg transition-colors">
+              Contact Our Team
+            </button>
+          </a>
         </div>
       </section>
     </div>

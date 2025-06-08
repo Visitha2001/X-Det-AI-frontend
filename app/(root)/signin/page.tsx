@@ -77,6 +77,7 @@ const Page = () => {
                     autoComplete="username"
                     required
                     value={username}
+                    placeholder='Enter your username'
                     onChange={(e) => setUsername(e.target.value)}
                     className="appearance-none block w-full px-3 py-2 border border-gray-600 rounded-md shadow-sm placeholder-gray-500 bg-gray-700 text-white focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                   />
@@ -95,6 +96,7 @@ const Page = () => {
                     autoComplete="current-password"
                     required
                     value={password}
+                    placeholder='Enter your password'
                     onChange={(e) => setPassword(e.target.value)}
                     className="appearance-none block w-full px-3 py-2 border border-gray-600 rounded-md shadow-sm placeholder-gray-500 bg-gray-700 text-white focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                   />

@@ -80,54 +80,56 @@ export default function ResultsPage() {
 
   return (
     <div className="w-full p-4 bg-gray-900 min-h-screen">
-      <div className="flex flex-col lg:flex-row gap-8 max-w-full mx-auto">
-        {/* Left Column - 30% width */}
-        <div className="w-full lg:w-[30%] space-y-8">
-          {/* Image Section */}
-          <div className="bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-700">
-            <h2 className="text-xl font-semibold mb-4 text-blue-400">X-Ray Image</h2>
-            {imageUrl && (
-              <div className="bg-gray-700 rounded-lg overflow-hidden flex">
-                <img
-                  src={imageUrl}
-                  alt="Scanned X-ray"
-                  className="max-h-120 w-full"
-                />
-              </div>
-            )}
-          </div>
+      <div className="flex flex-col lg:flex-row gap-4 max-w-full mx-auto">
+        {/* Left Column - 40% width */}
+        <div className="w-full sm:w-[40%] space-y-4">
+          <div className="sm:flex sm:flex-col-2 gap-4 flex-col-1 w-auto">
+            {/* Image Section */}
+            <div className="bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-700 mb-4 sm:mb-0">
+              <h2 className="text-xl font-semibold text-blue-400">X-Ray Image</h2>
+              {imageUrl && (
+                <div className="bg-gray-700 rounded-lg overflow-hidden sm:w-80 w-full flex">
+                  <img
+                    src={imageUrl}
+                    alt="Scanned X-ray"
+                    className="max-h-120 w-full"
+                  />
+                </div>
+              )}
+            </div>
 
-          {/* Predictions Section */}
-          <div className="bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-700">
-            <h2 className="text-xl font-semibold mb-4 text-blue-400">Predicted Conditions</h2>
-            {predictionData && (
-              <div className="space-y-4">
-                {predictionData.top_5_diseases.map((item: any, index: number) => (
-                  <button
-                    key={index}
-                    onClick={() => handleDiseaseSelect(item.disease)}
-                    className={`w-full text-left p-4 rounded-lg border transition-all ${
-                      diseaseDetails?.disease === item.disease 
-                        ? 'border-blue-500 bg-blue-900/50' 
-                        : 'border-gray-700 hover:bg-blue-900/30'
-                    }`}
-                  >
-                    <div className="flex justify-between items-center">
-                      <span className="font-medium text-gray-200">{item.disease}</span>
-                      <span className="text-blue-400 font-semibold">
-                        {(item.probability * 100).toFixed(2)}%
-                      </span>
-                    </div>
-                    <div className="w-full bg-gray-700 rounded-full h-2 mt-2">
-                      <div
-                        className="bg-blue-500 h-2 rounded-full"
-                        style={{ width: `${item.probability * 100}%` }}
-                      ></div>
-                    </div>
-                  </button>
-                ))}
-              </div>
-            )}
+            {/* Predictions Section */}
+            <div className="bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-700">
+              <h2 className="text-xl font-semibold text-blue-400">Predicted Conditions</h2>
+              {predictionData && (
+                <div className="space-y-4">
+                  {predictionData.top_5_diseases.map((item: any, index: number) => (
+                    <button
+                      key={index}
+                      onClick={() => handleDiseaseSelect(item.disease)}
+                      className={`w-full text-left p-4 rounded-lg border transition-all ${
+                        diseaseDetails?.disease === item.disease 
+                          ? 'border-blue-500 bg-blue-900/50' 
+                          : 'border-gray-700 hover:bg-blue-900/30'
+                      }`}
+                    >
+                      <div className="flex justify-between items-center">
+                        <span className="font-medium text-gray-200">{item.disease}</span>
+                        <span className="text-blue-400 font-semibold">
+                          {(item.probability * 100).toFixed(2)}%
+                        </span>
+                      </div>
+                      <div className="w-full bg-gray-700 rounded-full h-2 mt-2">
+                        <div
+                          className="bg-blue-500 h-2 rounded-full"
+                          style={{ width: `${item.probability * 100}%` }}
+                        ></div>
+                      </div>
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
 
           {/* Chatbot Section - Sticky */}
@@ -136,8 +138,8 @@ export default function ResultsPage() {
           </div>
         </div>
 
-        {/* Right Column - 70% width */}
-        <div className="w-full lg:w-[70%] bg-gray-800 rounded-xl px-0 py-5 sm:px-8 sm:py-8 shadow-sm border border-gray-700 relative mb-12 sm:mb-0">
+        {/* Right Column - 60% width */}
+        <div className="w-full sm:w-[60%] bg-gray-800 rounded-xl px-0 py-5 sm:px-8 sm:py-8 shadow-sm border border-gray-700 relative mb-12 sm:mb-0">
           <h1 className="text-3xl font-bold text-center text-blue-400 mb-6">Detailed Analysis</h1>
 
           <h2 className="text-xl font-semibold mb-2 sm:mb-4 bg-blue-900 p-2 rounded-sm sm:rounded-lg text-blue-300">

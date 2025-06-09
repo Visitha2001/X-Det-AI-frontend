@@ -113,11 +113,25 @@ export default function BotPage() {
     });
   };
 
+  const handleClearChat = () => {
+    setMessages([]);
+  };
+
   return (
-    <div className="flex flex-col h-full w-full sm:px-80 px-8 sm:py-20 py-2 mx-auto bg-gray-900 shadow-lg overflow-hidden border-b-2 border-gray-700">
+    <div className="flex flex-col h-full w-full sm:px-80 px-8 sm:py-6 py-2 mx-auto bg-gray-900 shadow-lg overflow-hidden border-b-2 border-gray-700">
       {/* Header */}
       <div className="bg-gray-800 text-gray-100 p-4 sm:p-6 rounded-3xl mb-2 sm:mb-4">
-        <h2 className="text-xl font-bold">Medical Chatbot</h2>
+        <div className="flex justify-between items-center">
+          <h2 className="text-xl font-bold">Medical Chatbot</h2>
+          {messages.length > 0 && (
+            <button
+              onClick={handleClearChat}
+              className="text-sm bg-gray-700 hover:bg-gray-600 text-red-600 px-3 py-1 rounded-lg hover:text-white border border-red-500"
+            >
+              Clear Chat
+            </button>
+          )}
+        </div>
         <div className="flex flex-wrap items-center justify-between mt-2 gap-2">
           <div className="flex items-center">
             <label htmlFor="bot-type" className="mr-2">Bot Type:</label>
@@ -164,15 +178,15 @@ export default function BotPage() {
       {/* Chat messages */}
       <div className="flex-1 p-4 sm:p-8 overflow-y-auto bg-gray-800 text-gray-100 rounded-t-3xl">
         {messages.length === 0 ? (
-          <div className="flex items-center justify-center h-35 text-gray-400">
+          <div className="flex items-center justify-center sm:h-35 h-20 text-gray-400">
             {botType === 'local' ? (
               <div className="flex flex-col gap-2">
                 <p>Ask your question about {selectedDisease} or choose from suggested questions below</p>
               </div>
             ) : (
-              <div className="flex flex-col gap-2">
+              <div className="flex flex-col gap-2 text-center">
                 <p>Ask any medical question to the Gemini medical assistant</p>
-                <p className="text-red-200 p-2 bg-red-900/50 rounded-xl">
+                <p className="text-red-200 p-2 bg-red-900/50 rounded-xl text-center">
                   In Gemini chat you need to provide the disease name and more details
                 </p>
               </div>
@@ -204,15 +218,19 @@ export default function BotPage() {
                 <div className="mt-2">
                   <p className="text-xs text-gray-400 mb-1">Follow-up questions:</p>
                   <div className="flex flex-wrap gap-2">
-                    {message.followup_questions.slice(0, 3).map((q, i) => (
-                      <button
-                        key={i}
-                        onClick={() => handleSuggestedQuestionClick(q)}
-                        className="text-xs bg-gray-800 border border-blue-500 hover:bg-blue-900 hover:border-2 hover:border-blue-500 text-gray-100 px-2 py-1 rounded-xl"
-                      >
-                        {q}
-                      </button>
-                    ))}
+                    {message.followup_questions
+                      .slice()
+                      .sort(() => Math.random() - 0.5)
+                      .slice(0, 3)
+                      .map((q, i) => (
+                        <button
+                          key={i}
+                          onClick={() => handleSuggestedQuestionClick(q)}
+                          className="text-xs bg-gray-800 border border-blue-500 hover:bg-blue-900 hover:border-2 hover:border-blue-500 text-gray-100 px-2 py-1 rounded-xl"
+                        >
+                          {q}
+                        </button>
+                      ))}
                   </div>
                 </div>
               )}
@@ -227,12 +245,14 @@ export default function BotPage() {
         <div className="p-4 sm:p-6 border-t border-gray-700 bg-gray-800">
           <div className="p-4 sm:p-6 border-3 border-gray-700 bg-gray-800 rounded-2xl">
             <h3 className="text-sm font-medium text-gray-300 mb-2">Suggested Questions:</h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2">
-              {suggestedQuestions.slice(0, 6).map((question, index) => (
+            <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-2">
+              {suggestedQuestions.slice(0, 12).map((question, index) => (
                 <button
                   key={index}
                   onClick={() => handleSuggestedQuestionClick(question)}
-                  className="text-left text-sm bg-gray-700 hover:bg-blue-900 hover:border-2 hover:border-blue-500 text-gray-100 px-3 py-2 rounded-xl border border-gray-600"
+                  className={`text-left text-sm bg-gray-700 hover:bg-blue-900 hover:border-2 hover:border-blue-500 text-gray-100 sm:px-3 sm:py-2 px-1 py-1 rounded-xl border border-gray-600 ${
+                    index >= 4 ? 'hidden sm:block' : ''
+                  }`}
                 >
                   {question}
                 </button>

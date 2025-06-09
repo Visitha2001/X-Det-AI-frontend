@@ -1,8 +1,8 @@
 import { useState, useRef, useEffect } from 'react';
 import { chatService } from '@/services/chat_service';
 import type { BotType, ChatResponse, DiseaseQuestionsResponse } from '@/services/chat_service';
-import { FaCheck, FaCopy, FaPaperPlane } from 'react-icons/fa';
-import ReactMarkdown from 'react-markdown'; // Import react-markdown
+import { FaCheck, FaCopy, FaPaperPlane, FaChevronDown, FaChevronUp } from 'react-icons/fa';
+import ReactMarkdown from 'react-markdown';
 
 interface Message {
   text: string;
@@ -22,8 +22,9 @@ export default function ChatbotComponent({ disease }: ChatbotComponentProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [botType, setBotType] = useState<BotType>('local');
   const [suggestedQuestions, setSuggestedQuestions] = useState<string[]>([]);
+  const [showSuggestedQuestions, setShowSuggestedQuestions] = useState(true);
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const [isChatbotActive, setIsChatbotActive] = useState(false);
+  const [copied, setCopied] = useState(false);
 
   // Load initial suggested questions
   useEffect(() => {
@@ -44,14 +45,6 @@ export default function ChatbotComponent({ disease }: ChatbotComponentProps) {
       setSuggestedQuestions([]);
     }
   };
-
-  // const scrollToBottom = () => {
-  //   messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  // };
-
-  // useEffect(() => {
-  //   scrollToBottom();
-  // }, [messages]);
 
   const handleSendMessage = async () => {
     if (!input.trim() || isLoading) return;
@@ -116,13 +109,29 @@ export default function ChatbotComponent({ disease }: ChatbotComponentProps) {
     });
   };
 
-  const [copied, setCopied] = useState(false);
+  const handleClearChat = () => {
+    setMessages([]);
+  };
+
+  const toggleSuggestedQuestions = () => {
+    setShowSuggestedQuestions(!showSuggestedQuestions);
+  };
 
   return (
-    <div className="flex flex-col h-200 max-w-4xl mx-auto bg-gray-800 rounded-xl shadow-lg overflow-hidden">
+    <div className="flex flex-col sm:h-200 h-180 mx-auto bg-gray-800 rounded-xl shadow-lg overflow-hidden">
       {/* Header */}
       <div className="bg-gray-800 text-gray-100 p-4">
-        <h2 className="text-xl font-bold">Medical Chatbot</h2>
+        <div className="flex justify-between items-center">
+          <h2 className="text-xl font-bold">Medical Chatbot</h2>
+          {messages.length > 0 && (
+            <button
+              onClick={handleClearChat}
+              className="text-sm bg-gray-700 hover:bg-gray-600 text-red-600 px-3 py-1 rounded-lg hover:text-white border border-red-500"
+            >
+              Clear Chat
+            </button>
+          )}
+        </div>
         <div className="flex flex-wrap items-center justify-between mt-2 gap-2">
           <div className="flex items-center">
             <label htmlFor="bot-type" className="mr-2">Bot Type:</label>
@@ -160,79 +169,97 @@ export default function ChatbotComponent({ disease }: ChatbotComponentProps) {
       {/* Chat messages */}
       <div className="flex-1 p-4 overflow-y-auto bg-gray-800 text-gray-100 custom-scrollbar hide-scrollbar">
         {messages.length === 0 ? (
-            <div className="flex items-center justify-center h-full text-gray-400">
+          <div className="flex items-center justify-center h-full text-gray-400">
             {botType === 'local' ? (
-                <div className="flex flex-col gap-2">
+              <div className="flex flex-col gap-2">
                 <p>Ask your question about **{disease}** or choose from suggested questions below</p>
-                </div>
+              </div>
             ) : (
-                <div className="flex flex-col gap-2">
+              <div className="flex flex-col gap-2">
                 <p>Ask any medical question to the **Gemini medical assistant**</p>
                 <p className="text-red-200 p-2 bg-red-900/50 rounded-xl">
-                    In Gemini chat you need to provide the disease name and more details
+                  In Gemini chat you need to provide the disease name and more details
                 </p>
-                </div>
+              </div>
             )}
-            </div>
+          </div>
         ) : (
-            messages.map((message, index) => (
+          messages.map((message, index) => (
             <div
-                key={index}
-                className={`mb-4 ${message.sender === 'user' ? 'text-right' : 'text-left'}`}
+              key={index}
+              className={`mb-4 ${message.sender === 'user' ? 'text-right' : 'text-left'}`}
             >
-                <div
+              <div
                 className={`inline-block px-4 py-2 rounded-xl max-w-xs md:max-w-md lg:max-w-lg ${
-                    message.sender === 'user' ? 'bg-blue-600 text-gray-100' : 'bg-gray-700 text-gray-100'
+                  message.sender === 'user' ? 'bg-blue-600 text-gray-100' : 'bg-gray-700 text-gray-100'
                 }`}
-                >
+              >
                 {message.sender === 'bot' && !message.isLocalBot ? (
-                    <ReactMarkdown>{message.text}</ReactMarkdown>
+                  <ReactMarkdown>{message.text}</ReactMarkdown>
                 ) : (
-                    <p>{message.text}</p>
+                  <p>{message.text}</p>
                 )}
                 {message.sender === 'bot' && message.isLocalBot && message.confidence !== undefined && (
-                    <p className="text-xs mt-1 text-gray-400">
+                  <p className="text-xs mt-1 text-gray-400">
                     Confidence: {(message.confidence * 100).toFixed(1)}%
-                    </p>
+                  </p>
                 )}
-                </div>
-                {message.sender === 'bot' && message.followup_questions && message.followup_questions.length > 0 && (
+              </div>
+              {message.sender === 'bot' && message.followup_questions && message.followup_questions.length > 0 && (
                 <div className="mt-2">
-                    <p className="text-xs text-gray-400 mb-1">Follow-up questions:</p>
-                    <div className="flex flex-wrap gap-2">
-                    {message.followup_questions.slice(0, 3).map((q, i) => (
+                  <p className="text-xs text-gray-400 mb-1">Follow-up questions:</p>
+                  <div className="flex flex-wrap gap-2">
+                    {message.followup_questions
+                      .slice()
+                      .sort(() => Math.random() - 0.5)
+                      .slice(0, 4)
+                      .map((q, i) => (
                         <button
-                        key={i}
-                        onClick={() => handleSuggestedQuestionClick(q)}
-                        className="text-xs bg-gray-800 border border-blue-500 hover:bg-blue-900 hover:border-2 hover:border-blue-500 text-gray-100 px-2 py-1 rounded-xl"
+                          key={i}
+                          onClick={() => handleSuggestedQuestionClick(q)}
+                          className="text-xs bg-gray-800 border border-blue-500 hover:bg-blue-900 hover:border-2 hover:border-blue-500 text-gray-100 px-2 py-1 rounded-xl"
                         >
-                        {q}
+                          {q}
                         </button>
-                    ))}
-                    </div>
+                      ))}
+                  </div>
                 </div>
-                )}
+              )}
             </div>
-            ))
+          ))
         )}
         <div ref={messagesEndRef} />
-     </div>
+      </div>
 
       {/* Suggested questions (local bot only) */}
       {botType === 'local' && suggestedQuestions.length > 0 && (
-        <div className="p-4 border-t border-gray-700 bg-gray-800">
-          <h3 className="text-sm font-medium text-gray-300 mb-2">Suggested Questions:</h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2">
-            {suggestedQuestions.slice(0, 6).map((question, index) => (
-              <button
-                key={index}
-                onClick={() => handleSuggestedQuestionClick(question)}
-                className="text-left text-sm bg-gray-700 hover:bg-blue-900 hover:border-2 hover:border-blue-500 text-gray-100 px-3 py-2 rounded-xl border border-gray-600"
-              >
-                {question}
-              </button>
-            ))}
-          </div>
+        <div className="border-t border-gray-700 bg-gray-800">
+          <button
+            onClick={toggleSuggestedQuestions}
+            className="w-full flex justify-between items-center p-4 hover:bg-gray-700 transition-colors"
+          >
+            <h3 className="text-sm font-medium text-gray-300">Suggested Questions</h3>
+            {showSuggestedQuestions ? (
+              <FaChevronUp className="text-gray-400" />
+            ) : (
+              <FaChevronDown className="text-gray-400" />
+            )}
+          </button>
+          {showSuggestedQuestions && (
+            <div className="p-4 pt-0">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                {suggestedQuestions.slice(0, 9).map((question, index) => (
+                  <button
+                    key={index}
+                    onClick={() => handleSuggestedQuestionClick(question)}
+                    className="text-left text-sm bg-gray-700 hover:bg-blue-900 hover:border-2 hover:border-blue-500 text-gray-100 px-2 py-1 rounded-xl border border-gray-600"
+                  >
+                    {question}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       )}
 

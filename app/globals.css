@@ -58,3 +58,32 @@ body {
 .spin-animation {
   animation: spin 1.5s linear infinite;
 }
+
+/* Hide scrollbar for IE, Edge and Firefox (optional, if you want only custom styles) */
+/* This won't affect Webkit, so you still need the Webkit specific rules */
+.hide-scrollbar {
+  /* -ms-overflow-style: none; IE and Edge */
+  /* scrollbar-width: none; Firefox */
+}
+
+/* Custom scrollbar for Webkit browsers (Chrome, Safari, Edge) */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px; /* width of the vertical scrollbar */
+  height: 6px; /* height of the horizontal scrollbar */
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #333; /* Dark background for the track */
+  border-radius: 10px; /* Optional: rounded corners for the track */
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #555; /* Darker gray for the thumb */
+  border-radius: 10px; /* Rounded corners for the thumb */
+  border: 1px solid #333; /* Optional: a thin border to separate thumb from track */
+}
+
+/* On hover, make the thumb slightly lighter (optional) */
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: #777; /* Slightly lighter gray on hover */
+}

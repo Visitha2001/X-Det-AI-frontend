@@ -55,7 +55,7 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 z-50 bg-black border-b border-gray-700">
-      <div className="container mx-auto px-4 py-4 flex items-center justify-between">
+      <div className="sm:px-50 mx-auto px-4 py-4 flex items-center justify-between">
         {/* Logo */}
         <Link href="/home" className="flex items-center">
           <Image src={Logo} alt="Logo" width={100} height={40} className="object-cover" unoptimized />

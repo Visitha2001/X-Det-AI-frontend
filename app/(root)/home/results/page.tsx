@@ -11,6 +11,7 @@ import {
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { FaSpinner } from 'react-icons/fa';
+import ChatbotComponent from '@/components/ChatbotComponent';
 
 interface DiseaseDetails {
   disease: string;
@@ -67,7 +68,7 @@ export default function ResultsPage() {
 
   if (error) {
     return (
-      <div className="w-full bg-gray-900 rounded-lg p-6 mt-4 max-w-3xl mx-auto">
+      <div className="w-full bg-gray-900 rounded-xl p-6 mt-4 max-w-3xl mx-auto">
         <div className="flex flex-col items-center">
           <div className="text-red-500 text-4xl mb-4">⚠️</div>
           <p className="text-lg font-medium text-red-400 mb-2">Error</p>
@@ -127,6 +128,11 @@ export default function ResultsPage() {
                 ))}
               </div>
             )}
+          </div>
+
+          {/* Chatbot Section - Sticky */}
+          <div className="sticky top-25">
+            <ChatbotComponent disease={diseaseDetails?.disease || ''} />
           </div>
         </div>
 

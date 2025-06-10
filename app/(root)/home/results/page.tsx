@@ -86,7 +86,7 @@ export default function ResultsPage() {
           <div className="sm:flex sm:flex-col-2 gap-4 flex-col-1 w-auto">
             {/* Image Section */}
             <div className="bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-700 mb-4 sm:mb-0">
-              <h2 className="text-xl font-semibold text-blue-400">X-Ray Image</h2>
+              <h2 className="text-xl font-semibold text-blue-400 mb-3">X-Ray Image</h2>
               {imageUrl && (
                 <div className="bg-gray-700 rounded-lg overflow-hidden sm:w-80 w-full flex">
                   <img

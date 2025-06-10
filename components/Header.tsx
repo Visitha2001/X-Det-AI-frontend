@@ -11,7 +11,7 @@ import { FiLogOut } from "react-icons/fi";
 import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function Header() {
   const { username, logout } = useAuth();
@@ -30,7 +30,6 @@ export default function Header() {
     { name: "History", path: "/history", icon: <FaGlobe /> },
   ];
 
-  // Filter nav items for mobile nav: show "History" only if logged in
   const filteredNavItems = navItems.filter((item) =>
     item.name === "History" ? session?.user || username : true
   );
@@ -54,108 +53,106 @@ export default function Header() {
   };
 
   return (
-    <header className="sticky top-0 z-50 bg-black border-b border-gray-700">
-      <div className="sm:px-50 mx-auto px-4 py-4 flex items-center justify-between">
-        {/* Logo */}
-        <Link href="/home" className="flex items-center">
-          <Image src={Logo} alt="Logo" width={100} height={40} className="object-cover" unoptimized />
-        </Link>
+    <>
+      <header className="sticky top-0 z-50 border-b border-gray-700 bg-gray-900/70 backdrop-blur-[6px] backdrop-saturate-150">
+        <div className="sm:px-50 mx-auto px-4 py-4 flex items-center justify-between">
+          <Link href="/home" className="flex items-center">
+            <Image src={Logo} alt="Logo" width={100} height={40} className="object-cover" unoptimized />
+          </Link>
 
-        {/* Navigation - Center */}
-        <nav className="hidden md:flex items-center space-x-8">
-          {navItems.slice(0, 4).map((item) => {
-            const isActive = pathname === item.path;
-            return (
-              <Link
-                key={item.path}
-                href={item.path}
-                className="relative group text-gray-300 hover:text-white transition-colors"
-              >
-                <div className={`flex items-center mb-1 ${isActive ? "text-blue-300" : ""}`}>
-                  {item.name}
-                </div>
-                <span
-                  className={`absolute bottom-0 left-1/2 h-[3px] bg-blue-400 transition-all duration-300 ${
-                    isActive ? "w-3 left-[calc(50%-6px)]" : "w-0 group-hover:w-full group-hover:left-0"
-                  }`}
-                ></span>
-              </Link>
-            );
-          })}
-        </nav>
-
-        {/* Auth Section - Right */}
-        <div className="relative flex items-center space-x-4">
-          {session?.user || username ? (
-            <>
-              <div className="relative">
-                <button
-                  onClick={() => setDropdownOpen((prev) => !prev)}
-                  className="flex items-center space-x-2 focus:outline-none sm:mr-5 mr-0"
+          <nav className="hidden md:flex items-center space-x-8">
+            {navItems.slice(0, 4).map((item) => {
+              const isActive = pathname === item.path;
+              return (
+                <Link
+                  key={item.path}
+                  href={item.path}
+                  className="relative group text-gray-300 hover:text-white transition-colors"
                 >
-                  {session?.user?.image ? (
-                    <Image
-                      src={session.user.image}
-                      alt="Profile"
-                      width={36}
-                      height={36}
-                      className="w-9 h-9 rounded-full border-2 border-green-500 object-cover"
-                      unoptimized
-                    />
-                  ) : (
-                    <div className="w-9 h-9 rounded-full bg-gray-700 flex items-center justify-center">
-                      <FaUser className="text-gray-400" />
+                  <div className={`flex items-center mb-1 ${isActive ? "text-blue-300" : ""}`}>
+                    {item.name}
+                  </div>
+                  <span
+                    className={`absolute bottom-0 left-1/2 h-[3px] bg-blue-400 transition-all duration-300 ${
+                      isActive ? "w-3 left-[calc(50%-6px)]" : "w-0 group-hover:w-full group-hover:left-0"
+                    }`}
+                  ></span>
+                </Link>
+              );
+            })}
+          </nav>
+
+          <div className="relative flex items-center space-x-4">
+            {session?.user || username ? (
+              <>
+                <div className="relative">
+                  <button
+                    onClick={() => setDropdownOpen((prev) => !prev)}
+                    className="flex items-center space-x-2 focus:outline-none sm:mr-5 mr-0"
+                  >
+                    {session?.user?.image ? (
+                      <Image
+                        src={session.user.image}
+                        alt="Profile"
+                        width={36}
+                        height={36}
+                        className="w-9 h-9 rounded-full border-2 border-green-500 object-cover"
+                        unoptimized
+                      />
+                    ) : (
+                      <div className="w-9 h-9 rounded-full bg-gray-700 flex items-center justify-center">
+                        <FaUser className="text-gray-400" />
+                      </div>
+                    )}
+                    <span className="text-gray-300 hidden sm:inline">
+                      {session?.user?.name || session?.user?.email?.split("@")[0] || username}
+                    </span>
+                  </button>
+
+                  {dropdownOpen && (
+                    <div className="absolute right-5 mt-2 w-40 bg-gray-800/60 backdrop-blur-md border border-gray-600 rounded-2xl shadow-xl z-50">
+                      <Link
+                        href="/history"
+                        className="block px-4 py-2 text-sm text-gray-200 hover:bg-gray-700/50 rounded-t-2xl"
+                        onClick={() => setDropdownOpen(false)}
+                      >
+                        <FaGlobe className="inline-block mr-2" />
+                        History
+                      </Link>
+                      <button
+                        onClick={handleSignOut}
+                        className="w-full text-left px-4 py-2 text-sm text-red-400 hover:bg-gray-700/50 flex items-center rounded-b-2xl"
+                      >
+                        <FiLogOut className="mr-2" />
+                        Sign Out
+                      </button>
                     </div>
                   )}
-                  <span className="text-gray-300 hidden sm:inline">
-                    {session?.user?.name || session?.user?.email?.split("@")[0] || username}
-                  </span>
-                </button>
-
-                {/* Dropdown Menu */}
-                {dropdownOpen && (
-                  <div className="absolute right-5 mt-2 w-40 bg-gray-800/60 backdrop-blur-md border border-gray-600 rounded-2xl shadow-xl z-50">
-                    <Link
-                      href="/history"
-                      className="block px-4 py-2 text-sm text-gray-200 hover:bg-gray-700 rounded-t-2xl"
-                      onClick={() => setDropdownOpen(false)}
-                    >
-                      <FaGlobe className="inline-block mr-2" />
-                      History
-                    </Link>
-                    <button
-                      onClick={handleSignOut}
-                      className="w-full text-left px-4 py-2 text-sm text-red-400 hover:bg-gray-700 flex items-center rounded-b-2xl"
-                    >
-                      <FiLogOut className="mr-2" />
-                      Sign Out
-                    </button>
-                  </div>
-                )}
-              </div>
-            </>
-          ) : (
-            <>
-              <Link
-                href="/signin"
-                className="px-3 py-2 text-sm rounded-2xl bg-gray-700 text-gray-300 hover:bg-gray-600 transition-colors flex items-center"
-              >
-                <FcGoogle className="mr-2" />
-                Sign In
-              </Link>
-              <Link
-                href="/signup"
-                className="px-3 py-2 text-sm rounded-2xl bg-blue-600 text-white hover:bg-blue-700 transition-colors"
-              >
-                Sign Up
-              </Link>
-            </>
-          )}
+                </div>
+              </>
+            ) : (
+              <>
+                <Link
+                  href="/signin"
+                  className="px-3 py-2 text-sm rounded-2xl bg-gray-700 text-gray-300 hover:bg-gray-600 transition-colors flex items-center"
+                >
+                  <FcGoogle className="mr-2" />
+                  Sign In
+                </Link>
+                <Link
+                  href="/signup"
+                  className="px-3 py-2 text-sm rounded-2xl bg-blue-600 text-white hover:bg-blue-700 transition-colors"
+                >
+                  Sign Up
+                </Link>
+              </>
+            )}
+          </div>
         </div>
-      </div>
+      </header>
 
-      {/* Mobile Navigation */}
-      <nav className="md:hidden bg-gray-900 py-2 px-2 flex justify-around fixed bottom-0 left-0 right-0 z-50">
+      {/* Mobile Navigation - Updated with smooth border transition and active effect only on icon */}
+      <nav className="md:hidden bg-black/50 backdrop-blur-[2px] py-3 px-2 flex mx-4 my-5 rounded-3xl border border-gray-700 justify-around fixed bottom-0 left-0 right-0 z-50">
         {filteredNavItems.map((item) => {
           const isActive = pathname === item.path;
 
@@ -166,29 +163,28 @@ export default function Header() {
               className="flex flex-col items-center min-w-[60px] text-gray-400 hover:text-blue-300 transition-colors"
             >
               <div
-                className={`py-1 px-3 rounded-xl ripple-container ${
-                  isActive ? "bg-blue-900 text-blue-400" : "hover:bg-gray-700"
+                className={`py-1 px-4 rounded-xl ripple-container ${
+                  isActive ? "bg-blue-900/80 text-blue-300" : "hover:bg-gray-700 text-white"
                 }`}
               >
                 <span className="text-xl">{item.icon}</span>
               </div>
-              <span className={`text-[10px] mt-0.5 font-medium ${isActive ? "text-blue-400" : ""}`}>
+              <span className={`text-[10px] mt-0.5 font-medium ${isActive ? "text-blue-300" : "text-white"}`}>
                 {item.name}
               </span>
             </Link>
           );
         })}
       </nav>
-
+      
       {/* Scroll To Top Button */}
       <button
         onClick={scrollToTop}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
-        className={`fixed bottom-20 sm:bottom-6 right-6 bg-gray-800 text-white w-12 h-12 border-2 border-gray-700 rounded-full flex items-center justify-center shadow-lg transition-all duration-300 ${
-          isHovered ? "bg-gray-700 scale-110" : "scale-100"
+        className={`fixed z-50 bottom-26 sm:bottom-6 right-6 bg-gray-800/10 backdrop-blur-[2px] text-white w-12 h-12 border-2 border-gray-200/20 rounded-full flex items-center justify-center shadow-lg transition-all duration-300 glass-button-active ${
+          isHovered ? "bg-gray-700 scale-120" : "scale-100"
         } ${isClicked ? "transform scale-90" : ""}`}
-        style={{ zIndex: 1000 }}
         aria-label="Back to Top"
       >
         <motion.div
@@ -198,7 +194,7 @@ export default function Header() {
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className={`h-5 w-5 transition-colors duration-300 ${
-              isHovered ? "text-white" : "text-gray-400"
+              isHovered ? "text-white" : "text-gray-300"
             }`}
             fill="none"
             viewBox="0 0 24 24"
@@ -208,6 +204,6 @@ export default function Header() {
           </svg>
         </motion.div>
       </button>
-    </header>
+    </>
   );
 }

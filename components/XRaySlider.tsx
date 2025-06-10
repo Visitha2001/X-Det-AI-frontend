@@ -93,7 +93,7 @@ const HeroSlider = () => {
     index === currentSlide ? 'animate-fadeInLeft' : 'opacity-0 -translate-x-10';
 
   return (
-    <div className="relative w-full h-[60vh] md:h-[72vh] sm:h-[75vh] overflow-hidden bg-black border-black">
+    <div className="relative w-full h-[64vh] md:h-[72vh] sm:h-[75vh] overflow-hidden bg-black border-black">
       {/* Background Image */}
       {slides.map((slide, index) => (
         <div
@@ -163,7 +163,7 @@ const HeroSlider = () => {
       </div>
 
       {/* Navigation controls */}
-      <div className="absolute bottom-12 lg:bottom-9 left-0 right-0 flex justify-center items-center space-x-4 z-20">
+      <div className="absolute bottom-26 sm:bottom-12 lg:bottom-9 left-0 right-0 flex justify-center items-center space-x-4 z-20">
         <button
           onClick={goToPrevSlide}
           className="p-2 rounded-full bg-blue-400/20 hover:bg-blue-400/30 backdrop-blur-sm transition-all"

@@ -76,7 +76,7 @@ export default function PredictionResults({
     <div className="w-full p-2 border-2 border-gray-800 bg-black">
       {/* Processing Modal */}
       {isProcessing && (
-        <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50">
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-xs flex items-center justify-center z-50">
           <div className="bg-gray-800 rounded-4xl p-8 max-w-md w-full mx-4 border border-gray-700">
             <div className="flex flex-col items-center">
               <FaSpinner className="animate-spin text-blue-400 text-5xl mb-4" />

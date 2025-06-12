@@ -119,8 +119,8 @@ export default function ChatbotComponent({ disease }: ChatbotComponentProps) {
 
   return (
     <div
-      className="flex flex-col sm:h-145 h-180 mx-auto border border-gray-700 bg-gray-800 rounded-xl shadow-lg overflow-hidden"
-      // className="flex flex-col sm:h-200 h-180 mx-auto border border-gray-700 bg-gray-800 rounded-xl shadow-lg overflow-hidden"
+      // className="flex flex-col sm:h-145 h-180 mx-auto border border-gray-700 bg-gray-800 rounded-xl shadow-lg overflow-hidden"
+      className="flex flex-col sm:h-200 h-180 mx-auto border border-gray-700 bg-gray-800 rounded-xl shadow-lg overflow-hidden"
     >
       {/* Header */}
       <div className="bg-gray-800 text-gray-100 p-4">

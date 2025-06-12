@@ -93,8 +93,8 @@ const HeroSlider = () => {
     index === currentSlide ? 'animate-fadeInLeft' : 'opacity-0 -translate-x-10';
 
   return (
-    // <div className="relative w-full h-[64vh] md:h-[72vh] sm:h-[75vh] overflow-hidden bg-black border-black">
-    <div className="relative w-full h-[64vh] sm:h-[69vh] overflow-hidden bg-black border-black">
+    <div className="relative w-full h-[64vh] md:h-[72vh] sm:h-[75vh] overflow-hidden bg-black border-black">
+    {/* <div className="relative w-full h-[64vh] sm:h-[69vh] overflow-hidden bg-black border-black"> */}
       {/* Background Image */}
       {slides.map((slide, index) => (
         <div
@@ -145,8 +145,8 @@ const HeroSlider = () => {
           </div>
 
           {/* Static image container on desktop */}
-          {/* <div className="hidden lg:block absolute right-0 top-1/2 transform -translate-y-1/2 w-[700px] sm:h-[400px] h-[400px] overflow-hidden rounded-4xl shadow-2xl z-10"> */}
-          <div className="hidden lg:block absolute right-0 top-1/2 transform -translate-y-1/2 w-[500px] sm:h-[300px] h-[400px] overflow-hidden rounded-4xl shadow-2xl z-10">
+          <div className="hidden lg:block absolute right-0 top-1/2 transform -translate-y-1/2 w-[700px] sm:h-[400px] h-[400px] overflow-hidden rounded-4xl shadow-2xl z-10">
+          {/* <div className="hidden lg:block absolute right-0 top-1/2 transform -translate-y-1/2 w-[500px] sm:h-[300px] h-[400px] overflow-hidden rounded-4xl shadow-2xl z-10"> */}
             {slides.map((slide, index) => (
               <div
                 key={slide.id}

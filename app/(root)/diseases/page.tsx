@@ -140,8 +140,8 @@ export default function DiseasesPage() {
             <p className="text-sm mt-2">Try a different search term.</p>
           </div>
         ) : (
-          // <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+          {/* <div className="grid grid-cols-1 lg:grid-cols-3 gap-8"> */}
             {filteredDiseases.map((disease) => (
               <DiseaseCard key={disease.id} disease={disease} />
             ))}

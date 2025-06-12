@@ -89,8 +89,8 @@ export default function ResultsPage() {
               <h2 className="text-xl font-semibold text-blue-400 mb-3">X-Ray Image</h2>
               {imageUrl && (
                 <div 
-                  // className="bg-gray-700 rounded-lg overflow-hidden sm:w-80 w-full flex"
-                  className="bg-gray-700 rounded-lg overflow-hidden sm:w-60 w-full flex"
+                  className="bg-gray-700 rounded-lg overflow-hidden sm:w-80 w-full flex"
+                  // className="bg-gray-700 rounded-lg overflow-hidden sm:w-60 w-full flex"
                 >
                   <img
                     src={imageUrl}
@@ -103,7 +103,7 @@ export default function ResultsPage() {
 
             {/* Predictions Section */}
             <div className="bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-700">
-              <h2 className="text-xl font-semibold text-blue-400">Predicted Conditions</h2>
+              <h2 className="text-xl font-semibold text-blue-400 mb-2">Predicted Conditions</h2>
               {predictionData && (
                 <div className="space-y-4">
                   {predictionData.top_5_diseases.map((item: any, index: number) => (

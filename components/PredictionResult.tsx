@@ -92,8 +92,8 @@ export default function PredictionResults({
         </div>
       )}
 
-      {/* <div className="relative bg-gray-800 rounded-4xl p-6 sm:p-10 max-w-full mx-auto overflow-hidden border border-gray-700"> */}
       <div className="relative bg-gray-800 rounded-4xl p-6 sm:px-40 sm:py-10 max-w-full mx-auto overflow-hidden border border-gray-700">
+      {/* <div className="relative bg-gray-800 rounded-4xl p-6 sm:px-40 sm:py-10 max-w-full mx-auto overflow-hidden border border-gray-700"> */}
         {/* Scanning overlay */}
         {isScanning && (
           <div className="absolute inset-0 bg-gray-900 bg-opacity-90 flex items-center justify-center z-10 rounded-xl flex-col">

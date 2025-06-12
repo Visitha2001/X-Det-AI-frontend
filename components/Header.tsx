@@ -88,7 +88,7 @@ export default function Header() {
                 <div className="relative">
                   <button
                     onClick={() => setDropdownOpen((prev) => !prev)}
-                    className="flex items-center space-x-2 focus:outline-none sm:mr-5 mr-0"
+                    className="flex items-center space-x-2 focus:outline-none sm:mr-5 mr-0 cursor-pointer"
                   >
                     {session?.user?.image ? (
                       <Image
@@ -182,7 +182,7 @@ export default function Header() {
         onClick={scrollToTop}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
-        className={`fixed z-50 bottom-26 sm:bottom-6 right-6 bg-gray-800/10 backdrop-blur-[2px] text-white w-12 h-12 border-2 border-gray-200/20 rounded-full flex items-center justify-center shadow-lg transition-all duration-300 glass-button-active ${
+        className={`fixed z-50 bottom-26 sm:bottom-6 right-6 bg-gray-800/10 backdrop-blur-[2px] text-white w-12 h-12 border-2 cursor-pointer border-gray-200/20 rounded-full flex items-center justify-center shadow-lg transition-all duration-300 glass-button-active ${
           isHovered ? "bg-gray-700 scale-120" : "scale-100"
         } ${isClicked ? "transform scale-90" : ""}`}
         aria-label="Back to Top"

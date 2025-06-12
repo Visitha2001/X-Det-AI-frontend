@@ -166,7 +166,7 @@ const HeroSlider = () => {
       <div className="absolute bottom-26 sm:bottom-12 lg:bottom-9 left-0 right-0 flex justify-center items-center space-x-4 z-20">
         <button
           onClick={goToPrevSlide}
-          className="p-2 rounded-full bg-blue-400/20 hover:bg-blue-400/30 backdrop-blur-sm transition-all"
+          className="p-2 rounded-full bg-blue-400/20 hover:bg-blue-400/30 backdrop-blur-sm transition-all cursor-pointer"
           aria-label="Previous slide"
         >
           <svg className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -180,7 +180,7 @@ const HeroSlider = () => {
               key={index}
               onClick={() => goToSlide(index)}
               className={`w-3 h-3 rounded-full transition-all ${
-                index === currentSlide ? 'bg-blue-400 scale-125' : 'bg-blue-500/50 hover:bg-blue-500/70'
+                index === currentSlide ? 'bg-blue-400 scale-125' : 'bg-blue-500/50 hover:bg-blue-500/70 cursor-pointer'
               }`}
               aria-label={`Go to slide ${index + 1}`}
             />
@@ -205,7 +205,7 @@ const HeroSlider = () => {
         aria-label={isAutoPlaying ? 'Pause slideshow' : 'Play slideshow'}
       >
         {isAutoPlaying ? (
-          <svg className="h-5 w-5 text-white" viewBox="0 0 20 20" fill="currentColor">
+          <svg className="h-5 w-5 text-blue-400 cursor-pointer" viewBox="0 0 20 20" fill="currentColor">
             <path
               fillRule="evenodd"
               d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zM7 8a1 1 0 012 0v4a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v4a1 1 0 102 0V8a1 1 0 00-1-1z"
@@ -213,7 +213,7 @@ const HeroSlider = () => {
             />
           </svg>
         ) : (
-          <svg className="h-5 w-5 text-blue-400" viewBox="0 0 20 20" fill="currentColor">
+          <svg className="h-5 w-5 text-blue-400 cursor-pointer" viewBox="0 0 20 20" fill="currentColor">
             <path
               fillRule="evenodd"
               d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"

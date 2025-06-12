@@ -80,14 +80,16 @@ export default function WhyUsSection() {
             >
               <div className="relative aspect-square rounded-4xl overflow-hidden border-2 border-gray-800 w-full h-90 sm:h-130">
                 {/* Replace with your actual image */}
-                <Image
-                  src="/assets/robot-performing-ordinary-human-job.jpg"
-                  alt="AI Healthcare Technology"
-                  width={600}
-                  height={600}
-                  className="object-cover w-full h-full"
-                />
-                <div className="absolute inset-0 bg-blue-500/10 mix-blend-overlay" />
+                <div className="relative hover:scale-120 hover:grayscale transition-all duration-500 h-full w-full">
+                  <Image
+                    src="/assets/robot-performing-ordinary-human-job.jpg"
+                    alt="AI Healthcare Technology"
+                    width={600}
+                    height={600}
+                    className="object-cover w-full h-full"
+                  />
+                  <div className="absolute inset-0 bg-blue-500/10 mix-blend-overlay" />
+                </div>
               </div>
               
               {/* Decorative elements */}

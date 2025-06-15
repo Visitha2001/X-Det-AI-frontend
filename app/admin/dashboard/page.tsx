@@ -55,7 +55,7 @@ export default function AdminDashboard() {
 
   if (!isAdmin) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-[60vh] bg-gray-900">
+      <div className="flex flex-col items-center justify-center min-h-[60vh] bg-gray-800">
         <div className="text-center space-y-4 max-w-md">
           <h2 className="text-2xl font-bold text-red-500">Access Denied</h2>
           <p className="text-gray-400 mb-10">
@@ -70,19 +70,19 @@ export default function AdminDashboard() {
   }
 
   if (loading) return (
-    <div className="flex items-center justify-center min-h-[60vh] bg-gray-900">
+    <div className="flex items-center justify-center min-h-[60vh] bg-gray-800">
       <div className="text-white">Loading...</div>
     </div>
   );
 
   if (error) return (
-    <div className="flex items-center justify-center min-h-[60vh] bg-gray-900">
+    <div className="flex items-center justify-center min-h-[60vh] bg-gray-800">
       <div className="text-red-500">Error: {error}</div>
     </div>
   );
 
   return (
-    <div className="bg-gray-900 min-h-screen p-8">
+    <div className="bg-gray-800 min-h-screen p-8">
       <div className="max-w-7xl mx-auto">
         <div className="flex justify-between items-center mb-10">
           <div>
@@ -94,23 +94,23 @@ export default function AdminDashboard() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-10">
-          <div className="bg-gray-800 rounded-lg p-6 shadow-lg">
+          <div className="bg-gray-700 rounded-lg p-6 shadow-lg">
             <h3 className="text-xl font-semibold text-gray-300 mb-2">Total Users</h3>
             <p className="text-4xl font-bold text-blue-400">{userCount}</p>
           </div>
-          <div className="bg-gray-800 rounded-lg p-6 shadow-lg">
+          <div className="bg-gray-700 rounded-lg p-6 shadow-lg">
             <h3 className="text-xl font-semibold text-gray-300 mb-2">Admins</h3>
             <p className="text-4xl font-bold text-green-400">
               {users.filter(user => user.is_admin).length}
             </p>
           </div>
-          <div className="bg-gray-800 rounded-lg p-6 shadow-lg">
+          <div className="bg-gray-700 rounded-lg p-6 shadow-lg">
             <h3 className="text-xl font-semibold text-gray-300 mb-2">Patients</h3>
             <p className="text-4xl font-bold text-purple-400">
               {users.filter(user => !user.is_admin).length}
             </p>
           </div>
-          <div className="bg-gray-800 rounded-lg p-6 shadow-lg">
+          <div className="bg-gray-700 rounded-lg p-6 shadow-lg">
             <h3 className="text-xl font-semibold text-gray-300 mb-2">Diseases</h3>
             <p className="text-4xl font-bold text-yellow-400">
               {diseases.length}

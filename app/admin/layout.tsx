@@ -1,35 +1,20 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import "../globals.css";
-import { useAuth } from "@/context/AuthContext";
-import AdminHeader from "@/components/admin/AdminHeader";
+// app/admin/layout.tsx
+import AdminSidebar from '@/components/admin/AdminHeader';
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
-export const metadata: Metadata = {
-  title: "X-Det-AI",
-  description: "X-Det-AI is a AI based app for detecting X-ray diseases",
-};
-
-export default function RootLayout({
+export default function AdminLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: {
+  children: React.ReactNode
+}) {
   return (
-    <div
-      className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-    >
-        <AdminHeader />
-        {children}
+    <div className="flex h-screen bg-gray-100">
+      <AdminSidebar />
+      
+      <div className="flex flex-col flex-1 overflow-hidden">
+        <main className="flex-1 overflow-y-auto p-4 bg-gray-800">
+          {children}
+        </main>
+      </div>
     </div>
   );
 }

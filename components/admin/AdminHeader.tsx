@@ -12,7 +12,9 @@ import {
   FaSignOutAlt, 
   FaSignInAlt, 
   FaHome, 
-  FaStar
+  FaStar,
+  FaPage4,
+  FaNewspaper
 } from 'react-icons/fa';
 import Image from 'next/image';
 import Logo from "../../public/assets/T_logo.png";
@@ -25,13 +27,14 @@ export default function AdminSidebar() {
     { href: '/admin/dashboard', label: 'Dashboard', icon: <FaTachometerAlt className="mr-3" /> },
     { href: '/admin/disease', label: 'Diseases', icon: <FaViruses className="mr-3" /> },
     { href: '/admin/users', label: 'Users', icon: <FaUsers className="mr-3" /> },
-    { href: '/admin/review', label: 'Manage Reviews', icon: <FaStar className="mr-3" />}
+    { href: '/admin/review', label: 'Manage Reviews', icon: <FaStar className="mr-3" />},
+    { href: '/admin/newsletter', label: 'Newsletter', icon: <FaNewspaper className="mr-3" />}
   ];
 
   return (
     <div className="md:flex md:flex-shrink-0">
       <div className="flex flex-col w-80 bg-gray-900 border-r border-gray-800">
-        <div className="flex items-center justify-center h-16 px-4 border-b border-gray-800 bg-blue-950 py-10">
+        <div className="flex items-center justify-center h-16 px-4 border-b border-gray-800 bg-blue-950 py-15">
           <Link href="/admin/dashboard" className="text-xl text-blue-400 hover:text-blue-300">
             <Image src={Logo} alt="Logo" width={100} height={40} className="object-cover ml-2 mb-[-20px]" unoptimized />
             Admin Panel

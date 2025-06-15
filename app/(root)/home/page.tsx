@@ -8,6 +8,8 @@ import ServicesSection from '@/components/ServiceSection';
 import WhyUsSection from '@/components/WhyUsSection';
 import DetectableDiseases from '@/components/Detectable_Diseases';
 import HowItWorks from '@/components/HowItWorks';
+import AllReviewsComponent from '@/components/AllReviewsComponent';
+import ManageReviewsComponent from '@/components/ManageReviewsComponent';
 
 export default function HomePage() {
   const [uploadResult, setUploadResult] = useState(null);
@@ -65,6 +67,7 @@ export default function HomePage() {
       <WhyUsSection />
       <HowItWorks />
       <ServicesSection />
+      <AllReviewsComponent/>
     </div>
   );
 }

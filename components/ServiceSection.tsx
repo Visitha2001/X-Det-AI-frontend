@@ -36,7 +36,7 @@ export default function ServicesSection() {
   ];
 
   return (
-    <section className="w-full py-8 sm:py-10 bg-black">
+    <section className="w-full py-8 sm:py-12 bg-black">
       <div className="mx-auto px-8 sm:px-50">
         <div className="text-center mb-16">
           <h2 className="text-3xl sm:text-4xl font-bold text-white mb-2">Our Services</h2>

@@ -22,7 +22,7 @@ const DetectableDiseases = () => {
   ];
 
   return (
-    <section className="py-12 bg-gray-900">
+    <section className="py-8 sm:py-12 bg-gray-900">
       <div className="px-4 sm:px-50 mx-auto">
         <div className="text-center mb-12">
           <h2 className="text-3xl font-bold text-white mb-4">

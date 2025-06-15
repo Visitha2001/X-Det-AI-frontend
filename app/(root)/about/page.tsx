@@ -1,6 +1,7 @@
 'use client';
 import { FaEye, FaBullseye, FaLightbulb, FaChartLine } from 'react-icons/fa';
 import { motion } from 'framer-motion';
+import MakeReviewComponent from '@/components/MakeReviewsComponent';
 
 export default function page() {
   const fadeIn = {
@@ -260,6 +261,10 @@ export default function page() {
             </button>
           </a>
         </div>
+      </section>
+
+      <section className='sm:px-50 mx-auto px-8 mb-20'>
+          <MakeReviewComponent />
       </section>
     </div>
   );

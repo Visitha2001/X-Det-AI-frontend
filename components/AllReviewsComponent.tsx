@@ -4,6 +4,7 @@ import { useEffect, useState, useRef, useCallback } from 'react'; // Import useR
 import reviewService from '@/services/review_service';
 import { motion } from 'framer-motion'; // For potential slide animations
 import { FaArrowLeft, FaArrowRight, FaChevronLeft, FaChevronRight, FaStar } from 'react-icons/fa'; // For navigation arrows
+import Link from 'next/link';
 
 interface Review {
   _id: string;
@@ -111,15 +112,19 @@ export default function AllReviewsComponent() {
 
   return (
     <div className="space-y-8 bg-blue-800 px-8 py-8 sm:py-12 sm:px-50">
-      <h2 className="text-3xl font-bold text-white mb-8">All Reviews</h2>
+      <h2 className="text-3xl font-bold text-white mb-2">All Reviews</h2>
+      <h3 className="text-xl font-semibold text-gray-300 mb-2">Hear what our users are saying!</h3>
+      <p className="text-gray-400 text-sm mb-6">Add your honest feedback and experiences in our about section.</p>
 
       {reviews.length === 0 ? (
-        <div className="bg-gray-800/50 p-8 rounded-4xl border border-blue-700 text-center">
-          <div className="inline-block p-3 rounded-full bg-blue-900">
-            <FaStar className="text-blue-400 text-2xl" />
+        <Link href="/about#review">
+          <div className="bg-gray-800/50 p-8 rounded-4xl border border-blue-700 text-center">
+            <div className="inline-block p-3 rounded-full bg-blue-900">
+              <FaStar className="text-blue-400 text-2xl" />
+            </div>
+            <p className="text-gray-400 text-lg mt-4">No reviews yet. Be the first to review!</p>
           </div>
-          <p className="text-gray-400 text-lg mt-4">No reviews yet. Be the first to review!</p>
-        </div>
+        </Link>
       ) : (
         <div className="relative">
           <button
@@ -153,7 +158,7 @@ export default function AllReviewsComponent() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5 }}
-                  className="bg-gray-800/50 hover:bg-gray-800 p-6 rounded-4xl shadow-lg border-2 border-gray-700 transition-all duration-300 hover:shadow-blue-500/10 hover:border-blue-500/80 h-full flex flex-col"
+                  className="bg-gray-800/50 hover:bg-blue-950 p-6 rounded-4xl shadow-lg border-2 border-gray-700 transition-all duration-300 hover:shadow-blue-500/10 hover:border-blue-500/80 h-full flex flex-col"
                 >
                   <div className="flex justify-between items-start mb-4">
                     <div>
@@ -184,13 +189,13 @@ export default function AllReviewsComponent() {
                     </div>
                   </div>
 
-                  <p className="text-gray-300 mb-4 line-clamp-3 flex-grow">{review.content}</p> {/* flex-grow to push stars down */}
+                  <p className="text-gray-300 mb-4 line-clamp-4 flex-grow">{review.content}</p>
 
                   <div className="flex items-center space-x-1 mt-auto">
                     {[...Array(5)].map((_, i) => (
                       <span
                         key={`star-${i}-${review._id}`}  // Add unique key combining index and review ID
-                        className={`text-lg ${i < review.rating ? 'text-yellow-400' : 'text-gray-700'}`}
+                        className={`text-2xl ${i < review.rating ? 'text-yellow-400' : 'text-gray-600'}`}
                       >
                         ★
                       </span>

@@ -75,19 +75,21 @@ export default function ManageReviewsComponent({ reviews, setReviews, username }
       </div>
 
       {reviews.length === 0 ? (
-        <div className='text-center border-2 border-blue-800 p-10 sm:h-[330] h-[220] rounded-4xl justify-center'>
+        <div className='text-center border-2 border-blue-800 p-10 sm:h-[375] h-[220] rounded-4xl justify-center flex flex-col items-center'>
             <div className='bg-blue-900 p-5 rounded-full inline-block'>
                 <FaStar className='text-blue-400 text-2xl'/>
             </div>
             <p className="text-gray-400 mt-4">You haven't submitted any reviews yet.</p> 
         </div>
       ) : (
-        <div className={`space-y-4 custom-scrollbar ${reviews.length > 3 ? 'max-h-[330px] overflow-y-auto pr-2' : ''}`}>
+        <div className={`space-y-4 custom-scrollbar ${reviews.length > 3 ? 'max-h-[380px] overflow-y-auto pr-2' : ''}`}>
           {reviews.map((review) => (
             <div
               key={review._id}
-              className="bg-gray-800 p-4 rounded-lg shadow border border-gray-700"
+              className="bg-gray-900 p-4 rounded-2xl shadow border-2 border-blue-600"
             >
+              
+              <h3 className="text-blue-300 sm:text-md text-sm">{review.username}</h3>
               <div className="flex justify-between items-start mb-2">
                 <div className="flex items-center">
                   {[...Array(5)].map((_, i) => (

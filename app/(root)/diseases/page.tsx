@@ -116,7 +116,7 @@ export default function DiseasesPage() {
             )}
 
             {showSuggestions && suggestions.length > 0 && (
-              <ul className="absolute left-0 right-0 mt-1 bg-gray-800 border border-gray-700 rounded-xl max-h-48 overflow-y-auto z-20">
+              <ul className="absolute left-0 right-0 mt-1 bg-gray-800 border custom-scrollbar border-gray-700 rounded-xl max-h-48 overflow-y-auto z-20">
                 {suggestions.map((suggestion) => (
                   <li
                     key={suggestion.id}

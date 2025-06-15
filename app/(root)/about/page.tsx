@@ -263,7 +263,7 @@ export default function page() {
         </div>
       </section>
 
-      <section className='sm:px-50 mx-auto px-8 mb-20'>
+      <section className='sm:px-50 mx-auto px-8 mb-20' id='review'>
           <MakeReviewComponent />
       </section>
     </div>

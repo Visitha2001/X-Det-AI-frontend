@@ -61,7 +61,7 @@ export default function MakeReviewComponent() {
               value={content}
               onChange={(e) => setContent(e.target.value)}
               className="w-full px-3 py-2 bg-gray-800 text-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              rows={4}
+              rows={6}
               required
             />
           </div>

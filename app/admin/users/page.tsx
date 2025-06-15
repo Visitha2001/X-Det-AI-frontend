@@ -77,10 +77,10 @@ const UsersPage = () => {
   );
 
   return (
-    <div className="container mx-auto px-4 py-8 bg-gray-900 min-h-screen">
+    <div className="container mx-auto px-4 py-8 bg-gray-800 min-h-screen">
       <h1 className="text-2xl font-bold mb-6 text-white">User Management</h1>
       
-      <div className="mb-6 p-4 bg-gray-800 rounded-lg shadow">
+      <div className="mb-6 p-4 bg-gray-700 rounded-lg shadow">
         <h2 className="text-xl font-semibold text-gray-300">Statistics</h2>
         <p className="mt-2 text-blue-400">Total Users: {userCount}</p>
       </div>

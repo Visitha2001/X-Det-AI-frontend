@@ -1,10 +1,10 @@
 import http from './http_service';
 
 export interface Review {
+  _id?: string;
   username: string;
   content: string;
   rating: number;
-  _id?: string;
   created_at?: string;
 }
 
@@ -43,6 +43,15 @@ class ReviewService {
   async deleteReviewsByUsername(username: string) {
     try {
       const response = await http.delete(`/reviews/${username}`);
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async deleteReviewById(reviewId: string) {
+    try {
+      const response = await http.delete(`/reviews/id/${reviewId}`);
       return response.data;
     } catch (error) {
       throw error;

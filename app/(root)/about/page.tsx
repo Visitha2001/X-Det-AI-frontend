@@ -3,11 +3,47 @@ import { FaEye, FaBullseye, FaLightbulb, FaChartLine } from 'react-icons/fa';
 import { motion } from 'framer-motion';
 import MakeReviewComponent from '@/components/MakeReviewsComponent';
 import AllReviewsComponent from '@/components/AllReviewsComponent';
+import { useEffect, useState } from 'react';
+import { subscribeUser } from '@/services/subscribe_service';
+import toast from 'react-hot-toast';
 
 export default function page() {
   const fadeIn = {
     hidden: { opacity: 0, y: 20 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
+  };
+
+  const currentYear = new Date().getFullYear();
+  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    // Check if window is defined (client-side)
+    if (typeof window !== 'undefined') {
+      const storedUsername = sessionStorage.getItem('username');
+      if (storedUsername) {
+        setUsername(storedUsername);
+      }
+    }
+  }, []);
+
+  const handleSubscribe = async () => {
+    if (!username || !email) {
+      toast.error('Please enter your name and email');
+      return;
+    }
+    try {
+      setLoading(true);
+      await subscribeUser(username, email);
+      toast.success('Thanks for subscribing!');
+      setUsername('');
+      setEmail('');
+    } catch (err: any) {
+      toast.error(err?.message || 'Subscription failed');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -27,10 +63,57 @@ export default function page() {
             initial="hidden"
             animate="visible"
             variants={{ ...fadeIn, transition: { delay: 0.2 } }}
-            className="text-xl text-gray-300 max-w-3xl mx-auto"
+            className="text-xl text-gray-300 max-w-3xl mx-auto mb-2"
           >
             Revolutionizing medical diagnostics through artificial intelligence and deep learning.
           </motion.p>
+          
+          <motion.div 
+            initial="hidden"
+            animate="visible"
+            variants={{ ...fadeIn, transition: { delay: 0.4 } }}
+            className="max-w-md mx-auto"
+          >
+            <motion.p 
+              initial="hidden"
+              animate="visible"
+              variants={{ ...fadeIn, transition: { delay: 0.8 } }}
+              className="text-gray-400 mb-4"
+            >
+              Subscribe to our newsletter for the latest in AI diagnostics.
+            </motion.p>
+            <motion.div 
+              initial="hidden"
+              animate="visible"
+              variants={{ ...fadeIn, transition: { delay: 1 } }}
+              className="flex flex-col sm:inline md:flex md:flex-row md:space-x-2 space-y-2 md:space-y-0"
+            >
+              <input
+                type="text"
+                placeholder="Your name"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                className="bg-gray-800 text-white px-4 py-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 w-full"
+              />
+              <input
+                type="email"
+                placeholder="Your email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="bg-gray-800 text-white px-4 py-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 w-full"
+              />
+              <motion.button
+                initial="hidden"
+                animate="visible"
+                variants={{ ...fadeIn, transition: { delay: 1.2 } }}
+                onClick={handleSubscribe}
+                disabled={loading}
+                className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-xl transition-colors w-full md:w-auto"
+              >
+                {loading ? 'Subscribing...' : 'Subscribe'}
+              </motion.button>
+            </motion.div>
+          </motion.div>
         </div>
       </section>
 

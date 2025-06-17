@@ -105,7 +105,7 @@ export default function AllReviewsComponent() {
 
   if (error) {
     return (
-      <div className="flex items-center justify-center min-h-[200px] text-red-400">
+      <div className="flex items-center bg-gray-900 justify-center min-h-[200px] text-red-400">
         {error}
       </div>
     );
@@ -114,7 +114,7 @@ export default function AllReviewsComponent() {
   return (
     <div className="space-y-8 bg-gradient-to-b from-blue-900 to-blue-950 px-4 py-8 sm:py-12 sm:px-40">
       <div className="mb-8 ml-10">
-        <h2 className="text-3xl font-bold text-white mb-2">User Reviews</h2>
+        <h2 className="text-3xl font-bold text-white mb-2">Patient's Reviews</h2>
         <h3 className="text-xl font-semibold text-gray-300 mb-2">Hear what our users are saying!</h3>
         <p className="text-gray-400 mx-auto">
           Read honest feedback from our community. Newest reviews appear first.

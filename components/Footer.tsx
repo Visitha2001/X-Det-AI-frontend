@@ -3,9 +3,45 @@ import { FaTwitter, FaLinkedin, FaGithub, FaFacebook, FaInstagram } from 'react-
 import { MdEmail, MdPhone, MdLocationOn } from 'react-icons/md';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useEffect, useState } from 'react';
+import { subscribeUser } from '@/services/subscribe_service';
+import toast from 'react-hot-toast';
+import { useSession } from 'next-auth/react';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
+
+  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    // Check if window is defined (client-side)
+    if (typeof window !== 'undefined') {
+      const storedUsername = sessionStorage.getItem('username');
+      if (storedUsername) {
+        setUsername(storedUsername);
+      }
+    }
+  }, []);
+
+  const handleSubscribe = async () => {
+    if (!username || !email) {
+      toast.error('Please enter your name and email');
+      return;
+    }
+    try {
+      setLoading(true);
+      await subscribeUser(username, email);
+      toast.success('Thanks for subscribing!');
+      setUsername('');
+      setEmail('');
+    } catch (err: any) {
+      toast.error(err?.message || 'Subscription failed');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <footer className="w-full bg-gray-900 border-gray-800">
@@ -96,15 +132,30 @@ export default function Footer() {
             <p className="text-gray-400 mb-4">
               Subscribe to our newsletter for the latest in AI diagnostics.
             </p>
-            <div className="flex">
+            <div className="space-y-2 md:flex-row md:space-y-0 md:space-x-2">
               <input
-                type="email"
-                placeholder="Your email"
-                className="bg-gray-800 text-white px-4 py-2 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-500 w-full"
+                type="text"
+                placeholder="Your name"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                className="bg-gray-800 text-white px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 w-full mb-2"
               />
-              <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-r-lg transition-colors">
-                Subscribe
-              </button>
+              <div className='flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-2' >
+                <input
+                  type="email"
+                  placeholder="Your email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="bg-gray-800 text-white px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 w-full"
+                />
+                <button
+                  onClick={handleSubscribe}
+                  disabled={loading}
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors w-full md:w-auto"
+                >
+                  {loading ? 'Subscribing...' : 'Subscribe'}
+                </button>
+              </div>
             </div>
           </div>
         </div>

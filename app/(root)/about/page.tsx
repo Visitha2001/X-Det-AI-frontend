@@ -47,9 +47,9 @@ export default function page() {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen bg-gray-950 text-white">
       {/* Hero Section */}
-      <section className="py-10 sm:py-20 bg-gradient-to-b from-blue-900/20 to-black">
+      <section className="py-10 sm:py-20 bg-gradient-to-b from-blue-900/50 to-gray-950">
         <div className="sm:px-50 mx-auto px-8 text-center">
           <motion.h1 
             initial="hidden"
@@ -329,7 +329,7 @@ export default function page() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 bg-gradient-to-r from-blue-900/30 to-black">
+      <section className="py-16">
         <div className="sm:px-50 mx-auto px-8 text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-6">Join the Diagnostic Revolution</h2>
           <p className="text-xl text-gray-300 max-w-3xl mx-auto mb-8">

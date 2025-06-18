@@ -5,6 +5,7 @@ import { useSearchParams } from 'next/navigation';
 import { getAllDiseases } from '@/services/diseaseService';
 import DiseaseCard from '@/components/DiseaseCard';
 import { FaSpinner, FaSearch } from 'react-icons/fa';
+import AllReviewsComponent from '@/components/AllReviewsComponent';
 
 interface Disease {
   id: string;
@@ -175,6 +176,8 @@ export default function DiseasesPage() {
           </div>
         )}
       </div>
+
+      <AllReviewsComponent />
     </div>
   );
 }

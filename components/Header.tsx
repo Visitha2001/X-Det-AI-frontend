@@ -54,7 +54,7 @@ export default function Header() {
 
   return (
     <>
-      <header className="sticky top-0 z-50 border-b border-gray-700 bg-gray-900/70 backdrop-blur-[6px] backdrop-saturate-150">
+      <header className="sticky top-0 z-50 border-b border-gray-700 bg-gray-900 backdrop-blur-[6px] backdrop-saturate-150">
         <div className="sm:px-50 mx-auto px-4 py-4 flex items-center justify-between">
           <Link href="/home" className="flex items-center">
             <Image src={Logo} alt="Logo" width={100} height={40} className="object-cover" unoptimized />
@@ -152,7 +152,8 @@ export default function Header() {
       </header>
 
       {/* Mobile Navigation - Updated with smooth border transition and active effect only on icon */}
-      <nav className="md:hidden bg-black/50 backdrop-blur-[2px] py-3 px-2 flex mx-4 my-5 rounded-3xl border border-gray-700 justify-around fixed bottom-0 left-0 right-0 z-50">
+      {/* <nav className="md:hidden bg-black/50 backdrop-blur-[2px] py-3 px-2 flex mx-4 my-5 rounded-3xl border border-gray-700 justify-around fixed bottom-0 left-0 right-0 z-50"> */}
+      <nav className="md:hidden bg-gray-950 backdrop-blur-[2px] py-4 px-2 flex justify-around fixed bottom-0 left-0 right-0 z-50">
         {filteredNavItems.map((item) => {
           const isActive = pathname === item.path;
 
@@ -182,7 +183,7 @@ export default function Header() {
         onClick={scrollToTop}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
-        className={`fixed z-50 bottom-26 sm:bottom-6 right-6 bg-gray-800/10 backdrop-blur-[2px] text-white w-12 h-12 border-2 cursor-pointer border-gray-200/20 rounded-full flex items-center justify-center shadow-lg transition-all duration-300 glass-button-active ${
+        className={`fixed z-50 bottom-26 sm:bottom-6 right-6 bg-gray-800/50 backdrop-blur-[2px] text-white w-12 h-12 border-2 cursor-pointer border-gray-200/20 rounded-full flex items-center justify-center shadow-lg transition-all duration-300 ${
           isHovered ? "bg-gray-700 scale-120" : "scale-100"
         } ${isClicked ? "transform scale-90" : ""}`}
         aria-label="Back to Top"

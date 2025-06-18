@@ -93,28 +93,40 @@ const HeroSlider = () => {
     index === currentSlide ? 'animate-fadeInLeft' : 'opacity-0 -translate-x-10';
 
   return (
-    <div className="relative w-full h-[64vh] md:h-[72vh] sm:h-[75vh] overflow-hidden bg-black border-black">
-    {/* <div className="relative w-full h-[64vh] sm:h-[69vh] overflow-hidden bg-black border-black"> */}
+    <div className="relative w-full h-[65vh] sm:h-[74vh] overflow-hidden border-black">
       {/* Background Image */}
       {slides.map((slide, index) => (
         <div
           key={slide.id}
-          className={`absolute inset-0 transition-opacity duration-1000 ${getSlideAnimation(index)} p-2 border-black`}
+          className={`absolute inset-0 transition-opacity duration-1000 ${getSlideAnimation(index)} border-black`}
         >
-          <div className="relative w-full h-full overflow-hidden border-black rounded-4xl shadow-lg">
+          <div className="relative w-full h-full overflow-hidden border-black shadow-lg">
             <Image
               src={slide.imageUrl}
               alt={slide.title}
               fill
-              className="object-cover filter contrast-75 brightness-90"
+              className="object-cover"
               priority={index === 0}
               sizes="100vw"
             />
-        
-            {/* Vintage dark overlay */}
-            <div className="absolute inset-0 bg-black/40 mix-blend-multiply backdrop-blur-sm"></div>
+
+            {/* This is the key change: a separate div for the blur effect */}
+            {/* Dark overlay on the left 50% */}
+            <div className="absolute inset-0 w-1/2" style={{
+              backgroundImage: 'linear-gradient(to right, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.7) 70%, rgba(0,0,0,0) 100%)', // Adjust gradient for fade within the left 50%
+              filter: 'blur(5px)', // Apply blur directly to this overlay
+              transform: 'translateX(-50%)', // Shift left to control the blur area
+            }}></div>
+            
+            {/* The primary dark overlay with gradient */}
+            <div className="absolute inset-0" style={{
+              backgroundImage: 'linear-gradient(to right, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.7) 35%, rgba(0,0,0,0) 55%, rgba(0,0,0,0) 100%)',
+            }}></div>
+
+            {/* Full dark overlay for small devices only */}
+            <div className="absolute inset-0 bg-black opacity-40 sm:hidden"></div> {/* New overlay */}
           </div>
-        </div>       
+        </div>
       ))}
 
       <div className="mx-auto h-full px-4 sm:px-50 relative z-10">
@@ -127,8 +139,8 @@ const HeroSlider = () => {
                 className={`absolute transition-all duration-700 ease-out ${getContentAnimation(index)}`}
               >
                 <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight 
-                              bg-gradient-to-r from-blue-300 via-blue-500 to-blue-700 
-                              text-transparent bg-clip-text animate-gradient">
+                                  bg-gradient-to-r from-blue-300 via-blue-500 to-blue-700 
+                                  text-transparent bg-clip-text animate-gradient">
                   {slide.title}
                 </h1>
                 <p className="text-lg md:text-xl mt-6 mb-8 max-w-lg opacity-90">
@@ -140,24 +152,6 @@ const HeroSlider = () => {
                 >
                   {slide.ctaText}
                 </button>
-              </div>
-            ))}
-          </div>
-
-          {/* Static image container on desktop */}
-          <div className="hidden lg:block absolute right-0 top-1/2 transform -translate-y-1/2 w-[700px] sm:h-[400px] h-[400px] overflow-hidden rounded-4xl shadow-2xl z-10">
-          {/* <div className="hidden lg:block absolute right-0 top-1/2 transform -translate-y-1/2 w-[500px] sm:h-[300px] h-[400px] overflow-hidden rounded-4xl shadow-2xl z-10"> */}
-            {slides.map((slide, index) => (
-              <div
-                key={slide.id}
-                className={`absolute inset-0 transition-opacity duration-1000 ${getSlideAnimation(index)}`}
-              >
-                <Image
-                  src={slide.imageUrl}
-                  alt={slide.title}
-                  fill
-                  className="object-cover"
-                />
               </div>
             ))}
           </div>

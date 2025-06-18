@@ -34,7 +34,7 @@ export default function HowItWorks() {
   };
 
   return (
-    <section ref={sectionRef} className="w-full py-8 sm:py-12 bg-gray-900">
+    <section ref={sectionRef} className="w-full py-8 sm:py-12 bg-black">
       <div className="mx-auto px-8 sm:px-50">
         <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-12">
           {/* Left side - Video */}

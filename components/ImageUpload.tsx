@@ -115,7 +115,7 @@ export default function ImageUploadRow({
     <div className="flex flex-col items-center justify-center min-h-[25vh] sm:min-h-[17vh] text-black relative bg-black border-black">
     {/* <div className="flex flex-col items-center justify-center min-h-[25vh] sm:min-h-[17vh] text-black relative bg-black border-black"> */}
       {/* Background */}
-      <div className="absolute opacity-50 inset-0 overflow-hidden mr-2 ml-2 rounded-4xl">
+      <div className="absolute opacity-50 inset-0 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500 animate-gradient bg-[length:400%_400%]" />
       </div>
 

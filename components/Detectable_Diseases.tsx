@@ -45,7 +45,7 @@ const DetectableDiseases = () => {
           <source src="https://res.cloudinary.com/dqmeeveij/video/upload/v1750228566/vecteezy_two-people-in-white-lab-coats-looking-at-a-x-ray_56373634_e0dqd7.mp4" type="video/mp4" />
         </video>
 
-        <div className="absolute inset-0 bg-black/10 z-10" />
+        <div className="absolute inset-0 bg-black/40 z-10" />
       </div>
 
       {/* Content */}
@@ -64,7 +64,7 @@ const DetectableDiseases = () => {
             <Link
               key={index}
               href={`/diseases?search=${encodeURIComponent(disease)}`}
-              className="bg-black/30 rounded-lg shadow-md px-8 py-2 sm:px-15 sm:py-3 mx-2 my-2
+              className="bg-gray-300/10 rounded-lg shadow-md px-8 py-2 sm:px-15 sm:py-3 mx-2 my-2
                         backdrop-blur-sm transform transition-all duration-300 ease-in-out
                         hover:scale-105 border
                         hover:border-gray-300"

@@ -101,3 +101,25 @@ body {
   backdrop-filter: blur(8px) saturate(160%);
   -webkit-backdrop-filter: blur(8px) saturate(160%);
 }
+
+@keyframes flip {
+  0% {
+      transform: rotateY(0deg);
+  }
+  100% {
+      transform: rotateY(360deg); /* Or 180deg for a single flip */
+  }
+}
+
+.flip-animation {
+  animation: flip 2s infinite linear; /* Adjust duration, iteration, and timing as needed */
+  transform-style: preserve-3d; /* Important for 3D transforms */
+}
+
+@keyframes shine {
+  0% { transform: translateX(-100%) skewX(-12deg); }
+  100% { transform: translateX(200%) skewX(-12deg); }
+}
+.animate-shine {
+  animation: shine 1.5s infinite;
+}

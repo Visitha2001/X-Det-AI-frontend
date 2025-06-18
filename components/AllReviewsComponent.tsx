@@ -113,12 +113,17 @@ export default function AllReviewsComponent() {
 
   return (
     <div className="space-y-8 bg-gradient-to-b from-blue-900 to-blue-950 px-4 py-8 sm:py-12 sm:px-40">
-      <div className="mb-8 ml-10">
-        <h2 className="text-3xl font-bold text-white mb-2">Patient's Reviews</h2>
-        <h3 className="text-xl font-semibold text-gray-300 mb-2">Hear what our users are saying!</h3>
-        <p className="text-gray-400 mx-auto">
-          Read honest feedback from our community. Newest reviews appear first.
-        </p>
+      <div className='flex sm:ml-8 ml-2'>
+        <div className='h-full bg-blue-950 rounded-full p-3 sm:p-5 justify-center items-center'>
+          <FaStar className='text-4xl text-white flip-animation'/>
+        </div>
+        <div className="mb-8 ml-5">
+          <h2 className="text-3xl font-bold text-white mb-2">Patient's Reviews</h2>
+          <h3 className="text-xl font-semibold text-gray-300 mb-2">Hear what our users are saying!</h3>
+          <p className="text-gray-400 mx-auto">
+            Read honest feedback from our community. Newest reviews appear first.
+          </p>
+        </div>
       </div>
 
       {sortedReviews.length === 0 ? (

@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 
 export default function WhyUsSection() {
   return (
-    <section className="w-full py-8 sm:py-12 bg-black">
+    <section className="w-full py-8 sm:py-12 bg-gray-900">
       <div className="mx-auto px-8 sm:px-50">
         <div className="flex flex-col lg:flex-row items-center gap-12">
           {/* Left side - Content */}

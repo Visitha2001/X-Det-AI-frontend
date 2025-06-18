@@ -50,7 +50,7 @@ export default function ManageReviewsComponent({ reviews, setReviews, username }
 
   if (!username) {
     return (
-      <div className='sm:w-[40%] w-full text-center border-2 border-red-800 p-10 sm:h-[470] h-[220] rounded-4xl justify-center flex flex-col ml-6 items-center'>
+      <div className='sm:w-[40%] w-full text-center border-2 border-red-800 p-10 sm:h-[470] h-[220] rounded-4xl justify-center flex flex-col sm:ml-6 ml-0 mt-3 sm:mt-0 items-center'>
         <div className='bg-red-900 p-5 rounded-full inline-block'>
           <FaStar className='text-red-300 text-2xl'/>
         </div>

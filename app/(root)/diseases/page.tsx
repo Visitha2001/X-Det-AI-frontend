@@ -82,11 +82,39 @@ export default function DiseasesPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-900 sm:p-8 p-1">
-      <div className="sm:px-50 px-2 mx-auto">
-        <div className="flex flex-col sm:flex-row justify-between items-center mb-8 gap-4">
-          <h1 className="text-3xl font-bold text-white">Diseases Information</h1>
+    <div className="min-h-screen bg-gray-900">
+      {/* Video Header Section */}
+      <div className="relative h-[380px] w-full overflow-hidden -mt-20">
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover object-top z-0 
+            [mask-image:linear-gradient(to_bottom,white_100%,transparent_100%)]
+            [-webkit-mask-image:linear-gradient(to_bottom,white_40%,transparent_100%)]"
+          onTimeUpdate={(e) => {
+            const video = e.target as HTMLVideoElement;
+            if (video.currentTime > 15) {
+              video.currentTime = 3;
+            }
+          }}
+          onLoadedMetadata={(e) => {
+            const video = e.target as HTMLVideoElement;
+            video.currentTime = 3;
+          }}
+        >
+          <source src="https://res.cloudinary.com/dqmeeveij/video/upload/v1750220499/supawork-11b0029d044448f7895d49e4193f40da_lc3i86.mp4" type="video/mp4" />
+        </video>
 
+        <div className="relative z-10 flex items-center justify-center h-full px-4">
+          <h1 className="text-5xl font-bold text-gray-300 text-center">Diseases Information</h1>
+        </div>
+      </div>
+
+      {/* Main Content Section */}
+      <div className="sm:px-50 px-2 sm:py-8 py-2 mx-auto -mt-6">
+        <div className="flex flex-col sm:flex-row justify-end items-center mb-8 gap-4">
           <div className="relative w-full sm:w-1/3">
             <span className="absolute left-5 top-1/2 transform -translate-y-1/2 text-gray-400">
               <FaSearch />
@@ -141,7 +169,6 @@ export default function DiseasesPage() {
           </div>
         ) : (
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-          {/* <div className="grid grid-cols-1 lg:grid-cols-3 gap-8"> */}
             {filteredDiseases.map((disease) => (
               <DiseaseCard key={disease.id} disease={disease} />
             ))}

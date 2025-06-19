@@ -24,7 +24,22 @@ export default function ChatbotComponent({ disease }: ChatbotComponentProps) {
   const [suggestedQuestions, setSuggestedQuestions] = useState<string[]>([]);
   const [showSuggestedQuestions, setShowSuggestedQuestions] = useState(true);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const messagesContainerRef = useRef<HTMLDivElement>(null);
   const [copied, setCopied] = useState(false);
+
+  // Scroll to bottom when messages change
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
+  const scrollToBottom = () => {
+    if (messagesContainerRef.current) {
+      messagesContainerRef.current.scrollTo({
+        top: messagesContainerRef.current.scrollHeight,
+        behavior: 'smooth'
+      });
+    }
+  };
 
   // Load initial suggested questions
   useEffect(() => {
@@ -118,18 +133,15 @@ export default function ChatbotComponent({ disease }: ChatbotComponentProps) {
   };
 
   return (
-    <div
-      // className="flex flex-col sm:h-145 h-180 mx-auto border border-gray-700 bg-gray-800 rounded-xl shadow-lg overflow-hidden"
-      className="flex flex-col sm:h-200 h-180 mx-auto border border-gray-700 bg-gray-800 rounded-xl shadow-lg overflow-hidden"
-    >
+    <div className="flex flex-col sm:h-200 h-180 mx-auto border border-gray-800/30 bg-gray-800/50 rounded-xl shadow-lg overflow-hidden">
       {/* Header */}
-      <div className="bg-gray-800 text-gray-100 p-4">
+      <div className="bg-gray-800/50 text-gray-100 p-4">
         <div className="flex justify-between items-center">
           <h2 className="text-xl font-bold">Medical Chatbot</h2>
           {messages.length > 0 && (
             <button
               onClick={handleClearChat}
-              className="text-sm bg-gray-700 hover:bg-gray-600 text-red-600 px-3 py-1 rounded-lg hover:text-white border border-red-500"
+              className="text-sm bg-red-500/50 hover:bg-red-950/50 text-red-100 px-3 py-1 rounded-lg"
             >
               Clear Chat
             </button>
@@ -170,7 +182,11 @@ export default function ChatbotComponent({ disease }: ChatbotComponentProps) {
       </div>
 
       {/* Chat messages */}
-      <div className="flex-1 p-4 overflow-y-auto bg-gray-800 text-gray-100 custom-scrollbar hide-scrollbar">
+      <div 
+        ref={messagesContainerRef}
+        className="flex-1 p-4 overflow-y-auto bg-gray-800/50 text-gray-100 custom-scrollbar"
+        style={{ maxHeight: 'calc(100vh - 300px)' }}
+      >
         {messages.length === 0 ? (
           <div className="flex items-center justify-center h-full text-gray-400">
             {botType === 'local' ? (
@@ -178,7 +194,7 @@ export default function ChatbotComponent({ disease }: ChatbotComponentProps) {
                 <p>Ask your question about **{disease}** or choose from suggested questions below</p>
               </div>
             ) : (
-              <div className="flex flex-col gap-2">
+              <div className="flex flex-col gap-2 text-center">
                 <p>Ask any medical question to the **Gemini medical assistant**</p>
                 <p className="text-red-200 p-2 bg-red-900/50 rounded-xl">
                   In Gemini chat you need to provide the disease name and more details
@@ -236,10 +252,10 @@ export default function ChatbotComponent({ disease }: ChatbotComponentProps) {
 
       {/* Suggested questions (local bot only) */}
       {botType === 'local' && suggestedQuestions.length > 0 && (
-        <div className="border-t border-gray-700 bg-gray-800">
+        <div className="border-t border-gray-700 bg-gray-800/50">
           <button
             onClick={toggleSuggestedQuestions}
-            className="w-full flex justify-between items-center p-4 hover:bg-gray-700 transition-colors"
+            className="w-full flex justify-between items-center p-4 hover:bg-gray-800 transition-colors"
           >
             <h3 className="text-sm font-medium text-gray-300">Suggested Questions</h3>
             {showSuggestedQuestions ? (
@@ -255,7 +271,7 @@ export default function ChatbotComponent({ disease }: ChatbotComponentProps) {
                   <button
                     key={index}
                     onClick={() => handleSuggestedQuestionClick(question)}
-                    className="text-left text-sm bg-gray-700 hover:bg-blue-900 hover:border-2 hover:border-blue-500 text-gray-100 px-2 py-1 rounded-xl border border-gray-600"
+                    className="text-left text-sm bg-gray-700/50 hover:bg-blue-900/80 hover:border-2 hover:border-blue-500/30 text-gray-100 px-2 py-1 rounded-xl border border-gray-600/50"
                   >
                     {question}
                   </button>
@@ -267,7 +283,7 @@ export default function ChatbotComponent({ disease }: ChatbotComponentProps) {
       )}
 
       {/* Input area */}
-      <div className="p-4 border-t border-gray-700 bg-gray-800">
+      <div className="p-4 border-t border-gray-700/30 bg-gray-800/50">
         <div className="flex">
           <textarea
             value={input}

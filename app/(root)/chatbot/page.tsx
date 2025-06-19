@@ -119,7 +119,7 @@ export default function BotPage() {
 
   return (
     <>
-      <div className="flex flex-col h-full w-full sm:px-80 px-8 sm:py-7 py-2 mx-auto bg-gray-900 shadow-lg overflow-hidden border-b-2 border-gray-700">
+      <div className="flex flex-col h-full w-full sm:px-80 px-8 sm:py-7 py-15 mx-auto bg-gray-900 shadow-lg overflow-hidden border-b-2 border-gray-700">
       {/* <div className="flex flex-col h-full w-full sm:px-80 px-8 sm:py-4 py-2 mx-auto bg-gray-900 shadow-lg overflow-hidden border-b-2 border-gray-700"> */}
         {/* Header */}
         <div className="bg-gray-800 text-gray-100 p-4 sm:p-6 rounded-3xl mb-2 sm:mb-3">

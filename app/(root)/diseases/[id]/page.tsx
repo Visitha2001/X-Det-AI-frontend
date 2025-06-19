@@ -7,6 +7,7 @@ import { FaSpinner } from 'react-icons/fa';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { notFound } from 'next/navigation';
+import Image from 'next/image';
 
 interface Disease {
   id: string;
@@ -52,7 +53,13 @@ export default function DiseaseDetailsPage() {
   if (loading) {
     return (
       <div className="absolute inset-0 bg-gray-900 bg-opacity-90 flex items-center justify-center z-10 rounded-xl flex-col">
-        <FaSpinner className="animate-spin text-blue-400 text-5xl mb-4" />
+        {/* <FaSpinner className="animate-spin text-blue-400 text-5xl mb-4" /> */}
+        <Image
+          src='/assets/Loader.gif'
+          alt='loader'
+          width={100}
+          height={100}
+        />
         <div className="text-center text-blue-400">Loading disease details...</div>
       </div>
     );

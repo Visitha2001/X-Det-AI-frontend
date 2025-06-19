@@ -42,7 +42,13 @@ export default function HistoryPage() {
   if (loading) {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900 text-white p-4">
-        <FaSpinner className="animate-spin text-4xl text-blue-400 mb-4" />
+        {/* <FaSpinner className="animate-spin text-4xl text-blue-400 mb-4" /> */}
+        <Image
+          src='/assets/Loader.gif'
+          alt='loader'
+          width={100}
+          height={100}
+        />
         <p>Loading your medical history...</p>
       </div>
     );

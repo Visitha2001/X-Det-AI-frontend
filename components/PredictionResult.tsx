@@ -8,6 +8,7 @@ import {
     savePredictionWithDetails
 } from '@/services/disease_service';
 import { FaSpinner } from 'react-icons/fa';
+import Image from 'next/image';
 
 interface PredictionResultsProps {
   imageUrl: string;
@@ -36,7 +37,6 @@ export default function PredictionResults({
       window.location.href = `/home/results?image=${encodeURIComponent(imageUrl)}`;
     } catch (err) {
       console.error('Failed to save results:', err);
-      // Fallback to session storage if DB save fails
       try {
         savePredictionDataToSession(prediction);
         const topDisease = prediction.top_5_diseases[0].disease;
@@ -54,14 +54,14 @@ export default function PredictionResults({
 
   if (scanError) {
     return (
-      <div className="w-full bg-gray-900 rounded-lg p-6 mt-4 max-w-3xl mx-auto border border-gray-700">
+      <div className="w-full bg-gray-900/50 rounded-lg p-6 mt-4 max-w-3xl mx-auto border border-gray-700/50 backdrop-blur-md">
         <div className="flex flex-col items-center">
           <div className="text-red-400 text-4xl mb-4">⚠️</div>
           <p className="text-lg font-medium text-red-400 mb-2">Error</p>
           <p className="text-gray-300 mb-4">{scanError}</p>
           <button
             onClick={onRetry}
-            className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
+            className="px-4 py-2 bg-blue-600/80 text-white rounded-lg hover:bg-blue-700/80 transition backdrop-blur-sm"
           >
             Try Again
           </button>
@@ -73,15 +73,21 @@ export default function PredictionResults({
   if (!prediction && !isScanning) return null;
 
   return (
-    <div className="w-full p-2 border-2 border-gray-800 bg-black">
+    <div className="w-full p-2 border-2 border-gray-800/30 bg-black backdrop-blur-sm">
       {/* Processing Modal */}
       {isProcessing && (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-xs flex items-center justify-center z-50">
-          <div className="bg-gray-800 rounded-4xl p-8 max-w-md w-full mx-4 border border-gray-700">
+          <div className="bg-gray-800/70 rounded-4xl p-8 max-w-md w-full mx-4 border border-gray-700/50 backdrop-blur-lg">
             <div className="flex flex-col items-center">
-              <FaSpinner className="animate-spin text-blue-400 text-5xl mb-4" />
+              {/* <FaSpinner className="animate-spin text-blue-400 text-5xl mb-4" /> */}
+              <Image
+                src='/assets/Loader.gif'
+                alt='loader'
+                width={100}
+                height={100}
+              />
               <h3 className="text-xl font-bold text-gray-100 mb-2">Processing Results</h3>
-              <p className="text-gray-400 text-center mb-4">
+              <p className="text-gray-300 text-center mb-4">
                 Please wait while we save your scan results and prepare the detailed analysis.
               </p>
               {processingError && (
@@ -92,20 +98,25 @@ export default function PredictionResults({
         </div>
       )}
 
-      <div className="relative bg-gray-800 rounded-4xl p-6 sm:px-40 sm:py-10 max-w-full mx-auto overflow-hidden border border-gray-700">
-      {/* <div className="relative bg-gray-800 rounded-4xl p-6 sm:px-40 sm:py-10 max-w-full mx-auto overflow-hidden border border-gray-700"> */}
+      <div className="relative bg-gray-600/40 rounded-2xl py-6 sm:py-11 sm:px-42 max-w-full mx-auto overflow-hidden border border-gray-700/50 backdrop-blur-md">
         {/* Scanning overlay */}
         {isScanning && (
-          <div className="absolute inset-0 bg-gray-900 bg-opacity-90 flex items-center justify-center z-10 rounded-xl flex-col">
-            <FaSpinner className="animate-spin text-blue-400 text-5xl mb-4" />
+          <div className="absolute inset-0 bg-gray-900/90 flex items-center justify-center z-10 rounded-xl flex-col backdrop-blur-sm">
+            {/* <FaSpinner className="animate-spin text-blue-400 text-5xl mb-4" /> */}
+            <Image
+              src='/assets/Loader.gif'
+              alt='loader'
+              width={100}
+              height={100}
+            />
             <p className="text-gray-100 text-xl font-bold mt-2">Analyzing X-Ray image...</p>
-            <p className="text-gray-400 text-sm mt-1">Please wait while we analyze your X-Ray image.</p>
+            <p className="text-gray-300 text-sm mt-1">Please wait while we analyze your X-Ray image.</p>
           </div>
         )}
 
         <h2 className="text-2xl font-bold text-gray-100 mb-6">
           {isScanning ? (
-            <div className="h-8 w-48 bg-gradient-to-r from-gray-700 via-gray-600 to-gray-700 rounded-full animate-pulse"></div>
+            <div className="h-8 w-48 bg-gradient-to-r from-gray-700/50 via-gray-600/50 to-gray-700/50 rounded-full animate-pulse"></div>
           ) : (
             'Scan Results'
           )}
@@ -113,9 +124,9 @@ export default function PredictionResults({
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Image Column */}
-          <div className="bg-gray-700 rounded-2xl overflow-hidden">
+          <div className="bg-gray-700/50 rounded-2xl overflow-hidden backdrop-blur-sm">
             {isScanning ? (
-              <div className="w-full h-50 bg-gradient-to-r from-gray-700 via-gray-600 to-gray-700 animate-pulse"></div>
+              <div className="w-full h-50 bg-gradient-to-r from-gray-700/50 via-gray-600/50 to-gray-700/50 animate-pulse"></div>
             ) : (
               <img
                 src={imageUrl}
@@ -129,39 +140,50 @@ export default function PredictionResults({
           <div className="lg:col-span-2">
             {isScanning ? (
               <>
-                <div className="h-6 w-64 bg-gradient-to-r from-gray-700 via-gray-600 to-gray-700 rounded-full animate-pulse mb-6"></div>
+                <div className="h-6 w-64 bg-gradient-to-r from-gray-700/50 via-gray-600/50 to-gray-700/50 rounded-full animate-pulse mb-6"></div>
                 <div className="grid md:grid-cols-2 gap-4">
                   {[...Array(5)].map((_, index) => (
-                    <div key={index} className="bg-gray-700 rounded-lg p-4 border border-gray-600">
+                    <div key={index} className="bg-gray-700/50 rounded-lg p-4 border border-gray-600/50 backdrop-blur-sm">
                       <div className="flex justify-between items-center mb-3">
-                        <div className="h-5 w-32 bg-gradient-to-r from-gray-600 via-gray-500 to-gray-600 rounded-full animate-pulse"></div>
-                        <div className="h-5 w-12 bg-gradient-to-r from-gray-600 via-gray-500 to-gray-600 rounded-full animate-pulse"></div>
+                        <div className="h-5 w-32 bg-gradient-to-r from-gray-600/50 via-gray-500/50 to-gray-600/50 rounded-full animate-pulse"></div>
+                        <div className="h-5 w-12 bg-gradient-to-r from-gray-600/50 via-gray-500/50 to-gray-600/50 rounded-full animate-pulse"></div>
                       </div>
-                      <div className="w-full bg-gray-600 rounded-full h-2.5">
-                        <div className="bg-gray-500 h-2.5 rounded-full animate-pulse" style={{ width: `${Math.random() * 100}%` }}></div>
+                      <div className="w-full bg-gray-600/50 rounded-full h-2.5">
+                        <div className="bg-gray-500/50 h-2.5 rounded-full animate-pulse" style={{ width: `${Math.random() * 100}%` }}></div>
                       </div>
                     </div>
                   ))}
                 </div>
-                <div className="mt-6 h-5 w-40 bg-gradient-to-r from-gray-700 via-gray-600 to-gray-700 rounded-full animate-pulse"></div>
+                <div className="mt-6 h-5 w-40 bg-gradient-to-r from-gray-700/50 via-gray-600/50 to-gray-700/50 rounded-full animate-pulse"></div>
               </>
             ) : (
               <>
                 <h3 className="text-lg font-semibold mb-4 text-gray-200">Top 5 Predicted Conditions</h3>
                 <div className="grid md:grid-cols-2 gap-4">
                   {prediction.top_5_diseases.map((item, index) => (
-                    <div key={index} className="bg-gray-700 rounded-2xl p-4 border border-blue-500/50 shadow-lg">
-                      <div className="flex justify-between items-center mb-1">
-                        <span className="font-medium text-gray-100">{item.disease}</span>
-                        <span className="text-blue-400 font-semibold">
-                          {(item.probability * 100).toFixed(2)}%
-                        </span>
+                    <div 
+                      key={index} 
+                      className="bg-gray-800/30 rounded-2xl p-4 border border-blue-500/30 shadow-lg backdrop-blur-sm hover:bg-gray-800/70 transition-all duration-300 group relative overflow-hidden"
+                    >
+                      {/* Shine effect */}
+                      <div className="absolute inset-0 overflow-hidden rounded-xl">
+                        <div className="absolute top-0 left-0 w-full h-full opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                          <div className="absolute top-0 left-0 w-1/2 h-full bg-gradient-to-r from-transparent via-white/5 to-transparent transform -skew-x-12 animate-shine"></div>
+                        </div>
                       </div>
-                      <div className="w-full bg-blue-600 rounded-full h-2.5">
-                        <div
-                          className="bg-blue-300 h-2.5 rounded-full"
-                          style={{ width: `${item.probability * 100}%` }}
-                        ></div>
+                      <div className="relative z-10">
+                        <div className="flex justify-between items-center mb-1">
+                          <span className="font-medium text-gray-100">{item.disease}</span>
+                          <span className="text-blue-400 font-semibold">
+                            {(item.probability * 100).toFixed(2)}%
+                          </span>
+                        </div>
+                        <div className="w-full bg-blue-600/50 rounded-full h-2.5">
+                          <div
+                            className="bg-blue-300 h-2.5 rounded-full"
+                            style={{ width: `${item.probability * 100}%` }}
+                          ></div>
+                        </div>
                       </div>
                     </div>
                   ))}
@@ -171,7 +193,7 @@ export default function PredictionResults({
                   <button
                     onClick={handleViewDetails}
                     disabled={isProcessing}
-                    className="inline-flex items-center px-5 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-medium rounded-2xl shadow-md hover:from-blue-700 hover:to-blue-800 transition-all duration-300 disabled:opacity-70 disabled:cursor-not-allowed"
+                    className="inline-flex items-center px-5 py-3 bg-gradient-to-r from-blue-600/80 to-blue-700/80 text-white font-medium rounded-2xl shadow-md hover:from-blue-700/80 hover:to-blue-800/80 transition-all duration-300 disabled:opacity-70 disabled:cursor-not-allowed backdrop-blur-sm"
                   >
                     {isProcessing ? (
                       <>

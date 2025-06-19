@@ -6,6 +6,7 @@ import { getAllDiseases } from '@/services/diseaseService';
 import DiseaseCard from '@/components/DiseaseCard';
 import { FaSpinner, FaSearch } from 'react-icons/fa';
 import AllReviewsComponent from '@/components/AllReviewsComponent';
+import Image from 'next/image';
 
 interface Disease {
   id: string;
@@ -68,7 +69,13 @@ export default function DiseasesPage() {
   if (loading) {
     return (
       <div className="absolute inset-0 bg-gray-900 bg-opacity-90 flex items-center justify-center z-10 rounded-xl flex-col">
-        <FaSpinner className="animate-spin text-blue-400 text-5xl mb-4" />
+        {/* <FaSpinner className="animate-spin text-blue-400 text-5xl mb-4" /> */}
+        <Image
+           src='/assets/Loader.gif'
+           alt='loader'
+           width={100}
+           height={100}
+        />
         <div className="text-center text-blue-400">Loading diseases...</div>
       </div>
     );
@@ -114,7 +121,7 @@ export default function DiseasesPage() {
       </div>
 
       {/* Main Content Section */}
-      <div className="sm:px-50 px-2 sm:py-8 py-2 mx-auto -mt-6">
+      <div className="sm:px-50 px-6 sm:py-8 py-2 mx-auto -mt-6">
         <div className="flex flex-col sm:flex-row justify-end items-center mb-8 gap-4">
           <div className="relative w-full sm:w-1/3">
             <span className="absolute left-5 top-1/2 transform -translate-y-1/2 text-gray-400">
@@ -169,7 +176,7 @@ export default function DiseasesPage() {
             <p className="text-sm mt-2">Try a different search term.</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 mb-8 sm:mb-0">
             {filteredDiseases.map((disease) => (
               <DiseaseCard key={disease.id} disease={disease} />
             ))}

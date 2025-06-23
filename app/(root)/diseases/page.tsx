@@ -7,6 +7,11 @@ import DiseaseCard from '@/components/DiseaseCard';
 import { FaSpinner, FaSearch } from 'react-icons/fa';
 import AllReviewsComponent from '@/components/AllReviewsComponent';
 import Image from 'next/image';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: "Diseases"
+}
 
 interface Disease {
   id: string;

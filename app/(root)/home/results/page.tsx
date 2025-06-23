@@ -12,11 +12,6 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { FaSpinner } from 'react-icons/fa';
 import ChatbotComponent from '@/components/ChatbotComponent';
-import { Metadata } from 'next';
-
-export const metadata: Metadata = {
-  title: "Results"
-}
 
 interface DiseaseDetails {
   disease: string;

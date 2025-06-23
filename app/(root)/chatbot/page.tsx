@@ -324,7 +324,7 @@ export default function BotPage() {
           </p>
         </div>
       </div>
-      <div className="bg-red-900 bg-opacity-20 text-red-200 p-4 sm:p-10">
+      <div className="bg-red-900 bg-opacity-20 text-red-200 p-4 sm:py-10 sm:px-50">
         <h2 className="text-2xl font-bold text-red-300 mb-2">⚠️ Important Disclaimer</h2>
         <p className="text-sm leading-relaxed">
           This AI-powered medical chatbot is intended for informational and educational purposes only. It is not a substitute for professional medical advice, diagnosis, or treatment.

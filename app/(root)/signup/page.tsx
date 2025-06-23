@@ -5,6 +5,11 @@ import Link from 'next/link'
 import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { registerUser } from '@/services/auth_secices'
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: "Sign-Up"
+}
 
 const Page = () => {
   const router = useRouter()

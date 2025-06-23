@@ -5,6 +5,11 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { loginUser } from '@/services/auth_secices';
 import { useAuth } from '@/context/AuthContext';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: "Sign-In"
+}
 
 const Page = () => {
   const [username, setUsername] = useState('');

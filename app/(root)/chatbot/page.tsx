@@ -4,6 +4,11 @@ import { chatService } from '@/services/chat_service';
 import type { BotType, ChatResponse, DiseaseQuestionsResponse } from '@/services/chat_service';
 import { FaCheck, FaCopy, FaPaperPlane } from 'react-icons/fa';
 import ReactMarkdown from 'react-markdown';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: "ChatBot"
+}
 
 const DISEASE_LABELS = [
   'Emphysema', 'Infiltration', 'Pleural_Thickening',

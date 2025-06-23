@@ -27,6 +27,8 @@ const generateColorFromString = (str: string) => {
   return color;
 };
 
+const maxIndex = 6;
+
 export default function AllReviewsComponent() {
   const [reviews, setReviews] = useState<Review[]>([]);
   const [loading, setLoading] = useState(true);
@@ -139,7 +141,7 @@ export default function AllReviewsComponent() {
         <div className="relative">
           <button
             onClick={handlePrev}
-            className="absolute left-0 top-1/2 -translate-y-1/2 bg-gray-700/80 hover:bg-gray-600 p-3 rounded-full text-white z-20 transition-all disabled:opacity-30 shadow-lg hover:scale-110"
+            className="absolute left-0 top-[45%] -translate-y-1/2 bg-gray-700/80 hover:bg-gray-600 p-3 rounded-full text-white z-20 transition-all disabled:opacity-30 shadow-lg hover:scale-110"
             disabled={currentIndex === 0}
             aria-label="Previous review"
           >
@@ -148,7 +150,7 @@ export default function AllReviewsComponent() {
           
           <button
             onClick={handleNext}
-            className="absolute right-0 top-1/2 -translate-y-1/2 bg-gray-700/80 hover:bg-gray-600 p-3 rounded-full text-white z-20 transition-all disabled:opacity-30 shadow-lg hover:scale-110"
+            className="absolute right-0 top-[45%] -translate-y-1/2 bg-gray-700/80 hover:bg-gray-600 p-3 rounded-full text-white z-20 transition-all disabled:opacity-30 shadow-lg hover:scale-110"
             disabled={currentIndex >= maxIndex}
             aria-label="Next review"
           >
@@ -157,7 +159,7 @@ export default function AllReviewsComponent() {
 
           <div
             ref={sliderRef}
-            className="flex overflow-x-hidden snap-x snap-mandatory scroll-smooth px-4"
+            className="flex overflow-x-hidden snap-x snap-mandatory scroll-smooth px-4 mb-6"
           >
             {sortedReviews.map((review) => (
               <div
@@ -212,7 +214,7 @@ export default function AllReviewsComponent() {
             ))}
           </div>
 
-          <div className="flex justify-center mt-6 space-x-2">
+          <div className="flex justify-center space-x-2">
             {Array.from({ length: maxIndex + 1 }).map((_, index) => (
               <button
                 key={index}

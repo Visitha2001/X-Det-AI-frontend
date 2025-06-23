@@ -6,6 +6,9 @@ export const metadata = {
     openGraph: {
       images: ['/assets/Dark_Logo.png'],
     },
+    robots: {
+      follow: true,
+    }
   };
   
 export default function Layout({ children }: { children: React.ReactNode }) {

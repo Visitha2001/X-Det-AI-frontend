@@ -1,6 +1,17 @@
 // app/admin/layout.tsx
 import AdminSidebar from '@/components/admin/AdminHeader';
+import { Metadata } from 'next';
 import { Toaster } from 'react-hot-toast';
+
+
+export const metadata: Metadata = {
+  title : "Admin - X-Det-AI",
+  description: "X-Det-AI is a AI based app for detecting X-ray diseases",
+  twitter: {
+    card: "summary_large_image",
+    images: ["/assets/Dark_Logo.png"],
+  },
+};
 
 export default function AdminLayout({
   children,

@@ -6,11 +6,6 @@ import AllReviewsComponent from '@/components/AllReviewsComponent';
 import { useEffect, useState } from 'react';
 import { subscribeUser } from '@/services/subscribe_service';
 import toast from 'react-hot-toast';
-import { Metadata } from 'next';
-
-export const metadata: Metadata = {
-  title: "About"
-}
 
 export default function page() {
   const fadeIn = {

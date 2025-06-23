@@ -10,6 +10,11 @@ import DetectableDiseases from '@/components/Detectable_Diseases';
 import HowItWorks from '@/components/HowItWorks';
 import AllReviewsComponent from '@/components/AllReviewsComponent';
 import ManageReviewsComponent from '@/components/ManageReviewsComponent';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: "Home"
+}
 
 export default function HomePage() {
   const [uploadResult, setUploadResult] = useState(null);

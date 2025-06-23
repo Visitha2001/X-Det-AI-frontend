@@ -10,6 +10,11 @@ import { format } from 'date-fns';
 import Image from 'next/image';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: "History"
+}
 
 export default function HistoryPage() {
   const { data: session } = useSession();

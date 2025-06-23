@@ -16,8 +16,15 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "X-Det-AI",
+  title: {
+    default: "X-Det-AI",
+    template: "%s - X-Det-AI"
+  },
   description: "X-Det-AI is a AI based app for detecting X-ray diseases",
+  twitter: {
+    card: "summary_large_image",
+    images: ["/assets/Dark_Logo.png"],
+  },
 };
 
 export default function RootLayout({

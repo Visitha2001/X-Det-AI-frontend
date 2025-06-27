@@ -48,7 +48,7 @@ export default function MakeReviewComponent() {
 
   return (
     <div className='sm:flex flex-col-2'>
-      <div className="w-full sm:w-[60%] bg-gray-900 p-6 rounded-4xl shadow-lg border border-blue-500">
+      <div className="w-full sm:w-[60%] bg-gray-800/60 p-6 rounded-4xl shadow-lg">
         <h2 className="text-xl font-bold text-blue-400 mb-4">Write a Review</h2>
         {error && <p className="text-red-400 mb-4">{error}</p>}
         <form onSubmit={handleSubmit}>

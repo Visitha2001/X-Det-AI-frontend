@@ -50,7 +50,7 @@ export default function ManageReviewsComponent({ reviews, setReviews, username }
 
   if (!username) {
     return (
-      <div className='sm:w-[40%] w-full text-center border-2 border-red-800 p-10 sm:h-[470] h-[220] rounded-4xl justify-center flex flex-col sm:ml-6 ml-0 mt-3 sm:mt-0 items-center'>
+      <div className='sm:w-[40%] w-full text-center bg-red-900/50 p-10 sm:h-[470] h-[220] rounded-4xl justify-center flex flex-col sm:ml-6 ml-0 mt-3 sm:mt-0 items-center'>
         <div className='bg-red-900 p-5 rounded-full inline-block'>
           <FaStar className='text-red-300 text-2xl'/>
         </div>
@@ -68,7 +68,7 @@ export default function ManageReviewsComponent({ reviews, setReviews, username }
   }
 
   return (
-    <div className="sm:w-[40%] w-full sm:pl-6 pl-0 space-y-6 sm:mt-0 mt-10">
+    <div className="sm:w-[40%] w-full sm:pl-6 pl-0  space-y-6 sm:mt-0 mt-10">
       <div className="flex justify-between items-center">
         <h2 className="text-2xl font-bold text-blue-400">Your Reviews</h2>
         {reviews.length > 0 && (
@@ -82,8 +82,8 @@ export default function ManageReviewsComponent({ reviews, setReviews, username }
       </div>
 
       {reviews.length === 0 ? (
-        <div className='text-center border-2 border-blue-800 p-10 sm:h-[375] h-[220] rounded-4xl justify-center flex flex-col items-center'>
-            <div className='bg-blue-900 p-5 rounded-full inline-block'>
+        <div className='bg-gray-800/60 text-center p-10 sm:h-[375] h-[220] rounded-4xl justify-center flex flex-col items-center'>
+            <div className='p-5 bg-blue-800/60 rounded-full inline-block'>
                 <FaStar className='text-blue-400 text-2xl'/>
             </div>
             <p className="text-gray-400 mt-4">You haven't submitted any reviews yet.</p> 
@@ -93,7 +93,7 @@ export default function ManageReviewsComponent({ reviews, setReviews, username }
           {reviews.map((review) => (
             <div
               key={review._id}
-              className="bg-gray-900 p-4 rounded-2xl shadow border-2 border-blue-600"
+              className="bg-gray-800/60 p-4 rounded-2xl shadow"
             >
               
               <h3 className="text-blue-300 sm:text-md text-sm">{review.username}</h3>

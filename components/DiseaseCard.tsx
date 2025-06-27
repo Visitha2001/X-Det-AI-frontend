@@ -19,7 +19,7 @@ interface DiseaseCardProps {
 export default function DiseaseCard({ disease }: DiseaseCardProps) {
   return (
     <Link href={`/diseases/${disease.id}`}>
-      <div className="bg-gray-800 rounded-3xl shadow-lg overflow-hidden border border-gray-700 hover:border-blue-500 transition-all duration-300 hover:shadow-xl hover:-translate-y-1 h-full flex flex-col">
+      <div className="bg-gray-800 rounded-3xl shadow-lg overflow-hidden bordertransition-all duration-300 hover:shadow-xl hover:-translate-y-1 h-full flex flex-col">
         {disease.imageUrl && (
           <div className="h-48 overflow-hidden">
             <img 

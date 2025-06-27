@@ -45,14 +45,14 @@ export default function ServicesSection() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 sm:mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 sm:mb-8 mb-0">
           {services.map((service, index) => (
             <div 
               key={index}
-              className="relative bg-gray-800/20 rounded-4xl p-8 border-2 border-gray-600/30 transition-all duration-300 hover:shadow-lg backdrop-blur-lg overflow-hidden group"
-              style={{
-                background: 'linear-gradient(135deg, rgba(31, 41, 55, 0.4) 0%, rgba(31, 41, 55, 0.1) 100%)',
-              }}
+              className="relative bg-gray-800/40 rounded-4xl p-8 border-2 border-gray-800/30 transition-all duration-300 hover:shadow-lg backdrop-blur-lg overflow-hidden group"
+              // style={{
+              //   background: 'linear-gradient(135deg, rgba(31, 41, 55, 0.4) 0%, rgba(31, 41, 55, 0.1) 100%)',
+              // }}
             >
               {/* Darker reflection effect */}
               <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">

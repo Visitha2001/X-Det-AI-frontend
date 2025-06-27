@@ -84,7 +84,7 @@ export default function DiseaseDetailsPage() {
 
   return (
     <div className="min-h-screen bg-gray-900 p-8">
-      <div className="sm:px-30 px-4 w-full mx-auto">
+      <div className="sm:px-42 px-4 w-full mx-auto">
         <div className="mb-8">
           <h1 className="text-4xl font-bold text-blue-500 mb-10">{disease.name}</h1>
         </div>

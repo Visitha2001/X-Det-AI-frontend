@@ -75,17 +75,17 @@ export default function page() {
             className="max-w-md mx-auto"
           >
             <motion.p 
-              initial="hidden"
-              animate="visible"
-              variants={{ ...fadeIn, transition: { delay: 0.8 } }}
+              // initial="hidden"
+              // animate="visible"
+              // variants={{ ...fadeIn, transition: { delay: 0.8 } }}
               className="text-gray-400 mb-4"
             >
               Subscribe to our newsletter for the latest in AI diagnostics.
             </motion.p>
             <motion.div 
-              initial="hidden"
-              animate="visible"
-              variants={{ ...fadeIn, transition: { delay: 1 } }}
+              // initial="hidden"
+              // animate="visible"
+              // variants={{ ...fadeIn, transition: { delay: 1 } }}
               className="flex flex-col sm:inline md:flex md:flex-row md:space-x-2 space-y-2 md:space-y-0"
             >
               <input
@@ -103,9 +103,9 @@ export default function page() {
                 className="bg-gray-800 text-white px-4 py-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 w-full"
               />
               <motion.button
-                initial="hidden"
-                animate="visible"
-                variants={{ ...fadeIn, transition: { delay: 1.2 } }}
+                // initial="hidden"
+                // animate="visible"
+                // variants={{ ...fadeIn, transition: { delay: 1.2 } }}
                 onClick={handleSubscribe}
                 disabled={loading}
                 className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-xl transition-colors w-full md:w-auto"
@@ -188,19 +188,19 @@ export default function page() {
                   and MRIs, with current focus on pulmonary, neurological, and cardiovascular conditions.
                 </p>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="bg-gray-900/50 p-4 rounded-xl border border-gray-800">
+                  <div className="bg-gray-800/50 p-4 rounded-xl">
                     <h3 className="text-blue-500 font-semibold mb-2">Medical Imaging</h3>
                     <p className="text-gray-300 text-sm">X-ray, CT, MRI, Ultrasound analysis</p>
                   </div>
-                  <div className="bg-gray-900/50 p-4 rounded-xl border border-gray-800">
+                  <div className="bg-gray-800/50 p-4 rounded-xl">
                     <h3 className="text-blue-500 font-semibold mb-2">Specializations</h3>
                     <p className="text-gray-300 text-sm">Pulmonary, Neurological, Cardiovascular</p>
                   </div>
-                  <div className="bg-gray-900/50 p-4 rounded-xl border border-gray-800">
+                  <div className="bg-gray-800/50 p-4 rounded-xl">
                     <h3 className="text-blue-500 font-semibold mb-2">Technologies</h3>
                     <p className="text-gray-300 text-sm">Deep Learning, Computer Vision, NLP</p>
                   </div>
-                  <div className="bg-gray-900/50 p-4 rounded-xl border border-gray-800">
+                  <div className="bg-gray-800/50 p-4 rounded-xl">
                     <h3 className="text-blue-500 font-semibold mb-2">Applications</h3>
                     <p className="text-gray-300 text-sm">Hospitals, Clinics, Telemedicine</p>
                   </div>
@@ -239,7 +239,7 @@ export default function page() {
                   X-DetAI was born from a personal experience when our founder's family member 
                   experienced a misdiagnosis that nearly cost them their life.
                 </p>
-                <div className="bg-gray-900/50 p-6 rounded-xl border-l-4 border-blue-500">
+                <div className="bg-gray-800/50 p-6 rounded-xl border-l-4 border-blue-500">
                   <p className="italic text-gray-300">
                     "We believe every patient deserves accurate, timely diagnoses regardless of geography 
                     or economic status. AI shouldn't replace doctors, but empower them with superhuman 

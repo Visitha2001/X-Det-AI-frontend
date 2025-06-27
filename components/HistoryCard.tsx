@@ -14,7 +14,7 @@ interface HistoryCardProps {
 export default function HistoryCard({ item, onClick }: HistoryCardProps) {
   return (
     <div 
-      className="bg-gray-800 sm:h-110 h-115 rounded-4xl p-4 mb-4 border border-gray-700 hover:border-blue-500 transition-colors cursor-pointer"
+      className="bg-gray-800/80 sm:h-110 h-115 rounded-4xl p-4 mb-4 border border-gray-950 hover:border-blue-600 transition-colors cursor-pointer"
       // className="bg-gray-800 sm:h-115 h-115 rounded-4xl p-4 mb-4 border border-gray-700 hover:border-blue-500 transition-colors cursor-pointer"
       onClick={onClick}
     >

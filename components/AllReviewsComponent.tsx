@@ -141,7 +141,7 @@ export default function AllReviewsComponent() {
         <div className="relative">
           <button
             onClick={handlePrev}
-            className="absolute left-0 top-[45%] -translate-y-1/2 bg-gray-700/80 hover:bg-gray-600 p-3 rounded-full text-white z-20 transition-all disabled:opacity-30 shadow-lg hover:scale-110"
+            className="absolute left-0 top-[45%] -translate-y-1/2 bg-blue-300/30 hover:bg-blue-300/50 p-3 rounded-full text-white z-20 transition-all disabled:opacity-30 shadow-lg hover:scale-110"
             disabled={currentIndex === 0}
             aria-label="Previous review"
           >
@@ -150,7 +150,7 @@ export default function AllReviewsComponent() {
           
           <button
             onClick={handleNext}
-            className="absolute right-0 top-[45%] -translate-y-1/2 bg-gray-700/80 hover:bg-gray-600 p-3 rounded-full text-white z-20 transition-all disabled:opacity-30 shadow-lg hover:scale-110"
+            className="absolute right-0 top-[45%] -translate-y-1/2 bg-blue-300/30 hover:bg-blue-300/50 p-3 rounded-full text-white z-20 transition-all disabled:opacity-30 shadow-lg hover:scale-110"
             disabled={currentIndex >= maxIndex}
             aria-label="Next review"
           >
@@ -170,7 +170,7 @@ export default function AllReviewsComponent() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5 }}
-                  className="bg-gray-800/50 hover:bg-blue-950/50 p-6 rounded-4xl shadow-lg border-gray-700/50 transition-all duration-300 hover:shadow-blue-500/10 border-2 hover:border-blue-500/80 h-full flex flex-col"
+                  className="bg-blue-400/20 hover:bg-blue-300/20 p-6 rounded-4xl shadow-lg border-gray-700/50 transition-all duration-300 hover:shadow-blue-500/10 h-full flex flex-col"
                 >
                   <div className="flex justify-between items-start mb-4">
                     <div className="flex items-center">
@@ -182,7 +182,7 @@ export default function AllReviewsComponent() {
                       </div>
                       <div>
                         <h3 className="font-bold text-blue-300">{review.username}</h3>
-                        <p className="text-xs text-gray-500">
+                        <p className="text-xs text-gray-400">
                           {new Date(review.created_at).toLocaleDateString('en-US', {
                             year: 'numeric',
                             month: 'short',
@@ -191,7 +191,7 @@ export default function AllReviewsComponent() {
                         </p>
                       </div>
                     </div>
-                    <div className="flex items-center bg-gray-600/50 px-2 py-1 rounded-full">
+                    <div className="flex items-center bg-blue-500/50 px-3 py-1 rounded-full">
                       <span className="text-yellow-400 mr-1">{review.rating}</span>
                       <span className="text-yellow-400">★</span>
                     </div>

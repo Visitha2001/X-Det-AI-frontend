@@ -45,7 +45,7 @@ export default function HowItWorks() {
               <div className="aspect-video w-full">
                 <ReactPlayer
                   ref={playerRef}
-                  url="https://res.cloudinary.com/dqmeeveij/video/upload/v1749280266/0607_lgujuy.mp4"
+                  url="https://res.cloudinary.com/dqmeeveij/video/upload/v1751190769/Guidevideo_-_Made_with_Clipchamp_cg0auc.mp4"
                   width="100%"
                   height="100%"
                   controls={true}

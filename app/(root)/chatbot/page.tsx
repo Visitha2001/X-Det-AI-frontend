@@ -87,9 +87,6 @@ export default function BotPage() {
       setMessages((prev) => [...prev, errorMessage]);
     } finally {
       setIsLoading(false);
-      setTimeout(() => {
-        messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-      }, 100);
     }
   };
 
@@ -98,13 +95,6 @@ export default function BotPage() {
     setTimeout(() => {
       handleSendMessage();
     }, 100);
-  };
-
-  const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault();
-      handleSendMessage();
-    }
   };
 
   const handleCopyDisease = () => {
@@ -278,10 +268,11 @@ export default function BotPage() {
                           .map((q, i) => (
                             <motion.button
                               key={i}
-                              whileHover={{ scale: 1.05 }}
+                              whileHover={{ scale: 1.05, backgroundColor: 'rgba(30, 58, 138, 0.5)' }}
                               whileTap={{ scale: 0.95 }}
+                              onHoverEnd={() => {}}
                               onClick={() => handleSuggestedQuestionClick(q)}
-                              className="text-xs bg-gray-800 border border-blue-500 hover:bg-blue-900 hover:border-2 hover:border-blue-500 text-gray-100 px-2 py-1 rounded-xl"
+                              className="text-xs bg-gray-800 border border-blue-500 text-gray-100 px-2 py-1 rounded-xl"
                             >
                               {q}
                             </motion.button>
@@ -318,8 +309,9 @@ export default function BotPage() {
                     transition={{ delay: 0.3 + index * 0.05 }}
                     whileHover={{ scale: 1.03, backgroundColor: 'rgba(30, 58, 138, 0.5)' }}
                     whileTap={{ scale: 0.98 }}
+                    onHoverEnd={() => {}}
                     onClick={() => handleSuggestedQuestionClick(question)}
-                    className={`text-left text-sm bg-gray-700 hover:bg-blue-800/50 hover:border-2 hover:border-blue-500/40 text-gray-100 sm:px-3 sm:py-2 px-1 py-1 rounded-xl border border-gray-600 ${
+                    className={`text-left text-sm bg-gray-700 text-gray-100 sm:px-3 sm:py-2 px-1 py-1 rounded-xl border border-gray-600 ${
                       index >= 4 ? 'hidden sm:block' : ''
                     }`}
                   >
@@ -343,7 +335,6 @@ export default function BotPage() {
               whileFocus={{ borderColor: '#3b82f6' }}
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              onKeyDown={handleKeyDown}
               placeholder={botType === 'local' ? `Ask about ${selectedDisease}...` : 'Ask any medical question from Gemini...'}
               className="flex-1 bg-gray-700/80 text-gray-100 rounded-l-xl px-4 py-2 resize-none"
               rows={1}

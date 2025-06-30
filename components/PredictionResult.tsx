@@ -9,6 +9,7 @@ import {
 } from '@/services/disease_service';
 import { FaSpinner } from 'react-icons/fa';
 import Image from 'next/image';
+import toast from 'react-hot-toast';
 
 interface PredictionResultsProps {
   imageUrl: string;
@@ -35,8 +36,10 @@ export default function PredictionResults({
     try {
       await savePredictionWithDetails(prediction, imageUrl);
       window.location.href = `/home/results?image=${encodeURIComponent(imageUrl)}`;
+      toast.success('Results saved successfully!');
     } catch (err) {
       console.error('Failed to save results:', err);
+      toast.error('Failed to process results. Please try again after sign in again.');
       // Fallback to session storage if DB save fails
       try {
         savePredictionDataToSession(prediction);

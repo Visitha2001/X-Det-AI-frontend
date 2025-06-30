@@ -10,7 +10,7 @@ import Logo from "../public/assets/T_logo.png";
 import { FiLogOut } from "react-icons/fi";
 import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function Header() {
@@ -21,6 +21,7 @@ export default function Header() {
   const [isClicked, setIsClicked] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [imageError, setImageError] = useState(false); // State to track if the profile image failed to load
 
   const navItems = [
     { name: "Home", path: "/home", icon: <FaHome /> },
@@ -30,6 +31,7 @@ export default function Header() {
     { name: "History", path: "/history", icon: <FaGlobe /> },
   ];
 
+  // History item is only shown if a user is logged in (via NextAuth or custom auth)
   const filteredNavItems = navItems.filter((item) =>
     item.name === "History" ? session?.user || username : true
   );
@@ -40,17 +42,24 @@ export default function Header() {
     setTimeout(() => setIsClicked(false), 300);
   };
 
-  const handleSignOut = () => {
+  const handleSignOut = async () => { // Made async to handle signOut from next-auth
     setDropdownOpen(false);
     if (session) {
-      signOut();
+      await signOut({ callbackUrl: "/signin" }); // Redirect to signin after NextAuth signOut
     } else {
-      logout();
+      logout(); // Custom logout
       localStorage.removeItem("access_token");
       sessionStorage.removeItem("username");
       router.push("/signin");
     }
   };
+
+  // Reset imageError state when the session user image URL changes
+  // This is crucial: if a user logs out and logs back in, or switches accounts,
+  // we want to re-attempt loading the image.
+  useEffect(() => {
+    setImageError(false);
+  }, [session?.user?.image]);
 
   return (
     <>
@@ -61,6 +70,7 @@ export default function Header() {
           </Link>
 
           <nav className="hidden md:flex items-center space-x-8">
+            {/* Display first 4 items for desktop navigation */}
             {navItems.slice(0, 4).map((item) => {
               const isActive = pathname === item.path;
               return (
@@ -90,7 +100,8 @@ export default function Header() {
                     onClick={() => setDropdownOpen((prev) => !prev)}
                     className="flex items-center space-x-2 focus:outline-none sm:mr-5 mr-0 cursor-pointer"
                   >
-                    {session?.user?.image ? (
+                    {/* Conditional rendering for profile image or fallback icon */}
+                    {session?.user?.image && !imageError ? (
                       <Image
                         src={session.user.image}
                         alt="Profile"
@@ -98,8 +109,10 @@ export default function Header() {
                         height={36}
                         className="w-9 h-9 rounded-full border-2 border-green-500 object-cover"
                         unoptimized
+                        onError={() => setImageError(true)} // Set error state if image fails to load
                       />
                     ) : (
+                      // Fallback icon if no image, or if image failed to load
                       <div className="w-9 h-9 rounded-full bg-gray-700 flex items-center justify-center">
                         <FaUser className="text-gray-400" />
                       </div>
@@ -131,6 +144,7 @@ export default function Header() {
                 </div>
               </>
             ) : (
+              // Sign In/Sign Up buttons if no user is logged in
               <>
                 <Link
                   href="/signin"
@@ -151,8 +165,7 @@ export default function Header() {
         </div>
       </header>
 
-      {/* Mobile Navigation - Updated with smooth border transition and active effect only on icon */}
-      {/* <nav className="md:hidden bg-black/50 backdrop-blur-[2px] py-3 px-2 flex mx-4 my-5 rounded-3xl border border-gray-700 justify-around fixed bottom-0 left-0 right-0 z-50"> */}
+      {/* Mobile Navigation */}
       <nav className="md:hidden bg-gray-950 backdrop-blur-[2px] py-4 px-2 flex justify-around fixed bottom-0 left-0 right-0 z-50">
         {filteredNavItems.map((item) => {
           const isActive = pathname === item.path;

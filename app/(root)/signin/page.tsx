@@ -22,7 +22,6 @@ const Page = () => {
       const response = await loginUser(username, password);
       const { access_token } = response.data;
       
-      // Use the updated login function
       login(username, access_token);
       router.push('/home');
     } catch (err: any) {
@@ -31,8 +30,13 @@ const Page = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-800 sm:bg-gray-900 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
-      <div className="sm:mx-auto sm:w-full sm:max-w-md">
+    <div className="flex flex-col justify-center sm:py-32 py-8 sm:px-6 lg:px-8 relative overflow-hidden">
+      {/* Animated Gradient Background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-blue-900 to-black animate-gradient-bg"></div>
+      {/* Overlay to ensure content readability */}
+      <div className="absolute inset-0 bg-black/30"></div>
+      
+      <div className="sm:mx-auto sm:w-full sm:max-w-md relative z-10">
         <h2 className="mt-6 text-center text-3xl font-extrabold text-blue-400">
           Sign in to your account
         </h2>
@@ -44,8 +48,8 @@ const Page = () => {
         </p>
       </div>
 
-      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-        <div className="bg-gray-800 py-8 px-4 shadow-2xl sm:rounded-lg sm:px-10 border border-gray-700">
+      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md relative z-10">
+        <div className="bg-gray-800 py-8 px-4 shadow-2xl sm:rounded-xl sm:px-10">
           {errorMsg && (
             <div className="mb-4 p-4 bg-red-900/50 border border-red-400 text-red-100 rounded-md">{errorMsg}</div>
           )}
@@ -79,7 +83,7 @@ const Page = () => {
                     value={username}
                     placeholder='Enter your username'
                     onChange={(e) => setUsername(e.target.value)}
-                    className="appearance-none block w-full px-3 py-2 border border-gray-600 rounded-md shadow-sm placeholder-gray-500 bg-gray-700 text-white focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                    className="appearance-none block w-full px-3 py-2 rounded-md shadow-sm placeholder-gray-500 bg-gray-700 text-white focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                   />
                 </div>
               </div>
@@ -98,22 +102,19 @@ const Page = () => {
                     value={password}
                     placeholder='Enter your password'
                     onChange={(e) => setPassword(e.target.value)}
-                    className="appearance-none block w-full px-3 py-2 border border-gray-600 rounded-md shadow-sm placeholder-gray-500 bg-gray-700 text-white focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                    className="appearance-none block w-full px-3 py-2 rounded-md shadow-sm placeholder-gray-500 bg-gray-700 text-white focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
                     className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-400 hover:text-gray-300 focus:outline-none"
                   >
-                    {/* Eye Icon (show/hide) */}
                     {showPassword ? (
-                      // Eye Closed Icon (Hide)
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                         <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
                         <path fillRule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM10 7a3 3 0 100 6 3 3 0 000-6z" clipRule="evenodd" />
                       </svg>
                     ) : (
-                      // Eye Open Icon (Show)
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                         <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
                         <path fillRule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM10 7a3 3 0 100 6 3 3 0 000-6z" clipRule="evenodd" />
@@ -129,7 +130,7 @@ const Page = () => {
                     id="remember-me"
                     name="remember-me"
                     type="checkbox"
-                    className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-600 rounded bg-gray-700"
+                    className="h-4 w-4 text-blue-600 focus:ring-blue-500 rounded bg-gray-700"
                   />
                   <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-300">
                     Remember me
@@ -155,6 +156,26 @@ const Page = () => {
           </div>
         </div>
       </div>
+
+      {/* CSS for Animated Gradient */}
+      <style jsx>{`
+        @keyframes gradientAnimation {
+          0% {
+            background-position: 0% 50%;
+          }
+          50% {
+            background-position: 100% 50%;
+          }
+          100% {
+            background-position: 0% 50%;
+          }
+        }
+        .animate-gradient-bg {
+          background: linear-gradient(45deg, #1a202c, #2d3748, #1c2526, #2b6cb0);
+          background-size: 400% 400%;
+          animation: gradientAnimation 15s ease infinite;
+        }
+      `}</style>
     </div>
   );
 };

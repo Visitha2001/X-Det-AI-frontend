@@ -95,19 +95,19 @@ export default function DiseaseDetailsPage() {
           </a>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-          <div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6 items-stretch">
+          <div className="flex object-fill">
             {disease.imageUrl && (
-              <div className="w-full sm:h-150 h:40 bg-gray-800 rounded-lg mb-6 overflow-hidden">
+              <div className="w-full bg-gray-800 rounded-lg overflow-hidden flex items-center justify-center">
                 <img 
                   src={disease.imageUrl} 
                   alt={disease.name} 
-                  className="w-full h-full object-cover"
+                  className="w-full object-fill" 
                 />
               </div>
             )}
           </div>
-          <div className="bg-gray-800 rounded-xl p-6 mb-6">
+          <div className="bg-gray-800 h-auto rounded-xl p-6">
             <h2 className="text-2xl font-semibold text-blue-500 mb-4">Description</h2>
             <div className="prose prose-invert text-white max-w-none">
               <ReactMarkdown remarkPlugins={[remarkGfm]}>

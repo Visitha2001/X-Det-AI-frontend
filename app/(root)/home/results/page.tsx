@@ -270,7 +270,7 @@ export default function ResultsPage() {
                   thead: ({ node, ...props }) => <thead className="bg-gray-700 text-gray-100" {...props} />,
                   tbody: ({ node, ...props }) => <tbody className="bg-gray-800" {...props} />,
                   th: ({ node, ...props }) => <th className="px-4 py-2 border-b border-gray-600 font-semibold text-blue-200" {...props} />,
-                  td: ({ node, ...props }) => <td className="px-4 py-2 border-b border-gray-700 border-r border-gray-700 last:border-r-0" {...props} />,
+                  td: ({ node, ...props }) => <td className="px-4 py-2 border-b border-r border-gray-700 last:border-r-0" {...props} />,
                   // You might also consider adding styles for `tr` if needed, e.g., hover effects.
                   tr: ({node, ...props}) => <tr className="hover:bg-gray-700 transition-colors duration-200" {...props} />,
                 }}

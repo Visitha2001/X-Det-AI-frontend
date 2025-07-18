@@ -137,7 +137,7 @@ export default function BotPage() {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={handleClearChat}
-                className="text-sm bg-gray-700 hover:bg-gray-600 text-red-600 px-3 py-1 rounded-lg hover:text-white border border-red-500"
+                className="text-sm text-red-200 bg-red-950 px-3 py-1 rounded-lg hover:text-white border hover:bg-red-950 border-red-500"
               >
                 Clear Chat
               </motion.button>
@@ -398,9 +398,9 @@ export default function BotPage() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.2 }}
-        className="bg-red-900 bg-opacity-20 text-red-200 p-4 sm:py-10 sm:px-50"
+        className="bg-red-900 bg-opacity-20 text-red-100 p-4 sm:py-10 sm:px-50"
       >
-        <h2 className="text-2xl font-bold text-red-300 mb-2">⚠️ Important Disclaimer</h2>
+        <h2 className="text-2xl font-bold text-red-100 mb-2">⚠️ Important Disclaimer</h2>
         <p className="text-sm leading-relaxed">
           This AI-powered medical chatbot is intended for informational and educational purposes only. It is not a substitute for professional medical advice, diagnosis, or treatment.
           <br />

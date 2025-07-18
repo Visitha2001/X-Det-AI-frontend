@@ -162,10 +162,10 @@ const HeroSlider = () => {
       <div className="absolute bottom-26 sm:bottom-12 lg:bottom-9 left-0 right-0 flex justify-center items-center space-x-4 z-20">
         <button
           onClick={goToPrevSlide}
-          className="p-2 rounded-full bg-blue-400/20 hover:bg-blue-400/30 backdrop-blur-sm transition-all cursor-pointer"
+          className="p-2 rounded-full bg-white/50 hover:bg-white/80 backdrop-blur-sm transition-all cursor-pointer"
           aria-label="Previous slide"
         >
-          <svg className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <svg className="h-6 w-6 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
           </svg>
         </button>
@@ -176,7 +176,7 @@ const HeroSlider = () => {
               key={index}
               onClick={() => goToSlide(index)}
               className={`w-3 h-3 rounded-full transition-all ${
-                index === currentSlide ? 'bg-blue-400 scale-125' : 'bg-blue-500/50 hover:bg-blue-500/70 cursor-pointer'
+                index === currentSlide ? 'bg-white/80 scale-125' : 'bg-white/50 hover:bg-blue-500 cursor-pointer'
               }`}
               aria-label={`Go to slide ${index + 1}`}
             />
@@ -185,10 +185,10 @@ const HeroSlider = () => {
 
         <button
           onClick={goToNextSlide}
-          className="p-2 rounded-full bg-blue-400/20 hover:bg-blue-400/30 backdrop-blur-sm transition-all"
+          className="p-2 rounded-full bg-white/50 hover:bg-white/80 backdrop-blur-sm transition-all"
           aria-label="Next slide"
         >
-          <svg className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <svg className="h-6 w-6 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
           </svg>
         </button>

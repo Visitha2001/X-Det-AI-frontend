@@ -183,7 +183,7 @@ export default function ResultsPage() {
                 aria-label={language === 'si' ? 'Switch to English' : 'Switch to Sinhala'}
               >
                 <span
-                  className={`absolute left-0 inline-flex items-center justify-center h-8 w-10 transition-all duration-300 transform rounded-full
+                  className={`absolute left-0 inline-flex text-[12px] items-center justify-center h-8 w-10 transition-all duration-300 transform rounded-full
                     ${language === 'si'
                       ? 'translate-x-6 bg-white/80 text-blue-900 font-bold'
                       : 'translate-x-0 bg-white/80 text-gray-900 font-bold'

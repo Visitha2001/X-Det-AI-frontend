@@ -51,7 +51,7 @@ const DetectableDiseases = () => {
       {/* Content */}
       <div className="relative z-10 px-4 sm:px-50 sm:py-8 mx-auto">
         <div className="text-center mb-12">
-          <h2 className="sm:text-5xl text-4xl font-bold text-gray-200 mb-4">
+          <h2 className="sm:text-4xl text-3xl font-bold text-gray-200 mb-4">
             Detectable Diseases
           </h2>
           <p className="text-lg text-gray-300 max-w-2xl mx-auto">

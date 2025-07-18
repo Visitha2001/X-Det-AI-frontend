@@ -247,24 +247,37 @@ export default function ResultsPage() {
                 ))}
               </div>
             ) : diseaseDetails && selectedDisease ? (
-              <div className="max-w-none disease-content text-gray-300">
-                <ReactMarkdown 
-                  remarkPlugins={[remarkGfm]}
-                  components={{
-                    h1: ({node, ...props}) => <h1 className="text-3xl font-bold mt-8 mb-4 text-blue-400" {...props} />,
-                    h2: ({node, ...props}) => <h2 className="text-2xl font-semibold mt-6 mb-3 text-blue-300" {...props} />,
-                    h3: ({node, ...props}) => <h3 className="text-xl font-medium mt-4 mb-2 text-blue-200" {...props} />,
-                    p: ({node, ...props}) => <p className="mb-4" {...props} />,
-                    ul: ({node, ...props}) => <ul className="list-disc pl-6 mb-4 space-y-2" {...props} />,
-                    ol: ({node, ...props}) => <ol className="list-decimal pl-6 mb-4 space-y-2" {...props} />,
-                    li: ({node, ...props}) => <li className="mb-1" {...props} />,
-                    strong: ({node, ...props}) => <strong className="font-semibold text-blue-300" {...props} />,
-                    a: ({node, ...props}) => <a className="text-blue-400 hover:underline" {...props} />,
-                  }}
-                >
-                  {diseaseDetails.details}
-                </ReactMarkdown>
-              </div>
+            <div className="max-w-none disease-content text-gray-300">
+              <ReactMarkdown
+                remarkPlugins={[remarkGfm]}
+                components={{
+                  h1: ({ node, ...props }) => <h1 className="text-3xl font-bold mt-8 mb-4 text-blue-400" {...props} />,
+                  h2: ({ node, ...props }) => <h2 className="text-2xl font-semibold mt-6 mb-3 text-blue-300" {...props} />,
+                  h3: ({ node, ...props }) => <h3 className="text-xl font-medium mt-4 mb-2 text-blue-200" {...props} />,
+                  p: ({ node, ...props }) => <p className="mb-4" {...props} />,
+                  ul: ({ node, ...props }) => <ul className="list-disc pl-6 mb-4 space-y-2" {...props} />,
+                  ol: ({ node, ...props }) => <ol className="list-decimal pl-6 mb-4 space-y-2" {...props} />,
+                  li: ({ node, ...props }) => <li className="mb-1" {...props} />,
+                  strong: ({ node, ...props }) => <strong className="font-semibold text-blue-300" {...props} />,
+                  a: ({ node, ...props }) => <a className="text-blue-400 hover:underline" {...props} />,
+
+                  // --- Table-specific components ---
+                  table: ({ node, ...props }) => (
+                    <div className="overflow-x-auto mb-4"> 
+                      <table className="w-full text-left border-collapse border border-gray-400 rounded-lg overflow-hidden" {...props} />
+                    </div>
+                  ),
+                  thead: ({ node, ...props }) => <thead className="bg-gray-700 text-gray-100" {...props} />,
+                  tbody: ({ node, ...props }) => <tbody className="bg-gray-800" {...props} />,
+                  th: ({ node, ...props }) => <th className="px-4 py-2 border-b border-gray-600 font-semibold text-blue-200" {...props} />,
+                  td: ({ node, ...props }) => <td className="px-4 py-2 border-b border-gray-700 border-r border-gray-700 last:border-r-0" {...props} />,
+                  // You might also consider adding styles for `tr` if needed, e.g., hover effects.
+                  tr: ({node, ...props}) => <tr className="hover:bg-gray-700 transition-colors duration-200" {...props} />,
+                }}
+              >
+                {diseaseDetails.details}
+              </ReactMarkdown>
+            </div>
             ) : (
               <div className="flex items-center justify-center h-64">
                 <p className="text-gray-400 text-lg">

@@ -5,11 +5,14 @@ import { getAccessTokenFromLocalStorage, getUsernameFromSession, saveResultsToDB
 export interface DiseaseDetails {
   disease: string;
   details: string;
+  language: string;
 }
 
-export async function fetchDiseaseDetails(diseaseName: string): Promise<DiseaseDetails> {
+export async function fetchDiseaseDetails(diseaseName: string, language: string = 'en'): Promise<DiseaseDetails> {
   try {
-    const response = await http.get<DiseaseDetails>(`/disease-details/${encodeURIComponent(diseaseName)}`);
+    const response = await http.get<DiseaseDetails>(
+      `/disease-details/${encodeURIComponent(diseaseName)}?language=${language}`
+    );
     return response.data;
   } catch (error) {
     console.error('Error fetching disease details:', error);

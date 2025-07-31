@@ -113,15 +113,11 @@ export default function ImageUploadRow({
 
   return (
     <div className="flex flex-col items-center justify-center min-h-[25vh] sm:min-h-[17vh] text-black relative bg-black border-black">
-    {/* <div className="flex flex-col items-center justify-center min-h-[25vh] sm:min-h-[17vh] text-black relative bg-black border-black"> */}
-      {/* Background */}
       <div className="absolute opacity-50 inset-0 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500 animate-gradient bg-[length:400%_400%]" />
       </div>
 
-      {/* Glowing Border Container */}
       <div className="relative z-10 w-[80%] max-w-3xl p-[2px] rounded-4xl bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500 animate-gradient bg-[length:400%_400%] shadow-glow">
-        {/* Upload Container */}
         <div className={`
           flex flex-col sm:flex-row items-center gap-4 
           bg-gray-900 bg-opacity-20 backdrop-blur-lg
@@ -129,30 +125,23 @@ export default function ImageUploadRow({
           transition-all 
           ${selectedImage ? 'h-[22vh] sm:h-[13vh] px-2 py-2' : 'h-[10vh] sm:h-[8vh] px-2 py-2'}
         `}>
-        {/* <div className={`
-          flex flex-col sm:flex-row items-center gap-4 
-          bg-gray-900 bg-opacity-20 backdrop-blur-lg
-          rounded-4xl shadow-3xl
-          transition-all 
-          ${selectedImage ? 'h-[22vh] sm:h-[14vh] px-2 py-2' : 'h-[10vh] sm:h-[10vh] px-2 py-2'}
-        `}> */}
           <div className="flex flex-row w-full items-center mt-5 sm:mt-0">
-            {/* Upload Button with Spinning AI Logo */}
             <button
               onClick={triggerFileInput}
               disabled={isUploading || isScanning}
-              className="flex-shrink-0 flex items-center justify-center h-10 w-10 rounded-full bg-black bg-opacity-30 hover:bg-opacity-40 transition-all ml-2 mr-2 disabled:opacity-50"
+              className="flex-shrink-0 flex items-center justify-center h-10 w-10 rounded-full bg-black bg-opacity-30 hover:bg-opacity-40 transition-all ml-2 mr-2 relative"
             >
               <Image 
                 src="/assets/gemini-color.png" 
                 alt="AI Icon" 
-                width={30} 
-                height={30} 
-                className={isUploading || isScanning ? "spin-animation" : ""}
+                width={25} 
+                height={25} 
               />
+              {(isUploading || isScanning) && (
+                <div className="absolute inset-0 border-3 border-transparent border-t-blue-500 border-r-purple-500 rounded-full animate-spin"></div>
+              )}
             </button>
 
-            {/* Preview */}
             <div 
               onClick={!isUploading && !isScanning ? triggerFileInput : undefined} 
               className={`flex-grow ${!isUploading && !isScanning ? 'cursor-pointer' : ''}`}
@@ -164,7 +153,6 @@ export default function ImageUploadRow({
                       src={selectedImage}
                       alt="Preview"
                       className="h-25 w-25 mt-[-8px] sm:mt-[0px] sm:h-22 sm:w-22 object-cover rounded-2xl"
-                      // className="h-25 w-25 mt-[-8px] sm:mt-[0px] sm:h-18 sm:w-18 object-cover rounded-2xl"
                     />
                     {!isUploading && !isScanning && (
                       <button
@@ -199,7 +187,6 @@ export default function ImageUploadRow({
               disabled={isUploading || isScanning}
             />
 
-            {/* Desktop Buttons */}
             <div className="hidden sm:flex">
               {selectedImage && !uploadResult && (
                 <button
@@ -222,7 +209,6 @@ export default function ImageUploadRow({
             </div>
           </div>
 
-          {/* Mobile Buttons */}
           <div className="sm:hidden w-full px-4">
             {selectedImage && !uploadResult && (
               <button
@@ -246,7 +232,6 @@ export default function ImageUploadRow({
         </div>
       </div>
 
-      {/* Gradient animation and glow effect */}
       <style jsx global>{`
         @keyframes gradient {
           0% { background-position: 0% 50%; }
@@ -259,9 +244,6 @@ export default function ImageUploadRow({
         }
         .animate-gradient {
           animation: gradient 8s ease infinite;
-        }
-        .spin-animation {
-          animation: spin 1.5s linear infinite;
         }
         .shadow-glow {
           box-shadow: 0 0 10px rgba(168, 85, 247, 0.5), 

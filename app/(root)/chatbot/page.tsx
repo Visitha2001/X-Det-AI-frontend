@@ -349,7 +349,6 @@ export default function BotPage() {
             >
               {isLoading ? (
                 <motion.span
-                  animate={{ rotate: 360 }}
                   transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
                   className="flex items-center"
                 >

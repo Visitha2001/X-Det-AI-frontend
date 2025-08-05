@@ -148,7 +148,7 @@ const HeroSlider = () => {
                 </p>
                 <button
                   onClick={() => router.push(slide.ctaLink)}
-                  className="bg-white text-blue-800 hover:bg-blue-50 font-semibold px-8 py-3 rounded-lg text-lg transition-all duration-300 transform hover:scale-105 shadow-lg"
+                  className="bg-white text-blue-800 hover:bg-blue-50 font-semibold px-8 py-3 rounded-4xl text-lg transition-all duration-300 transform hover:scale-105 shadow-lg"
                 >
                   {slide.ctaText}
                 </button>

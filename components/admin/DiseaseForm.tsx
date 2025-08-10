@@ -3,15 +3,8 @@
 import { useState, useRef, ChangeEvent } from 'react';
 import { createDisease, updateDisease } from '@/services/diseaseService';
 import { uploadImage } from '@/services/image_upload_service';
-import dynamic from 'next/dynamic';
-import '@uiw/react-md-editor/markdown-editor.css';
-import '@uiw/react-markdown-preview/markdown.css';
-
-// Dynamically import MDEditor to avoid SSR issues
-const MDEditor = dynamic(
-  () => import('@uiw/react-md-editor').then((mod) => mod.default),
-  { ssr: false }
-);
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 
 interface DiseaseFormProps {
   initialData?: {
@@ -106,9 +99,9 @@ export default function DiseaseForm({ initialData }: DiseaseFormProps) {
   const handleItemChange = (
     setter: React.Dispatch<React.SetStateAction<string[]>>,
     index: number,
-    value: string | undefined
+    value: string
   ) => {
-    setter(prev => prev.map((item, i) => (i === index ? value || '' : item)));
+    setter(prev => prev.map((item, i) => (i === index ? value : item)));
   };
 
   const handleRemoveItem = (
@@ -119,7 +112,7 @@ export default function DiseaseForm({ initialData }: DiseaseFormProps) {
   };
 
   return (
-    <div className="max-w-4xl mx-auto p-6 bg-gray-900 text-gray-100 rounded-lg shadow-lg" data-color-mode="dark">
+    <div className="max-w-4xl mx-auto p-6 bg-gray-900 text-gray-100 rounded-lg shadow-lg">
       <h1 className="text-2xl font-bold mb-6">
         {initialData?.id ? 'Edit Disease' : 'Add New Disease'}
       </h1>
@@ -147,40 +140,102 @@ export default function DiseaseForm({ initialData }: DiseaseFormProps) {
 
         <div>
           <label className="block mb-2 font-medium">Description</label>
-          <div className="bg-gray-800 rounded overflow-hidden">
-            <MDEditor
-              value={description}
-              onChange={(value) => setDescription(value || '')}
-              height={300}
-              previewOptions={{
-                className: 'bg-gray-900 text-gray-100'
+          <textarea
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            className="w-full p-2 bg-gray-800 border border-gray-700 rounded focus:ring-2 focus:ring-blue-500 focus:border-blue-500 min-h-[200px]"
+          />
+          <div className="mt-2 p-4 bg-gray-800 rounded-lg">
+            <ReactMarkdown remarkPlugins={[remarkGfm]}
+              components={{
+                h1: ({ node, ...props }) => (
+                  <h1 className="text-3xl font-bold mt-8 mb-4 text-blue-400 border-b border-blue-300 pb-2" {...props} />
+                ),
+                h2: ({ node, ...props }) => (
+                  <h2 className="text-2xl font-semibold mt-6 mb-3 text-blue-300 border-b border-blue-200 pb-1" {...props} />
+                ),
+                h3: ({ node, ...props }) => (
+                  <h3 className="text-xl font-medium mt-4 mb-2 text-blue-200" {...props} />
+                ),
+                p: ({ node, ...props }) => (
+                  <p className="mb-4 leading-relaxed text-gray-200" {...props} />
+                ),
+                ul: ({ node, ...props }) => (
+                  <ul className="list-disc pl-6 mb-4 space-y-2 marker:text-blue-300" {...props} />
+                ),
+                ol: ({ node, ...props }) => (
+                  <ol className="list-decimal pl-6 mb-4 space-y-2 marker:text-blue-300" {...props} />
+                ),
+                li: ({ node, ...props }) => (
+                  <li className="mb-1 leading-snug" {...props} />
+                ),
+                strong: ({ node, ...props }) => (
+                  <strong className="font-semibold text-blue-300" {...props} />
+                ),
+                a: ({ node, ...props }) => (
+                  <a
+                    className="text-blue-400 hover:underline hover:text-blue-300 transition-colors"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    {...props}
+                  />
+                ),
+                blockquote: ({ node, ...props }) => (
+                  <blockquote className="border-l-4 border-blue-300 pl-4 italic text-gray-300 my-4" {...props} />
+                ),
+                hr: ({ node, ...props }) => <hr className="my-6 border-blue-300/50" {...props} />,
               }}
-            />
+            >
+              {description}
+            </ReactMarkdown>
           </div>
         </div>
 
         <div>
           <label className="block mb-2 font-medium">Symptoms</label>
           {symptoms.map((symptom, index) => (
-            <div key={index} className="mb-3 flex items-start">
-              <div className="flex-1 bg-gray-800 rounded overflow-hidden">
-                <MDEditor
+            <div key={index} className="mb-3">
+              <div className="flex items-start gap-2">
+                <textarea
                   value={symptom}
-                  onChange={(value) => handleItemChange(setSymptoms, index, value)}
-                  height={150}
-                  previewOptions={{
-                    className: 'bg-gray-900 text-gray-100'
-                  }}
+                  onChange={(e) => handleItemChange(setSymptoms, index, e.target.value)}
+                  className="flex-1 p-2 bg-gray-800 border border-gray-700 rounded focus:ring-2 focus:ring-blue-500 focus:border-blue-500 min-h-[100px]"
                 />
+                <button
+                  type="button"
+                  onClick={() => handleRemoveItem(setSymptoms, index)}
+                  className="p-2 text-red-400 hover:text-red-300"
+                  aria-label="Remove symptom"
+                >
+                  ×
+                </button>
               </div>
-              <button
-                type="button"
-                onClick={() => handleRemoveItem(setSymptoms, index)}
-                className="ml-2 p-2 text-red-400 hover:text-red-300"
-                aria-label="Remove symptom"
-              >
-                ×
-              </button>
+              <div className="mt-2 p-3 bg-gray-800 rounded-lg">
+                <ReactMarkdown remarkPlugins={[remarkGfm]}
+                  components={{
+                    h1: ({ node, ...props }) => (
+                      <h1 className="text-xl font-bold mt-4 mb-2 text-blue-400" {...props} />
+                    ),
+                    h2: ({ node, ...props }) => (
+                      <h2 className="text-lg font-semibold mt-3 mb-1 text-blue-300" {...props} />
+                    ),
+                    p: ({ node, ...props }) => (
+                      <p className="mb-2 leading-relaxed text-gray-200" {...props} />
+                    ),
+                    ul: ({ node, ...props }) => (
+                      <ul className="list-disc pl-5 mb-2 space-y-1 marker:text-blue-300" {...props} />
+                    ),
+                    ol: ({ node, ...props }) => (
+                      <ol className="list-decimal pl-5 mb-2 space-y-1 marker:text-blue-300" {...props} />
+                    ),
+                    li: ({ node, ...props }) => (
+                      <li className="mb-1 leading-snug" {...props} />
+                    ),
+                  }}
+                >
+                  {symptom}
+                </ReactMarkdown>
+              </div>
             </div>
           ))}
           <button
@@ -195,25 +250,48 @@ export default function DiseaseForm({ initialData }: DiseaseFormProps) {
         <div>
           <label className="block mb-2 font-medium">Treatments</label>
           {treatments.map((treatment, index) => (
-            <div key={index} className="mb-3 flex items-start">
-              <div className="flex-1 bg-gray-800 rounded overflow-hidden">
-                <MDEditor
+            <div key={index} className="mb-3">
+              <div className="flex items-start gap-2">
+                <textarea
                   value={treatment}
-                  onChange={(value) => handleItemChange(setTreatments, index, value)}
-                  height={150}
-                  previewOptions={{
-                    className: 'bg-gray-900 text-gray-100'
-                  }}
+                  onChange={(e) => handleItemChange(setTreatments, index, e.target.value)}
+                  className="flex-1 p-2 bg-gray-800 border border-gray-700 rounded focus:ring-2 focus:ring-blue-500 focus:border-blue-500 min-h-[100px]"
                 />
+                <button
+                  type="button"
+                  onClick={() => handleRemoveItem(setTreatments, index)}
+                  className="p-2 text-red-400 hover:text-red-300"
+                  aria-label="Remove treatment"
+                >
+                  ×
+                </button>
               </div>
-              <button
-                type="button"
-                onClick={() => handleRemoveItem(setTreatments, index)}
-                className="ml-2 p-2 text-red-400 hover:text-red-300"
-                aria-label="Remove treatment"
-              >
-                ×
-              </button>
+              <div className="mt-2 p-3 bg-gray-800 rounded-lg">
+                <ReactMarkdown remarkPlugins={[remarkGfm]}
+                  components={{
+                    h1: ({ node, ...props }) => (
+                      <h1 className="text-xl font-bold mt-4 mb-2 text-blue-400" {...props} />
+                    ),
+                    h2: ({ node, ...props }) => (
+                      <h2 className="text-lg font-semibold mt-3 mb-1 text-blue-300" {...props} />
+                    ),
+                    p: ({ node, ...props }) => (
+                      <p className="mb-2 leading-relaxed text-gray-200" {...props} />
+                    ),
+                    ul: ({ node, ...props }) => (
+                      <ul className="list-disc pl-5 mb-2 space-y-1 marker:text-blue-300" {...props} />
+                    ),
+                    ol: ({ node, ...props }) => (
+                      <ol className="list-decimal pl-5 mb-2 space-y-1 marker:text-blue-300" {...props} />
+                    ),
+                    li: ({ node, ...props }) => (
+                      <li className="mb-1 leading-snug" {...props} />
+                    ),
+                  }}
+                >
+                  {treatment}
+                </ReactMarkdown>
+              </div>
             </div>
           ))}
           <button
@@ -228,25 +306,48 @@ export default function DiseaseForm({ initialData }: DiseaseFormProps) {
         <div>
           <label className="block mb-2 font-medium">Prevention</label>
           {prevention.map((prev, index) => (
-            <div key={index} className="mb-3 flex items-start">
-              <div className="flex-1 bg-gray-800 rounded overflow-hidden">
-                <MDEditor
+            <div key={index} className="mb-3">
+              <div className="flex items-start gap-2">
+                <textarea
                   value={prev}
-                  onChange={(value) => handleItemChange(setPrevention, index, value)}
-                  height={150}
-                  previewOptions={{
-                    className: 'bg-gray-900 text-gray-100'
-                  }}
+                  onChange={(e) => handleItemChange(setPrevention, index, e.target.value)}
+                  className="flex-1 p-2 bg-gray-800 border border-gray-700 rounded focus:ring-2 focus:ring-blue-500 focus:border-blue-500 min-h-[100px]"
                 />
+                <button
+                  type="button"
+                  onClick={() => handleRemoveItem(setPrevention, index)}
+                  className="p-2 text-red-400 hover:text-red-300"
+                  aria-label="Remove prevention"
+                >
+                  ×
+                </button>
               </div>
-              <button
-                type="button"
-                onClick={() => handleRemoveItem(setPrevention, index)}
-                className="ml-2 p-2 text-red-400 hover:text-red-300"
-                aria-label="Remove prevention"
-              >
-                ×
-              </button>
+              <div className="mt-2 p-3 bg-gray-800 rounded-lg">
+                <ReactMarkdown remarkPlugins={[remarkGfm]}
+                  components={{
+                    h1: ({ node, ...props }) => (
+                      <h1 className="text-xl font-bold mt-4 mb-2 text-blue-400" {...props} />
+                    ),
+                    h2: ({ node, ...props }) => (
+                      <h2 className="text-lg font-semibold mt-3 mb-1 text-blue-300" {...props} />
+                    ),
+                    p: ({ node, ...props }) => (
+                      <p className="mb-2 leading-relaxed text-gray-200" {...props} />
+                    ),
+                    ul: ({ node, ...props }) => (
+                      <ul className="list-disc pl-5 mb-2 space-y-1 marker:text-blue-300" {...props} />
+                    ),
+                    ol: ({ node, ...props }) => (
+                      <ol className="list-decimal pl-5 mb-2 space-y-1 marker:text-blue-300" {...props} />
+                    ),
+                    li: ({ node, ...props }) => (
+                      <li className="mb-1 leading-snug" {...props} />
+                    ),
+                  }}
+                >
+                  {prev}
+                </ReactMarkdown>
+              </div>
             </div>
           ))}
           <button

@@ -108,9 +108,48 @@ export default function DiseaseDetailsPage() {
             )}
           </div>
           <div className="bg-gray-800 h-auto rounded-xl p-6">
-            <h2 className="text-2xl font-semibold text-blue-500 mb-4">Description</h2>
+            {/* <h2 className="text-2xl font-semibold text-blue-500 mb-4">Description</h2> */}
             <div className="prose prose-invert text-white max-w-none">
-              <ReactMarkdown remarkPlugins={[remarkGfm]}>
+              <ReactMarkdown remarkPlugins={[remarkGfm]}
+                components={{
+                  h1: ({ node, ...props }) => (
+                    <h1 className="text-3xl font-bold mt-8 mb-4 text-blue-400 border-b border-blue-300 pb-2" {...props} />
+                  ),
+                  h2: ({ node, ...props }) => (
+                    <h2 className="text-2xl font-semibold mt-6 mb-3 text-blue-300 border-b border-blue-200 pb-1" {...props} />
+                  ),
+                  h3: ({ node, ...props }) => (
+                    <h3 className="text-xl font-medium mt-4 mb-2 text-blue-200" {...props} />
+                  ),
+                  p: ({ node, ...props }) => (
+                    <p className="mb-4 leading-relaxed text-gray-200" {...props} />
+                  ),
+                  ul: ({ node, ...props }) => (
+                    <ul className="list-disc pl-6 mb-4 space-y-2 marker:text-blue-300" {...props} />
+                  ),
+                  ol: ({ node, ...props }) => (
+                    <ol className="list-decimal pl-6 mb-4 space-y-2 marker:text-blue-300" {...props} />
+                  ),
+                  li: ({ node, ...props }) => (
+                    <li className="mb-1 leading-snug" {...props} />
+                  ),
+                  strong: ({ node, ...props }) => (
+                    <strong className="font-semibold text-blue-300" {...props} />
+                  ),
+                  a: ({ node, ...props }) => (
+                    <a
+                      className="text-blue-400 hover:underline hover:text-blue-300 transition-colors"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      {...props}
+                    />
+                  ),
+                  blockquote: ({ node, ...props }) => (
+                    <blockquote className="border-l-4 border-blue-300 pl-4 italic text-gray-300 my-4" {...props} />
+                  ),
+                  hr: ({ node, ...props }) => <hr className="my-6 border-blue-300/50" {...props} />,
+                }}
+              >
                 {disease.description}
               </ReactMarkdown>
             </div>
@@ -119,22 +158,100 @@ export default function DiseaseDetailsPage() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
           <div className="bg-gray-800 rounded-xl p-6">
-            <h2 className="text-2xl font-semibold text-blue-500 mb-4">Symptoms</h2>
+            {/* <h2 className="text-2xl font-semibold text-blue-500 mb-4">Symptoms</h2> */}
             <div className="prose text-white prose-invert max-w-none 
                           prose-ul:list-disc prose-ul:pl-5
                           prose-li:my-2 prose-li:marker:text-white">
-              <ReactMarkdown remarkPlugins={[remarkGfm]}>
+              <ReactMarkdown remarkPlugins={[remarkGfm]}
+                components={{
+                  h1: ({ node, ...props }) => (
+                    <h1 className="text-3xl font-bold mt-8 mb-4 text-blue-400 border-b border-blue-300 pb-2" {...props} />
+                  ),
+                  h2: ({ node, ...props }) => (
+                    <h2 className="text-2xl font-semibold mt-6 mb-3 text-blue-300 border-b border-blue-200 pb-1" {...props} />
+                  ),
+                  h3: ({ node, ...props }) => (
+                    <h3 className="text-xl font-medium mt-4 mb-2 text-blue-200" {...props} />
+                  ),
+                  p: ({ node, ...props }) => (
+                    <p className="mb-4 leading-relaxed text-gray-200" {...props} />
+                  ),
+                  ul: ({ node, ...props }) => (
+                    <ul className="list-disc pl-6 mb-4 space-y-2 marker:text-blue-300" {...props} />
+                  ),
+                  ol: ({ node, ...props }) => (
+                    <ol className="list-decimal pl-6 mb-4 space-y-2 marker:text-blue-300" {...props} />
+                  ),
+                  li: ({ node, ...props }) => (
+                    <li className="mb-1 leading-snug" {...props} />
+                  ),
+                  strong: ({ node, ...props }) => (
+                    <strong className="font-semibold text-blue-300" {...props} />
+                  ),
+                  a: ({ node, ...props }) => (
+                    <a
+                      className="text-blue-400 hover:underline hover:text-blue-300 transition-colors"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      {...props}
+                    />
+                  ),
+                  blockquote: ({ node, ...props }) => (
+                    <blockquote className="border-l-4 border-blue-300 pl-4 italic text-gray-300 my-4" {...props} />
+                  ),
+                  hr: ({ node, ...props }) => <hr className="my-6 border-blue-300/50" {...props} />,
+                }}
+              >
                 {arrayToMarkdown(disease.symptoms)}
               </ReactMarkdown>
             </div>
           </div>
 
           <div className="bg-gray-800 rounded-xl p-6">
-            <h2 className="text-2xl font-semibold text-blue-500 mb-4">Treatments</h2>
+            {/* <h2 className="text-2xl font-semibold text-blue-500 mb-4">Treatments</h2> */}
             <div className="prose text-white prose-invert max-w-none
                           prose-ul:list-disc prose-ul:pl-5
                           prose-li:my-2 prose-li:marker:text-white">
-              <ReactMarkdown remarkPlugins={[remarkGfm]}>
+              <ReactMarkdown remarkPlugins={[remarkGfm]}
+                components={{
+                  h1: ({ node, ...props }) => (
+                    <h1 className="text-3xl font-bold mt-8 mb-4 text-blue-400 border-b border-blue-300 pb-2" {...props} />
+                  ),
+                  h2: ({ node, ...props }) => (
+                    <h2 className="text-2xl font-semibold mt-6 mb-3 text-blue-300 border-b border-blue-200 pb-1" {...props} />
+                  ),
+                  h3: ({ node, ...props }) => (
+                    <h3 className="text-xl font-medium mt-4 mb-2 text-blue-200" {...props} />
+                  ),
+                  p: ({ node, ...props }) => (
+                    <p className="mb-4 leading-relaxed text-gray-200" {...props} />
+                  ),
+                  ul: ({ node, ...props }) => (
+                    <ul className="list-disc pl-6 mb-4 space-y-2 marker:text-blue-300" {...props} />
+                  ),
+                  ol: ({ node, ...props }) => (
+                    <ol className="list-decimal pl-6 mb-4 space-y-2 marker:text-blue-300" {...props} />
+                  ),
+                  li: ({ node, ...props }) => (
+                    <li className="mb-1 leading-snug" {...props} />
+                  ),
+                  strong: ({ node, ...props }) => (
+                    <strong className="font-semibold text-blue-300" {...props} />
+                  ),
+                  a: ({ node, ...props }) => (
+                    <a
+                      className="text-blue-400 hover:underline hover:text-blue-300 transition-colors"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      {...props}
+                    />
+                  ),
+                  blockquote: ({ node, ...props }) => (
+                    <blockquote className="border-l-4 border-blue-300 pl-4 italic text-gray-300 my-4" {...props} />
+                  ),
+                  hr: ({ node, ...props }) => <hr className="my-6 border-blue-300/50" {...props} />,
+                }}
+              >
                 {arrayToMarkdown(disease.treatments)}
               </ReactMarkdown>
             </div>
@@ -142,11 +259,50 @@ export default function DiseaseDetailsPage() {
         </div>
 
         <div className="bg-gray-800 rounded-xl p-6 mb-6">
-          <h2 className="text-2xl font-semibold text-blue-500 mb-4">Prevention</h2>
+          {/* <h2 className="text-2xl font-semibold text-blue-500 mb-4">Prevention</h2> */}
           <div className="prose text-white prose-invert max-w-none
                         prose-ul:list-disc prose-ul:pl-5
                         prose-li:my-2 prose-li:marker:text-white">
-            <ReactMarkdown remarkPlugins={[remarkGfm]}>
+            <ReactMarkdown remarkPlugins={[remarkGfm]}
+              components={{
+                  h1: ({ node, ...props }) => (
+                    <h1 className="text-3xl font-bold mt-8 mb-4 text-blue-400 border-b border-blue-300 pb-2" {...props} />
+                  ),
+                  h2: ({ node, ...props }) => (
+                    <h2 className="text-2xl font-semibold mt-6 mb-3 text-blue-300 border-b border-blue-200 pb-1" {...props} />
+                  ),
+                  h3: ({ node, ...props }) => (
+                    <h3 className="text-xl font-medium mt-4 mb-2 text-blue-200" {...props} />
+                  ),
+                  p: ({ node, ...props }) => (
+                    <p className="mb-4 leading-relaxed text-gray-200" {...props} />
+                  ),
+                  ul: ({ node, ...props }) => (
+                    <ul className="list-disc pl-6 mb-4 space-y-2 marker:text-blue-300" {...props} />
+                  ),
+                  ol: ({ node, ...props }) => (
+                    <ol className="list-decimal pl-6 mb-4 space-y-2 marker:text-blue-300" {...props} />
+                  ),
+                  li: ({ node, ...props }) => (
+                    <li className="mb-1 leading-snug" {...props} />
+                  ),
+                  strong: ({ node, ...props }) => (
+                    <strong className="font-semibold text-blue-300" {...props} />
+                  ),
+                  a: ({ node, ...props }) => (
+                    <a
+                      className="text-blue-400 hover:underline hover:text-blue-300 transition-colors"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      {...props}
+                    />
+                  ),
+                  blockquote: ({ node, ...props }) => (
+                    <blockquote className="border-l-4 border-blue-300 pl-4 italic text-gray-300 my-4" {...props} />
+                  ),
+                  hr: ({ node, ...props }) => <hr className="my-6 border-blue-300/50" {...props} />,
+                }}
+            >
               {arrayToMarkdown(disease.prevention)}
             </ReactMarkdown>
           </div>
